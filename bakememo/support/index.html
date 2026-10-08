@@ -12,6 +12,14 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="stylesheet" href="/assets/home.css">
   <link rel="stylesheet" href="/assets/support.css">
+  <script>
+    /* 系统首选语言不是中文时，直接定位到英文部分。 */
+    (function () {
+      if (location.hash) return;
+      var first = (navigator.languages && navigator.languages[0]) || navigator.language || "";
+      if (!/^zh\b/i.test(first)) location.replace("#en");
+    })();
+  </script>
 </head>
 <body>
   <header class="nav">

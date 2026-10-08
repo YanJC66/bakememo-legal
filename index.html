@@ -10,6 +10,20 @@
   <link rel="canonical" href="https://bakememo.cn/">
   <link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/">
   <link rel="alternate" hreflang="en" href="https://bakememo.cn/en/">
+  <link rel="alternate" hreflang="x-default" href="https://bakememo.cn/">
+  <script>
+    /* 按系统语言选页：首选语言是中文（含繁体）留在中文页，其他跳到 /en/。手动点过语言切换会被记住。无追踪、不发送任何数据。 */
+    (function () {
+      var pref = null, q = location.search;
+      try {
+        if (/[?&]lang=zh\b/.test(q)) localStorage.setItem("bm-lang", "zh");
+        pref = localStorage.getItem("bm-lang");
+      } catch (e) {}
+      if (/[?&]lang=zh\b/.test(q) || pref === "zh") return;
+      var first = (navigator.languages && navigator.languages[0]) || navigator.language || "";
+      if (pref === "en" || !/^zh\b/i.test(first)) location.replace("/en/" + location.hash);
+    })();
+  </script>
   <meta property="og:type" content="website">
   <meta property="og:title" content="焙可记 · 烘焙不靠猜">
   <meta property="og:description" content="记下每一炉，看清这一炉改了什么，下一炉少猜一点。">
@@ -27,7 +41,7 @@
         <a class="hide-s" href="#features">功能</a>
         <a class="hide-s" href="#plans">免费与 Pro</a>
         <a href="/bakememo/support/">帮助</a>
-        <a class="lang" href="/en/" lang="en" hreflang="en">EN</a>
+        <a class="lang" href="/en/?lang=en" lang="en" hreflang="en">EN</a>
         <a class="btn btn-primary btn-sm" href="https://apps.apple.com/cn/app/id6792324050">免费下载</a>
       </nav>
     </div>
@@ -222,7 +236,7 @@
       <span>© 2026 Jiahui Xu · 焙可记 BakeMemo</span>
       <a href="/bakememo/support/">支持</a>
       <a href="/bakememo/privacy/">隐私政策</a>
-      <a href="/en/" lang="en" hreflang="en">English</a>
+      <a href="/en/?lang=en" lang="en" hreflang="en">English</a>
       <a class="sp" href="https://beian.miit.gov.cn/" rel="noreferrer">粤ICP备2026075524号</a>
     </div>
   </footer>

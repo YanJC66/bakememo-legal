@@ -10,6 +10,11 @@
   <link rel="canonical" href="https://bakememo.cn/en/">
   <link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/">
   <link rel="alternate" hreflang="en" href="https://bakememo.cn/en/">
+  <link rel="alternate" hreflang="x-default" href="https://bakememo.cn/">
+  <script>
+    /* 记住手动选择的英文，之后访问主页不再按系统语言判断。 */
+    try { if (/[?&]lang=en\b/.test(location.search)) localStorage.setItem("bm-lang", "en"); } catch (e) {}
+  </script>
   <meta property="og:type" content="website">
   <meta property="og:title" content="BakeMemo · Stop guessing. Bake better.">
   <meta property="og:description" content="Every bake, on record. See what changed, bake to bake.">
@@ -27,7 +32,7 @@
         <a class="hide-s" href="#features">Features</a>
         <a class="hide-s" href="#plans">Free &amp; Pro</a>
         <a href="/bakememo/support/#en">Help</a>
-        <a class="lang" href="/" lang="zh-Hans" hreflang="zh-Hans">中文</a>
+        <a class="lang" href="/?lang=zh" lang="zh-Hans" hreflang="zh-Hans">中文</a>
         <a class="btn btn-primary btn-sm" href="https://apps.apple.com/app/id6792324050">Get it free</a>
       </nav>
     </div>
@@ -222,7 +227,7 @@
       <span>© 2026 Jiahui Xu · BakeMemo</span>
       <a href="/bakememo/support/#en">Support</a>
       <a href="/bakememo/privacy/#en">Privacy Policy</a>
-      <a href="/" lang="zh-Hans" hreflang="zh-Hans">中文</a>
+      <a href="/?lang=zh" lang="zh-Hans" hreflang="zh-Hans">中文</a>
       <a class="sp" href="https://beian.miit.gov.cn/" rel="noreferrer">粤ICP备2026075524号</a>
     </div>
   </footer>

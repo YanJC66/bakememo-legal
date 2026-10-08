@@ -8,6 +8,14 @@
   <meta name="apple-itunes-app" content="app-id=6792324050">
   <title>BakeMemo 隐私政策 / Privacy Policy</title>
   <link rel="stylesheet" href="../../assets/site.css">
+  <script>
+    /* 系统首选语言不是中文时，直接定位到英文部分。 */
+    (function () {
+      if (location.hash) return;
+      var first = (navigator.languages && navigator.languages[0]) || navigator.language || "";
+      if (!/^zh\b/i.test(first)) location.replace("#en");
+    })();
+  </script>
 </head>
 <body>
   <main>
