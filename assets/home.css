@@ -216,6 +216,7 @@ a { color: var(--brand); text-underline-offset: 3px; }
 .final h2 { font-family: var(--serif); font-size: clamp(2.4rem, 6.4vw, 4.6rem); line-height: 1.06; margin: 0 0 16px; letter-spacing: -0.02em; }
 .final p { color: var(--muted); font-size: 1.1rem; margin: 0 0 30px; }
 .final .cta-row { justify-content: center; }
+.final .mini { margin: 22px 0 0; font-size: 15px; }
 
 /* ---------- 页脚 ---------- */
 .foot { border-top: 1px solid var(--line); padding: 30px 0 40px; color: var(--muted); font-size: 14px; }
