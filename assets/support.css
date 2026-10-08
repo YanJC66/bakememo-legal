@@ -30,3 +30,16 @@
   .faq summary { padding: 16px 46px 16px 18px; }
   .faq details > p, .faq details > ol { margin: 12px 18px 16px; }
 }
+
+/* 指南页 */
+.guide h2 { font-family: var(--serif); font-size: clamp(1.5rem, 3.2vw, 2rem); margin: 44px 0 12px; }
+.guide p, .guide li { color: var(--ink-2); }
+.guide .formula { font-family: var(--serif); font-size: clamp(1.2rem, 2.6vw, 1.5rem); background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--brand); border-radius: 14px; padding: 18px 22px; margin: 18px 0; color: var(--ink); }
+.guide .tbl { overflow-x: auto; margin: 16px 0; }
+.guide table { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; font-variant-numeric: tabular-nums; }
+.guide th, .guide td { padding: 11px 16px; border-bottom: 1px solid var(--line); text-align: left; }
+.guide th { font-size: 14px; color: var(--muted); font-weight: 650; }
+.guide td.n, .guide th.n { text-align: right; }
+.guide tr:last-child td { border-bottom: 0; }
+.guide tr.sum td { font-weight: 650; border-top: 1px solid var(--line); }
+.guide .note { font-size: 14px; color: var(--muted); }

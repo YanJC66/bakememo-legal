@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://bakememo.cn/</loc>
+    <lastmod>2026-10-08</lastmod>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/"/>
+  </url>
+  <url>
+    <loc>https://bakememo.cn/en/</loc>
+    <lastmod>2026-10-08</lastmod>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/"/>
+  </url>
+  <url>
+    <loc>https://bakememo.cn/guide/bakers-percentage/</loc>
+    <lastmod>2026-10-08</lastmod>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/guide/bakers-percentage/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/guide/bakers-percentage/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/guide/bakers-percentage/"/>
+  </url>
+  <url>
+    <loc>https://bakememo.cn/en/guide/bakers-percentage/</loc>
+    <lastmod>2026-10-08</lastmod>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/guide/bakers-percentage/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/guide/bakers-percentage/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/guide/bakers-percentage/"/>
+  </url>
+  <url>
+    <loc>https://bakememo.cn/bakememo/support/</loc>
+    <lastmod>2026-10-08</lastmod>
+  </url>
+  <url>
+    <loc>https://bakememo.cn/bakememo/privacy/</loc>
+    <lastmod>2026-10-08</lastmod>
+  </url>
+</urlset>
