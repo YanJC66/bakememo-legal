@@ -29,6 +29,34 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/guide/bakers-percentage/"/>
   </url>
   <url>
+    <loc>https://bakememo.cn/guide/log-a-bake/</loc>
+    <lastmod>2026-10-08</lastmod>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/guide/log-a-bake/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/guide/log-a-bake/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/guide/log-a-bake/"/>
+  </url>
+  <url>
+    <loc>https://bakememo.cn/en/guide/log-a-bake/</loc>
+    <lastmod>2026-10-08</lastmod>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/guide/log-a-bake/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/guide/log-a-bake/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/guide/log-a-bake/"/>
+  </url>
+  <url>
+    <loc>https://bakememo.cn/guide/paper-recipes/</loc>
+    <lastmod>2026-10-08</lastmod>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/guide/paper-recipes/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/guide/paper-recipes/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/guide/paper-recipes/"/>
+  </url>
+  <url>
+    <loc>https://bakememo.cn/en/guide/paper-recipes/</loc>
+    <lastmod>2026-10-08</lastmod>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/guide/paper-recipes/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/guide/paper-recipes/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/guide/paper-recipes/"/>
+  </url>
+  <url>
     <loc>https://bakememo.cn/bakememo/support/</loc>
     <lastmod>2026-10-08</lastmod>
   </url>
