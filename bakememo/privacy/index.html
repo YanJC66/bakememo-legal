@@ -7,10 +7,13 @@
   <meta name="description" content="BakeMemo 隐私政策。BakeMemo 不出售或追踪你的数据。">
   <meta name="apple-itunes-app" content="app-id=6792324050">
   <title>BakeMemo 隐私政策 / Privacy Policy</title>
+  <link rel="canonical" href="https://bakememo.cn/bakememo/privacy/">
   <link rel="stylesheet" href="../../assets/site.css">
   <script>
     /* 系统首选语言不是中文时，直接定位到英文部分。 */
     (function () {
+      /* 搜索引擎爬虫不跳转，各语言页面都能被收录（页面已用 hreflang 互相标注）。 */
+      if (/bot|crawl|spider|slurp|mediapartners|google|baidu|bing|yandex|sogou|360spider|bytespider|petalbot/i.test(navigator.userAgent || "")) return;
       if (location.hash) return;
       var first = (navigator.languages && navigator.languages[0]) || navigator.language || "";
       if (!/^zh\b/i.test(first)) location.replace("#en");

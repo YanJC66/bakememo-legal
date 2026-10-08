@@ -15,6 +15,8 @@
   <script>
     /* 按系统语言选页：首选语言是中文（含繁体）留在中文页，其他跳到 /en/。手动点过语言切换会被记住。无追踪、不发送任何数据。 */
     (function () {
+      /* 搜索引擎爬虫不跳转，各语言页面都能被收录（页面已用 hreflang 互相标注）。 */
+      if (/bot|crawl|spider|slurp|mediapartners|google|baidu|bing|yandex|sogou|360spider|bytespider|petalbot/i.test(navigator.userAgent || "")) return;
       var pref = null, q = location.search;
       try {
         if (/[?&]lang=zh\b/.test(q)) localStorage.setItem("bm-lang", "zh");
@@ -33,6 +35,7 @@
   <link rel="icon" href="/assets/img/favicon-64.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="stylesheet" href="/assets/home.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://bakememo.cn/#website","name":"焙可记 BakeMemo","url":"https://bakememo.cn/","inLanguage":"zh-Hans"},{"@type":"MobileApplication","name":"焙可记","alternateName":"BakeMemo","description":"焙可记把每一炉的配方、做法和结果记在一起，让你看清这一炉改了什么，下一炉少猜一点。支持 iPhone、iPad 与 iPhone Duo。无需账号，无广告、无追踪。","operatingSystem":"iOS 18.0+, iPadOS 18.0+","applicationCategory":"LifestyleApplication","applicationSubCategory":"Food & Drink","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"url":"https://apps.apple.com/cn/app/id6792324050","downloadUrl":"https://apps.apple.com/cn/app/id6792324050","image":"https://bakememo.cn/assets/img/icon.webp","author":{"@type":"Person","name":"Jiahui Xu"},"inLanguage":"zh-Hans"}]}</script>
 </head>
 <body>
   <header class="nav">
@@ -67,8 +70,8 @@
           </ul>
         </div>
         <div class="stage" aria-hidden="true">
-          <figure class="phone back"><img src="/assets/img/lineage-zh.webp" alt="" width="620" height="1277"></figure>
-          <figure class="phone front"><img src="/assets/img/home-zh.webp" alt="" width="620" height="1277"></figure>
+          <figure class="phone back"><img src="/assets/img/lineage-zh.webp" alt="焙可记炉记页：同一配方的几炉连成血脉链" width="620" height="1277"></figure>
+          <figure class="phone front"><img src="/assets/img/home-zh.webp" alt="焙可记首页：记一炉、看食谱、迭代一炉与食材柜概览" width="620" height="1277"></figure>
           <div class="stamp"><small>出炉批次</small>No.047</div>
         </div>
       </div>
@@ -238,6 +241,7 @@
       <span>© 2026 Jiahui Xu · 焙可记 BakeMemo</span>
       <a href="/bakememo/support/">支持</a>
       <a href="/bakememo/privacy/">隐私政策</a>
+      <a href="/guide/">烘焙指南</a>
       <a href="/guide/bakers-percentage/">烘焙百分比怎么算</a>
       <a href="/guide/log-a-bake/">怎样记一炉</a>
       <a href="/guide/paper-recipes/">纸质食谱转电子版</a>

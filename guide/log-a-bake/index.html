@@ -14,6 +14,8 @@
   <script>
     /* 按系统语言选页，规则与主页相同。 */
     (function () {
+      /* 搜索引擎爬虫不跳转，各语言页面都能被收录（页面已用 hreflang 互相标注）。 */
+      if (/bot|crawl|spider|slurp|mediapartners|google|baidu|bing|yandex|sogou|360spider|bytespider|petalbot/i.test(navigator.userAgent || "")) return;
       var pref = null, q = location.search;
       try {
         if (/[?&]lang=zh\b/.test(q)) localStorage.setItem("bm-lang", "zh");
@@ -33,6 +35,7 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="stylesheet" href="/assets/home.css">
   <link rel="stylesheet" href="/assets/support.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"怎样记录一炉面包，下一炉才好复盘？","description":"复盘一炉面包要记的不只是配方：面粉、面温、每个阶段的时间与状态、烤温和成品评分。附记录项清单，以及一次只改一个变量的对比方法。","inLanguage":"zh-Hans","datePublished":"2026-10-08","dateModified":"2026-10-08","author":{"@type":"Person","name":"Jiahui Xu"},"publisher":{"@type":"Person","name":"Jiahui Xu"},"mainEntityOfPage":"https://bakememo.cn/guide/log-a-bake/","image":"https://bakememo.cn/assets/img/og-zh.png"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"主页","item":"https://bakememo.cn/"},{"@type":"ListItem","position":2,"name":"烘焙指南","item":"https://bakememo.cn/guide/"},{"@type":"ListItem","position":3,"name":"怎样记录一炉面包，下一炉才好复盘？","item":"https://bakememo.cn/guide/log-a-bake/"}]}]}</script>
 </head>
 <body>
   <header class="nav">
@@ -84,7 +87,7 @@
         <p>焙可记的记录纸把配方、做法和结果放在一起，烘焙百分比实时算好；每一炉连成血脉链，对照每代配方变化和评分。62 道食谱和前三炉免费，无需注册。</p>
         <a class="btn btn-primary" href="https://apps.apple.com/cn/app/id6792324050?pt=129189349&amp;ct=web-guide-log-zh-inline&amp;mt=8"><span class="two"><small>在 App Store</small>免费下载</span></a>
       </section>
-      <nav class="related" aria-label="更多烘焙指南"><h2>更多烘焙指南</h2><ul><li><a href="/guide/bakers-percentage/">烘焙百分比怎么算？</a></li><li><a href="/guide/paper-recipes/">纸质食谱怎么转成电子版？</a></li></ul></nav>
+      <nav class="related" aria-label="更多烘焙指南"><h2>更多烘焙指南</h2><ul><li><a href="/guide/bakers-percentage/">烘焙百分比怎么算？</a></li><li><a href="/guide/paper-recipes/">纸质食谱怎么转成电子版？</a></li><li><a href="/guide/dough-temperature/">面团温度怎么算？</a></li><li><a href="/guide/starter-feeding/">天然酵种怎么喂养？</a></li><li><a href="/guide/">全部烘焙指南</a></li></ul></nav>
       <p class="note">本页是通用的记录方法建议，具体工艺请以你的配方和面团状态为准。</p>
     </article>
   </main>

@@ -14,6 +14,8 @@
   <script>
     /* 按系统语言选页，规则与主页相同。 */
     (function () {
+      /* 搜索引擎爬虫不跳转，各语言页面都能被收录（页面已用 hreflang 互相标注）。 */
+      if (/bot|crawl|spider|slurp|mediapartners|google|baidu|bing|yandex|sogou|360spider|bytespider|petalbot/i.test(navigator.userAgent || "")) return;
       var pref = null, q = location.search;
       try {
         if (/[?&]lang=zh\b/.test(q)) localStorage.setItem("bm-lang", "zh");
@@ -33,6 +35,7 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="stylesheet" href="/assets/home.css">
   <link rel="stylesheet" href="/assets/support.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"纸质食谱怎么转成电子版？","description":"把手抄本、书上和网页里的烘焙食谱整理成电子版：手动录入、拍照文字识别或粘贴文字，以及单位换算和逐行核对的注意事项。","inLanguage":"zh-Hans","datePublished":"2026-10-08","dateModified":"2026-10-08","author":{"@type":"Person","name":"Jiahui Xu"},"publisher":{"@type":"Person","name":"Jiahui Xu"},"mainEntityOfPage":"https://bakememo.cn/guide/paper-recipes/","image":"https://bakememo.cn/assets/img/og-zh.png"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"主页","item":"https://bakememo.cn/"},{"@type":"ListItem","position":2,"name":"烘焙指南","item":"https://bakememo.cn/guide/"},{"@type":"ListItem","position":3,"name":"纸质食谱怎么转成电子版？","item":"https://bakememo.cn/guide/paper-recipes/"}]}]}</script>
 </head>
 <body>
   <header class="nav">
@@ -79,7 +82,7 @@
         <p>在食谱页选择导入，粘贴文字或拍照，文字识别只在你的设备上完成；原料和克数逐行核对后，存为「我的食谱」，之后就能照着做、记录每一炉。导入功能免费。</p>
         <a class="btn btn-primary" href="https://apps.apple.com/cn/app/id6792324050?pt=129189349&amp;ct=web-guide-import-zh-inline&amp;mt=8"><span class="two"><small>在 App Store</small>免费下载</span></a>
       </section>
-      <nav class="related" aria-label="更多烘焙指南"><h2>更多烘焙指南</h2><ul><li><a href="/guide/bakers-percentage/">烘焙百分比怎么算？</a></li><li><a href="/guide/log-a-bake/">怎样记录一炉面包，下一炉才好复盘？</a></li></ul></nav>
+      <nav class="related" aria-label="更多烘焙指南"><h2>更多烘焙指南</h2><ul><li><a href="/guide/bakers-percentage/">烘焙百分比怎么算？</a></li><li><a href="/guide/log-a-bake/">怎样记录一炉面包，下一炉才好复盘？</a></li><li><a href="/guide/dough-temperature/">面团温度怎么算？</a></li><li><a href="/guide/starter-feeding/">天然酵种怎么喂养？</a></li><li><a href="/guide/">全部烘焙指南</a></li></ul></nav>
       <p class="note">单位换算因原料和地区标准而异，请以实际称量为准。</p>
     </article>
   </main>

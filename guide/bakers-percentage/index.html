@@ -14,6 +14,8 @@
   <script>
     /* 按系统语言选页，规则与主页相同。 */
     (function () {
+      /* 搜索引擎爬虫不跳转，各语言页面都能被收录（页面已用 hreflang 互相标注）。 */
+      if (/bot|crawl|spider|slurp|mediapartners|google|baidu|bing|yandex|sogou|360spider|bytespider|petalbot/i.test(navigator.userAgent || "")) return;
       var pref = null, q = location.search;
       try {
         if (/[?&]lang=zh\b/.test(q)) localStorage.setItem("bm-lang", "zh");
@@ -33,6 +35,7 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="stylesheet" href="/assets/home.css">
   <link rel="stylesheet" href="/assets/support.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"烘焙百分比怎么算？","description":"烘焙百分比以面粉重量为 100%，其他原料按占面粉的比例计算。附含水量、盐、酵母的常见范围，以及按目标面团重量反推面粉用量的方法。","inLanguage":"zh-Hans","datePublished":"2026-10-08","dateModified":"2026-10-08","author":{"@type":"Person","name":"Jiahui Xu"},"publisher":{"@type":"Person","name":"Jiahui Xu"},"mainEntityOfPage":"https://bakememo.cn/guide/bakers-percentage/","image":"https://bakememo.cn/assets/img/og-zh.png"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"主页","item":"https://bakememo.cn/"},{"@type":"ListItem","position":2,"name":"烘焙指南","item":"https://bakememo.cn/guide/"},{"@type":"ListItem","position":3,"name":"烘焙百分比怎么算？","item":"https://bakememo.cn/guide/bakers-percentage/"}]}]}</script>
 </head>
 <body>
   <header class="nav">
@@ -101,7 +104,7 @@
         <p>在焙可记的记录纸里填克数，烘焙百分比和含水量实时算好；每一炉连成血脉链，改了什么一目了然。62 道食谱和前三炉免费，无需注册。</p>
         <a class="btn btn-primary" href="https://apps.apple.com/cn/app/id6792324050?pt=129189349&amp;ct=web-guide-bp-zh-inline&amp;mt=8"><span class="two"><small>在 App Store</small>免费下载</span></a>
       </section>
-      <nav class="related" aria-label="更多烘焙指南"><h2>更多烘焙指南</h2><ul><li><a href="/guide/log-a-bake/">怎样记录一炉面包，下一炉才好复盘？</a></li><li><a href="/guide/paper-recipes/">纸质食谱怎么转成电子版？</a></li></ul></nav>
+      <nav class="related" aria-label="更多烘焙指南"><h2>更多烘焙指南</h2><ul><li><a href="/guide/log-a-bake/">怎样记录一炉面包，下一炉才好复盘？</a></li><li><a href="/guide/paper-recipes/">纸质食谱怎么转成电子版？</a></li><li><a href="/guide/dough-temperature/">面团温度怎么算？</a></li><li><a href="/guide/starter-feeding/">天然酵种怎么喂养？</a></li><li><a href="/guide/">全部烘焙指南</a></li></ul></nav>
       <p class="note">本页数值为常见参考范围，不同面粉、气候与工艺差异很大，请以实际面团状态为准。</p>
     </article>
   </main>

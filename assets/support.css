@@ -47,3 +47,8 @@
 .guide .related h2 { font-size: 1.2rem; margin: 0 0 8px; }
 .guide .related ul { margin: 0; padding-left: 1.2em; }
 .guide .related li { margin: 4px 0; }
+.guide-list { list-style: none; margin: 0 0 60px; padding: 0; display: grid; gap: 12px; }
+.guide-list li { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 18px 22px; }
+.guide-list a { text-decoration: none; }
+.guide-list b { font-family: var(--serif); font-size: 1.25rem; color: var(--ink); display: block; margin-bottom: 4px; }
+.guide-list span { color: var(--muted); font-size: 15px; display: block; }
