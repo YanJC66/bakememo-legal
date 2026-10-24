@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="applicable-device" content="pc,mobile">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <title>Baker’s Percentage Calculator: Hydration and Dough Scaling · BakeMemo</title>
+  <meta name="description" content="Free baker’s percentage calculator: enter grams to get baker’s percentages, hydration and total hydration with starter, then scale to any dough weight. Runs in your browser; nothing is uploaded.">
+  <meta name="apple-itunes-app" content="app-id=6792324050">
+  <link rel="canonical" href="https://bakememo.cn/en/calculator/">
+  <link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/calculator/">
+  <link rel="alternate" hreflang="en" href="https://bakememo.cn/en/calculator/">
+  <link rel="alternate" hreflang="x-default" href="https://bakememo.cn/calculator/">
+  <script>
+    /* Remember a manual switch to English. */
+    try { if (/[?&]lang=en\b/.test(location.search)) localStorage.setItem("bm-lang", "en"); } catch (e) {}
+  </script>
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Baker’s percentage calculator">
+  <meta property="og:description" content="Baker’s percentages, hydration with starter, and dough scaling.">
+  <meta property="og:url" content="https://bakememo.cn/en/calculator/">
+  <meta property="og:image" content="https://bakememo.cn/assets/img/og-en.png">
+  <link rel="icon" href="/assets/img/favicon-64.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/home.css">
+  <link rel="stylesheet" href="/assets/support.css">
+  <style>
+    .calc { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 18px; margin: 8px 0 18px; }
+    .calc-head, .calc-row { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr) 5em 5.5em 2.2em; gap: 8px; align-items: center; }
+    .calc-head { font-size: 13px; color: var(--muted); font-weight: 650; padding: 0 2px 6px; }
+    .calc-row { padding: 6px 0; border-top: 1px dashed var(--line); }
+    .calc input, .calc select { font: inherit; font-size: 16px; width: 100%; min-width: 0; padding: 9px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--ink); }
+    .calc output { font-variant-numeric: tabular-nums; text-align: right; color: var(--ink); }
+    .calc .del { border: 0; background: none; color: var(--muted); font-size: 1.3rem; cursor: pointer; padding: 4px; }
+    .calc .add { margin: 10px 0 4px; border: 1px dashed var(--brand); background: var(--brand-wash); color: var(--brand-deep); border-radius: 10px; padding: 9px 14px; font: inherit; font-weight: 650; cursor: pointer; }
+    .calc-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 6px; }
+    .calc-opts label { font-size: 14px; color: var(--muted); font-weight: 650; display: grid; gap: 6px; }
+    .calc-sum { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 14px 0 0; }
+    .calc-sum div { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+    .calc-sum dt { font-size: 12.5px; color: var(--muted); }
+    .calc-sum dd { margin: 2px 0 0; font-family: var(--serif); font-size: 1.35rem; color: var(--ink); font-variant-numeric: tabular-nums; }
+    @media (max-width: 640px) {
+      .calc-head { display: none; }
+      .calc-row { grid-template-columns: 1fr 1fr 2.2em; grid-template-areas: "name name del" "g kind kind" "pct sc sc"; }
+      .calc-row .c-name { grid-area: name; } .calc-row .c-g { grid-area: g; } .calc-row .c-kind { grid-area: kind; }
+      .calc-row .c-pct { grid-area: pct; text-align: left; } .calc-row .c-sc { grid-area: sc; text-align: left; } .calc-row .del { grid-area: del; }
+      .calc-row output::before { content: attr(data-l) " "; color: var(--muted); font-size: 13px; }
+      .calc-opts, .calc-sum { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","inLanguage":"en","url":"https://bakememo.cn/en/calculator/","name":"Baker’s percentage calculator","description":"Free baker’s percentage calculator: enter grams to get baker’s percentages, hydration and total hydration with starter, then scale to any dough weight. Runs in your browser; nothing is uploaded.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://bakememo.cn/en/"},{"@type":"ListItem","position":2,"name":"Baker’s percentage calculator","item":"https://bakememo.cn/en/calculator/"}]}]}</script>
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap">
+      <a class="brand" href="/en/" aria-label="BakeMemo home"><img src="/assets/img/icon.webp" alt="" width="34" height="34">BakeMemo</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="/en/">Home</a>
+        <a class="hide-s" href="/en/guide/">Guides</a>
+        <a href="/bakememo/support/#en">Help</a>
+        <a class="lang" href="/calculator/?lang=zh" lang="zh-Hans" hreflang="zh-Hans">中文</a>
+        <a class="btn btn-primary btn-sm" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-calc-en-nav&amp;mt=8">Get it free</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap help guide">
+    <article>
+      <section class="help-hero">
+        <p class="eyebrow">Baking tool</p>
+        <h1>Baker’s percentage calculator</h1>
+        <p class="lede">Enter each ingredient in grams to get baker’s percentages, hydration and total hydration including your starter. Add a target dough weight and every ingredient scales to match.</p>
+      </section>
+
+      <section class="calc" id="calc" hidden aria-label="Baker’s percentage calculator">
+        <div class="calc-head"><span>Ingredient</span><span>Grams</span><span>Type</span><span style="text-align:right">Baker’s %</span><span style="text-align:right">Scaled</span><span></span></div>
+        <div class="calc-rows"></div>
+        <button type="button" class="add">+ Add ingredient</button>
+        <div class="calc-opts">
+          <label>Starter hydration (%)<input id="sh" type="number" inputmode="decimal" min="0" step="any" value="100"></label>
+          <label>Target dough weight (g, optional)<input id="target" type="number" inputmode="decimal" min="0" step="any" placeholder="e.g. 1600"></label>
+        </div>
+        <dl class="calc-sum">
+          <div><dt>Total flour (100%)</dt><dd id="o-flour">–</dd></div>
+          <div><dt>Dough weight</dt><dd id="o-total">–</dd></div>
+          <div><dt>Hydration (added water)</dt><dd id="o-hyd">–</dd></div>
+          <div><dt>Total hydration (with starter)</dt><dd id="o-thyd">–</dd></div>
+        </dl>
+      </section>
+      <noscript><p class="note">The calculator needs JavaScript. The formulas below work by hand.</p></noscript>
+      <p class="note">Everything is calculated in your browser; nothing is uploaded or saved. Default example: 500 g flour + 350 g water + 100 g starter (from lesson 2 of BakeMemo’s Baking basics), plus 10 g salt.</p>
+
+      <h2>How it works</h2>
+      <p class="formula">Baker’s % = ingredient weight ÷ total flour × 100%</p>
+      <ul>
+        <li><b>Total flour</b> counts only rows marked “Flour”; several flours together make 100%. Flour inside the starter isn’t included here, matching how most formulas are written.</li>
+        <li><b>Hydration</b> = total “Water” ÷ total flour.</li>
+        <li><b>Total hydration</b> first splits the starter into flour and water by its hydration (flour in starter = starter ÷ (1 + hydration)), then works out (water + starter water) ÷ (flour + starter flour).</li>
+        <li><b>Scaling</b>: factor = target weight ÷ current weight, applied to every ingredient so the ratios stay the same. Allow 2–3% extra for losses in mixing and shaping.</li>
+      </ul>
+      <p>Milk, eggs and butter contain water too. Here they count as “Other” and are left out of hydration; convert them by their water content yourself if you need to.</p>
+
+      <h2>Read more</h2>
+      <p><a href="/en/guide/bakers-percentage/">How to calculate baker’s percentage</a> walks through the formula and scaling; <a href="/en/guide/hydration/">how to calculate dough hydration</a> explains why the starter counts and lists common breads.</p>
+
+      <section class="inline-cta">
+        <h3>Keep every formula on your phone</h3>
+        <p>BakeMemo’s recipe sheet works out percentages and hydration live too: scale to a target dough weight in one step (with undo), set your starter’s hydration, and total hydration includes the starter. Archive each bake and every change to a recipe links into one lineage. 62 recipes and your first three bakes are free, no sign-up.</p>
+        <a class="btn btn-primary" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-calc-en-inline&amp;mt=8"><span class="two"><small>Download on the</small>App Store — free</span></a>
+      </section>
+      <nav class="related" aria-label="More baking guides"><h2>More baking guides</h2><ul><li><a href="/en/guide/bakers-percentage/">How to calculate baker’s percentage</a></li><li><a href="/en/guide/hydration/">How to calculate dough hydration</a></li><li><a href="/en/guide/sourdough-bread/">How to make a basic sourdough loaf</a></li><li><a href="/en/guide/bread-troubleshooting/">Bread didn’t turn out? How to review it</a></li><li><a href="/en/guide/log-a-bake/">How to log a bake so you can review it</a></li><li><a href="/en/guide/paper-recipes/">How to turn paper recipes into digital ones</a></li><li><a href="/en/guide/dough-temperature/">How to calculate dough temperature</a></li><li><a href="/en/guide/starter-feeding/">How to feed a sourdough starter</a></li><li><a href="/en/guide/">All baking guides</a></li></ul></nav>
+    </article>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <span>© 2026 Jiahui Xu · BakeMemo</span>
+      <a href="/en/">Home</a>
+      <a href="/en/guide/">Baking guides</a>
+      <a href="/en/calculator/">Baker’s percentage calculator</a>
+      <a href="/bakememo/support/#en">Support</a>
+      <a href="/bakememo/privacy/#en">Privacy Policy</a>
+      <a class="sp" href="https://beian.miit.gov.cn/" rel="noreferrer">粤ICP备2026075524号</a>
+    </div>
+  </footer>
+
+  <div class="dock" role="complementary" aria-label="Download">
+    <img src="/assets/img/icon.webp" alt="" width="40" height="40">
+    <div class="t"><b>BakeMemo</b><span>Free to start · live baker’s %</span></div>
+    <a class="btn btn-primary" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-calc-en-dock&amp;mt=8">Get</a>
+  </div>
+  <script>
+    /* 烘焙百分比计算器：只在本页计算，不发送、不保存任何数据。 */
+    (function () {
+      var root = document.getElementById("calc"); if (!root) return;
+      var zh = document.documentElement.lang.indexOf("zh") === 0;
+      var T = zh ? { name: "原料", kinds: [["flour", "粉"], ["water", "水"], ["starter", "酵种"], ["other", "其他"]], pct: "百分比", sc: "换算后", del: "删除这一行", grams: "克数",
+                     rows: [["高筋面粉", 500, "flour"], ["水", 350, "water"], ["盐", 10, "other"], ["天然酵种", 100, "starter"]] }
+                 : { name: "Ingredient", kinds: [["flour", "Flour"], ["water", "Water"], ["starter", "Starter"], ["other", "Other"]], pct: "Baker’s %", sc: "Scaled", del: "Remove this row", grams: "Grams",
+                     rows: [["Bread flour", 500, "flour"], ["Water", 350, "water"], ["Salt", 10, "other"], ["Sourdough starter", 100, "starter"]] };
+      var list = root.querySelector(".calc-rows");
+      function num(v) { var n = parseFloat(String(v).replace(",", ".")); return isFinite(n) && n > 0 ? n : 0; }
+      function fmt(n, d) { if (!isFinite(n)) return "–"; var s = n.toFixed(d); return s.indexOf(".") >= 0 ? s.replace(/\.?0+$/, "") : s; }
+      function g(n) { return n >= 100 ? fmt(n, 0) : n >= 10 ? fmt(n, 1) : fmt(n, 2); }
+      function addRow(name, grams, kind) {
+        var r = document.createElement("div"); r.className = "calc-row";
+        var opts = T.kinds.map(function (k) { return '<option value="' + k[0] + '"' + (k[0] === kind ? " selected" : "") + ">" + k[1] + "</option>"; }).join("");
+        r.innerHTML = '<input class="c-name" aria-label="' + T.name + '">' +
+          '<input class="c-g" type="number" inputmode="decimal" min="0" step="any" aria-label="' + T.grams + '">' +
+          '<select class="c-kind" aria-label="' + T.name + '">' + opts + "</select>" +
+          '<output class="c-pct" data-l="' + T.pct + '"></output><output class="c-sc" data-l="' + T.sc + '"></output>' +
+          '<button type="button" class="del" aria-label="' + T.del + '">×</button>';
+        r.querySelector(".c-name").value = name; r.querySelector(".c-g").value = grams === "" ? "" : grams;
+        r.querySelector(".del").addEventListener("click", function () { r.remove(); calc(); });
+        list.appendChild(r);
+      }
+      function calc() {
+        var rows = [].slice.call(list.querySelectorAll(".calc-row"));
+        var sh = num(document.getElementById("sh").value) / 100, target = num(document.getElementById("target").value);
+        var flour = 0, water = 0, starter = 0, total = 0;
+        rows.forEach(function (r) {
+          var w = num(r.querySelector(".c-g").value), k = r.querySelector(".c-kind").value; total += w;
+          if (k === "flour") flour += w; else if (k === "water") water += w; else if (k === "starter") starter += w;
+        });
+        var sFlour = starter / (1 + sh), sWater = starter - sFlour, f = target > 0 && total > 0 ? target / total : 1;
+        rows.forEach(function (r) {
+          var w = num(r.querySelector(".c-g").value);
+          r.querySelector(".c-pct").value = flour > 0 && w > 0 ? fmt(w / flour * 100, 1) + "%" : "–";
+          r.querySelector(".c-sc").value = w > 0 ? g(w * f) + " g" : "–";
+        });
+        document.getElementById("o-flour").textContent = flour > 0 ? g(flour) + " g" : "–";
+        document.getElementById("o-total").textContent = total > 0 ? g(total * f) + " g" : "–";
+        document.getElementById("o-hyd").textContent = flour > 0 ? fmt(water / flour * 100, 1) + "%" : "–";
+        document.getElementById("o-thyd").textContent = flour + sFlour > 0 ? fmt((water + sWater) / (flour + sFlour) * 100, 1) + "%" : "–";
+      }
+      T.rows.forEach(function (x) { addRow(x[0], x[1], x[2]); });
+      root.querySelector(".add").addEventListener("click", function () { addRow("", "", "other"); calc(); list.lastChild.querySelector(".c-name").focus(); });
+      root.addEventListener("input", calc); root.addEventListener("change", calc);
+      root.hidden = false; calc();
+    })();
+  </script>
+</body>
+</html>

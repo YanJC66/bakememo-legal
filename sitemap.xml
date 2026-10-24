@@ -2,101 +2,157 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://bakememo.cn/</loc>
-    <lastmod>2026-10-08</lastmod>
+    <lastmod>2026-10-24</lastmod>
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/"/>
   </url>
   <url>
     <loc>https://bakememo.cn/en/</loc>
-    <lastmod>2026-10-08</lastmod>
+    <lastmod>2026-10-24</lastmod>
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/"/>
   </url>
   <url>
     <loc>https://bakememo.cn/guide/</loc>
-    <lastmod>2026-10-08</lastmod>
+    <lastmod>2026-10-24</lastmod>
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/guide/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/guide/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/guide/"/>
   </url>
   <url>
     <loc>https://bakememo.cn/en/guide/</loc>
-    <lastmod>2026-10-08</lastmod>
+    <lastmod>2026-10-24</lastmod>
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/guide/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/guide/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/guide/"/>
   </url>
   <url>
     <loc>https://bakememo.cn/guide/bakers-percentage/</loc>
-    <lastmod>2026-10-08</lastmod>
+    <lastmod>2026-10-24</lastmod>
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/guide/bakers-percentage/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/guide/bakers-percentage/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/guide/bakers-percentage/"/>
   </url>
   <url>
     <loc>https://bakememo.cn/en/guide/bakers-percentage/</loc>
-    <lastmod>2026-10-08</lastmod>
+    <lastmod>2026-10-24</lastmod>
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/guide/bakers-percentage/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/guide/bakers-percentage/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/guide/bakers-percentage/"/>
   </url>
   <url>
+    <loc>https://bakememo.cn/guide/hydration/</loc>
+    <lastmod>2026-10-24</lastmod>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/guide/hydration/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/guide/hydration/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/guide/hydration/"/>
+  </url>
+  <url>
+    <loc>https://bakememo.cn/en/guide/hydration/</loc>
+    <lastmod>2026-10-24</lastmod>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/guide/hydration/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/guide/hydration/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/guide/hydration/"/>
+  </url>
+  <url>
+    <loc>https://bakememo.cn/guide/sourdough-bread/</loc>
+    <lastmod>2026-10-24</lastmod>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/guide/sourdough-bread/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/guide/sourdough-bread/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/guide/sourdough-bread/"/>
+  </url>
+  <url>
+    <loc>https://bakememo.cn/en/guide/sourdough-bread/</loc>
+    <lastmod>2026-10-24</lastmod>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/guide/sourdough-bread/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/guide/sourdough-bread/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/guide/sourdough-bread/"/>
+  </url>
+  <url>
+    <loc>https://bakememo.cn/guide/bread-troubleshooting/</loc>
+    <lastmod>2026-10-24</lastmod>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/guide/bread-troubleshooting/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/guide/bread-troubleshooting/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/guide/bread-troubleshooting/"/>
+  </url>
+  <url>
+    <loc>https://bakememo.cn/en/guide/bread-troubleshooting/</loc>
+    <lastmod>2026-10-24</lastmod>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/guide/bread-troubleshooting/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/guide/bread-troubleshooting/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/guide/bread-troubleshooting/"/>
+  </url>
+  <url>
     <loc>https://bakememo.cn/guide/log-a-bake/</loc>
-    <lastmod>2026-10-08</lastmod>
+    <lastmod>2026-10-24</lastmod>
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/guide/log-a-bake/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/guide/log-a-bake/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/guide/log-a-bake/"/>
   </url>
   <url>
     <loc>https://bakememo.cn/en/guide/log-a-bake/</loc>
-    <lastmod>2026-10-08</lastmod>
+    <lastmod>2026-10-24</lastmod>
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/guide/log-a-bake/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/guide/log-a-bake/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/guide/log-a-bake/"/>
   </url>
   <url>
     <loc>https://bakememo.cn/guide/paper-recipes/</loc>
-    <lastmod>2026-10-08</lastmod>
+    <lastmod>2026-10-24</lastmod>
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/guide/paper-recipes/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/guide/paper-recipes/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/guide/paper-recipes/"/>
   </url>
   <url>
     <loc>https://bakememo.cn/en/guide/paper-recipes/</loc>
-    <lastmod>2026-10-08</lastmod>
+    <lastmod>2026-10-24</lastmod>
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/guide/paper-recipes/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/guide/paper-recipes/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/guide/paper-recipes/"/>
   </url>
   <url>
     <loc>https://bakememo.cn/guide/dough-temperature/</loc>
-    <lastmod>2026-10-08</lastmod>
+    <lastmod>2026-10-24</lastmod>
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/guide/dough-temperature/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/guide/dough-temperature/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/guide/dough-temperature/"/>
   </url>
   <url>
     <loc>https://bakememo.cn/en/guide/dough-temperature/</loc>
-    <lastmod>2026-10-08</lastmod>
+    <lastmod>2026-10-24</lastmod>
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/guide/dough-temperature/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/guide/dough-temperature/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/guide/dough-temperature/"/>
   </url>
   <url>
     <loc>https://bakememo.cn/guide/starter-feeding/</loc>
-    <lastmod>2026-10-08</lastmod>
+    <lastmod>2026-10-24</lastmod>
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/guide/starter-feeding/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/guide/starter-feeding/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/guide/starter-feeding/"/>
   </url>
   <url>
     <loc>https://bakememo.cn/en/guide/starter-feeding/</loc>
-    <lastmod>2026-10-08</lastmod>
+    <lastmod>2026-10-24</lastmod>
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/guide/starter-feeding/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/guide/starter-feeding/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/guide/starter-feeding/"/>
+  </url>
+  <url>
+    <loc>https://bakememo.cn/calculator/</loc>
+    <lastmod>2026-10-24</lastmod>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/calculator/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/calculator/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/calculator/"/>
+  </url>
+  <url>
+    <loc>https://bakememo.cn/en/calculator/</loc>
+    <lastmod>2026-10-24</lastmod>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/calculator/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/calculator/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/calculator/"/>
   </url>
   <url>
     <loc>https://bakememo.cn/bakememo/support/</loc>
@@ -104,6 +160,6 @@
   </url>
   <url>
     <loc>https://bakememo.cn/bakememo/privacy/</loc>
-    <lastmod>2026-10-08</lastmod>
+    <lastmod>2026-10-24</lastmod>
   </url>
 </urlset>

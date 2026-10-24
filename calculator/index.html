@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="applicable-device" content="pc,mobile">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <title>烘焙百分比计算器：面包师百分比、水合率、按总重换算 · 焙可记</title>
+  <meta name="description" content="免费在线烘焙百分比计算器：输入克数自动算面包师百分比、水合率和含酵种的总水合，填目标面团总重即可按比例换算配方。只在浏览器里计算，不上传数据。">
+  <meta name="apple-itunes-app" content="app-id=6792324050">
+  <link rel="canonical" href="https://bakememo.cn/calculator/">
+  <link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/calculator/">
+  <link rel="alternate" hreflang="en" href="https://bakememo.cn/en/calculator/">
+  <link rel="alternate" hreflang="x-default" href="https://bakememo.cn/calculator/">
+  <script>
+    /* 按系统语言选页，规则与主页相同。 */
+    (function () {
+      /* 搜索引擎爬虫不跳转，各语言页面都能被收录（页面已用 hreflang 互相标注）。 */
+      if (/bot|crawl|spider|slurp|mediapartners|google|baidu|bing|yandex|sogou|360spider|bytespider|petalbot/i.test(navigator.userAgent || "")) return;
+      var pref = null, q = location.search;
+      try {
+        if (/[?&]lang=zh\b/.test(q)) localStorage.setItem("bm-lang", "zh");
+        pref = localStorage.getItem("bm-lang");
+      } catch (e) {}
+      if (/[?&]lang=zh\b/.test(q) || pref === "zh") return;
+      var first = (navigator.languages && navigator.languages[0]) || navigator.language || "";
+      if (pref === "en" || !/^zh\b/i.test(first)) location.replace("/en/calculator/" + location.hash);
+    })();
+  </script>
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="烘焙百分比计算器">
+  <meta property="og:description" content="面包师百分比、水合率、含酵种总水合与按总重换算。">
+  <meta property="og:url" content="https://bakememo.cn/calculator/">
+  <meta property="og:image" content="https://bakememo.cn/assets/img/og-zh.png">
+  <link rel="icon" href="/assets/img/favicon-64.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/home.css">
+  <link rel="stylesheet" href="/assets/support.css">
+  <style>
+    .calc { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 18px; margin: 8px 0 18px; }
+    .calc-head, .calc-row { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr) 5em 5.5em 2.2em; gap: 8px; align-items: center; }
+    .calc-head { font-size: 13px; color: var(--muted); font-weight: 650; padding: 0 2px 6px; }
+    .calc-row { padding: 6px 0; border-top: 1px dashed var(--line); }
+    .calc input, .calc select { font: inherit; font-size: 16px; width: 100%; min-width: 0; padding: 9px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--ink); }
+    .calc output { font-variant-numeric: tabular-nums; text-align: right; color: var(--ink); }
+    .calc .del { border: 0; background: none; color: var(--muted); font-size: 1.3rem; cursor: pointer; padding: 4px; }
+    .calc .add { margin: 10px 0 4px; border: 1px dashed var(--brand); background: var(--brand-wash); color: var(--brand-deep); border-radius: 10px; padding: 9px 14px; font: inherit; font-weight: 650; cursor: pointer; }
+    .calc-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 6px; }
+    .calc-opts label { font-size: 14px; color: var(--muted); font-weight: 650; display: grid; gap: 6px; }
+    .calc-sum { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 14px 0 0; }
+    .calc-sum div { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+    .calc-sum dt { font-size: 12.5px; color: var(--muted); }
+    .calc-sum dd { margin: 2px 0 0; font-family: var(--serif); font-size: 1.35rem; color: var(--ink); font-variant-numeric: tabular-nums; }
+    @media (max-width: 640px) {
+      .calc-head { display: none; }
+      .calc-row { grid-template-columns: 1fr 1fr 2.2em; grid-template-areas: "name name del" "g kind kind" "pct sc sc"; }
+      .calc-row .c-name { grid-area: name; } .calc-row .c-g { grid-area: g; } .calc-row .c-kind { grid-area: kind; }
+      .calc-row .c-pct { grid-area: pct; text-align: left; } .calc-row .c-sc { grid-area: sc; text-align: left; } .calc-row .del { grid-area: del; }
+      .calc-row output::before { content: attr(data-l) " "; color: var(--muted); font-size: 13px; }
+      .calc-opts, .calc-sum { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","inLanguage":"zh-Hans","url":"https://bakememo.cn/calculator/","name":"烘焙百分比计算器","description":"免费在线烘焙百分比计算器：输入克数自动算面包师百分比、水合率和含酵种的总水合，填目标面团总重即可按比例换算配方。只在浏览器里计算，不上传数据。","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"主页","item":"https://bakememo.cn/"},{"@type":"ListItem","position":2,"name":"烘焙百分比计算器","item":"https://bakememo.cn/calculator/"}]}]}</script>
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="焙可记 首页"><img src="/assets/img/icon.webp" alt="" width="34" height="34">焙可记 <small>BakeMemo</small></a>
+      <nav class="nav-links" aria-label="主导航">
+        <a href="/">主页</a>
+        <a class="hide-s" href="/guide/">烘焙指南</a>
+        <a href="/bakememo/support/">帮助</a>
+        <a class="lang" href="/en/calculator/?lang=en" lang="en" hreflang="en">EN</a>
+        <a class="btn btn-primary btn-sm" href="https://apps.apple.com/cn/app/id6792324050?pt=129189349&amp;ct=web-calc-zh-nav&amp;mt=8">免费下载</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap help guide">
+    <article>
+      <section class="help-hero">
+        <p class="eyebrow">烘焙工具</p>
+        <h1>烘焙百分比计算器</h1>
+        <p class="lede">填入每样原料的克数，自动算出面包师百分比（烘焙百分比）、水合率和连酵种在内的总水合；再填一个目标面团总重，所有原料按比例换算。</p>
+      </section>
+
+      <section class="calc" id="calc" hidden aria-label="烘焙百分比计算器">
+        <div class="calc-head"><span>原料</span><span>克数</span><span>类型</span><span style="text-align:right">百分比</span><span style="text-align:right">换算后</span><span></span></div>
+        <div class="calc-rows"></div>
+        <button type="button" class="add">+ 添加原料</button>
+        <div class="calc-opts">
+          <label>酵种水合度（%）<input id="sh" type="number" inputmode="decimal" min="0" step="any" value="100"></label>
+          <label>目标面团总重（g，可不填）<input id="target" type="number" inputmode="decimal" min="0" step="any" placeholder="例如 1600"></label>
+        </div>
+        <dl class="calc-sum">
+          <div><dt>面粉合计（100%）</dt><dd id="o-flour">–</dd></div>
+          <div><dt>面团总重</dt><dd id="o-total">–</dd></div>
+          <div><dt>水合率（只算加的水）</dt><dd id="o-hyd">–</dd></div>
+          <div><dt>总水合（连酵种）</dt><dd id="o-thyd">–</dd></div>
+        </dl>
+      </section>
+      <noscript><p class="note">计算器需要浏览器开启 JavaScript。下面的公式可以手算。</p></noscript>
+      <p class="note">计算只在你的浏览器里进行，不上传、不保存任何数据。默认例子：500 g 粉 + 350 g 水 + 100 g 酵种（来自焙可记「烘焙基础」第 2 课），再加 10 g 盐。</p>
+
+      <h2>它是怎么算的</h2>
+      <p class="formula">原料百分比 = 原料重量 ÷ 面粉合计 × 100%</p>
+      <ul>
+        <li><b>面粉合计</b>只算类型为「粉」的行，几种面粉一起当作 100%。酵种里的粉不计入这里，和大多数配方的写法一致。</li>
+        <li><b>水合率</b> = 「水」的合计 ÷ 面粉合计。</li>
+        <li><b>总水合</b>先把酵种按水合度拆成粉和水（酵种里的粉 = 酵种 ÷ (1 + 水合度)），再算 (水 + 酵种里的水) ÷ (粉 + 酵种里的粉)。</li>
+        <li><b>按总重换算</b>：换算系数 = 目标总重 ÷ 现在的总重，每样原料乘以同一个系数，比例不变。实际操作有少量损耗，可以多备 2–3%。</li>
+      </ul>
+      <p>牛奶、鸡蛋、黄油等也含水，这里按「其他」处理，不计入水合率；需要时可以把它们按实际含水量手动折算。</p>
+
+      <h2>延伸阅读</h2>
+      <p><a href="/guide/bakers-percentage/">烘焙百分比怎么算</a> 讲了公式和换算的例子；<a href="/guide/hydration/">面包水合率怎么算</a> 讲了为什么要把酵种算进去，以及常见面包的水合率。</p>
+
+      <section class="inline-cta">
+        <h3>每一炉的配方，都留在手机里</h3>
+        <p>焙可记的配方表同样实时算百分比与水合率：填目标总重一键换算、可撤销；酵种水合度可设，总水合自动计入酵种。做完一炉入档，同一配方的每次调整连成血脉链。62 道食谱和前三炉免费，无需注册。</p>
+        <a class="btn btn-primary" href="https://apps.apple.com/cn/app/id6792324050?pt=129189349&amp;ct=web-calc-zh-inline&amp;mt=8"><span class="two"><small>在 App Store</small>免费下载</span></a>
+      </section>
+      <nav class="related" aria-label="更多烘焙指南"><h2>更多烘焙指南</h2><ul><li><a href="/guide/bakers-percentage/">烘焙百分比怎么算？</a></li><li><a href="/guide/hydration/">面包水合率怎么算？</a></li><li><a href="/guide/sourdough-bread/">酸种面包怎么做？</a></li><li><a href="/guide/bread-troubleshooting/">面包烤坏了，怎么复盘？</a></li><li><a href="/guide/log-a-bake/">怎样记录一炉面包，下一炉才好复盘？</a></li><li><a href="/guide/paper-recipes/">纸质食谱怎么转成电子版？</a></li><li><a href="/guide/dough-temperature/">面团温度怎么算？</a></li><li><a href="/guide/starter-feeding/">天然酵种怎么喂养？</a></li><li><a href="/guide/">全部烘焙指南</a></li></ul></nav>
+    </article>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <span>© 2026 Jiahui Xu · 焙可记 BakeMemo</span>
+      <a href="/">主页</a>
+      <a href="/guide/">烘焙指南</a>
+      <a href="/calculator/">烘焙百分比计算器</a>
+      <a href="/bakememo/support/">帮助</a>
+      <a href="/bakememo/privacy/">隐私政策</a>
+      <a class="sp" href="https://beian.miit.gov.cn/" rel="noreferrer">粤ICP备2026075524号</a>
+    </div>
+  </footer>
+
+  <div class="dock" role="complementary" aria-label="下载">
+    <img src="/assets/img/icon.webp" alt="" width="40" height="40">
+    <div class="t"><b>焙可记</b><span>免费 · 实时算烘焙百分比</span></div>
+    <a class="btn btn-primary" href="https://apps.apple.com/cn/app/id6792324050?pt=129189349&amp;ct=web-calc-zh-dock&amp;mt=8">获取</a>
+  </div>
+  <script>
+    /* 烘焙百分比计算器：只在本页计算，不发送、不保存任何数据。 */
+    (function () {
+      var root = document.getElementById("calc"); if (!root) return;
+      var zh = document.documentElement.lang.indexOf("zh") === 0;
+      var T = zh ? { name: "原料", kinds: [["flour", "粉"], ["water", "水"], ["starter", "酵种"], ["other", "其他"]], pct: "百分比", sc: "换算后", del: "删除这一行", grams: "克数",
+                     rows: [["高筋面粉", 500, "flour"], ["水", 350, "water"], ["盐", 10, "other"], ["天然酵种", 100, "starter"]] }
+                 : { name: "Ingredient", kinds: [["flour", "Flour"], ["water", "Water"], ["starter", "Starter"], ["other", "Other"]], pct: "Baker’s %", sc: "Scaled", del: "Remove this row", grams: "Grams",
+                     rows: [["Bread flour", 500, "flour"], ["Water", 350, "water"], ["Salt", 10, "other"], ["Sourdough starter", 100, "starter"]] };
+      var list = root.querySelector(".calc-rows");
+      function num(v) { var n = parseFloat(String(v).replace(",", ".")); return isFinite(n) && n > 0 ? n : 0; }
+      function fmt(n, d) { if (!isFinite(n)) return "–"; var s = n.toFixed(d); return s.indexOf(".") >= 0 ? s.replace(/\.?0+$/, "") : s; }
+      function g(n) { return n >= 100 ? fmt(n, 0) : n >= 10 ? fmt(n, 1) : fmt(n, 2); }
+      function addRow(name, grams, kind) {
+        var r = document.createElement("div"); r.className = "calc-row";
+        var opts = T.kinds.map(function (k) { return '<option value="' + k[0] + '"' + (k[0] === kind ? " selected" : "") + ">" + k[1] + "</option>"; }).join("");
+        r.innerHTML = '<input class="c-name" aria-label="' + T.name + '">' +
+          '<input class="c-g" type="number" inputmode="decimal" min="0" step="any" aria-label="' + T.grams + '">' +
+          '<select class="c-kind" aria-label="' + T.name + '">' + opts + "</select>" +
+          '<output class="c-pct" data-l="' + T.pct + '"></output><output class="c-sc" data-l="' + T.sc + '"></output>' +
+          '<button type="button" class="del" aria-label="' + T.del + '">×</button>';
+        r.querySelector(".c-name").value = name; r.querySelector(".c-g").value = grams === "" ? "" : grams;
+        r.querySelector(".del").addEventListener("click", function () { r.remove(); calc(); });
+        list.appendChild(r);
+      }
+      function calc() {
+        var rows = [].slice.call(list.querySelectorAll(".calc-row"));
+        var sh = num(document.getElementById("sh").value) / 100, target = num(document.getElementById("target").value);
+        var flour = 0, water = 0, starter = 0, total = 0;
+        rows.forEach(function (r) {
+          var w = num(r.querySelector(".c-g").value), k = r.querySelector(".c-kind").value; total += w;
+          if (k === "flour") flour += w; else if (k === "water") water += w; else if (k === "starter") starter += w;
+        });
+        var sFlour = starter / (1 + sh), sWater = starter - sFlour, f = target > 0 && total > 0 ? target / total : 1;
+        rows.forEach(function (r) {
+          var w = num(r.querySelector(".c-g").value);
+          r.querySelector(".c-pct").value = flour > 0 && w > 0 ? fmt(w / flour * 100, 1) + "%" : "–";
+          r.querySelector(".c-sc").value = w > 0 ? g(w * f) + " g" : "–";
+        });
+        document.getElementById("o-flour").textContent = flour > 0 ? g(flour) + " g" : "–";
+        document.getElementById("o-total").textContent = total > 0 ? g(total * f) + " g" : "–";
+        document.getElementById("o-hyd").textContent = flour > 0 ? fmt(water / flour * 100, 1) + "%" : "–";
+        document.getElementById("o-thyd").textContent = flour + sFlour > 0 ? fmt((water + sWater) / (flour + sFlour) * 100, 1) + "%" : "–";
+      }
+      T.rows.forEach(function (x) { addRow(x[0], x[1], x[2]); });
+      root.querySelector(".add").addEventListener("click", function () { addRow("", "", "other"); calc(); list.lastChild.querySelector(".c-name").focus(); });
+      root.addEventListener("input", calc); root.addEventListener("change", calc);
+      root.hidden = false; calc();
+    })();
+  </script>
+</body>
+</html>

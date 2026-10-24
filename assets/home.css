@@ -279,3 +279,11 @@ a { color: var(--brand); text-underline-offset: 3px; }
   .dock .t span { color: var(--muted); }
   .dock .btn { margin-left: auto; padding: 10px 18px; font-size: 15px; }
 }
+
+/* 主页 · 烘焙指南入口 */
+.home-guides { padding-bottom: clamp(40px, 6vw, 72px); }
+.guide-links { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+.guide-links a { display: block; height: 100%; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; text-decoration: none; color: var(--ink); }
+.guide-links b { font-family: var(--serif); font-size: 1.12rem; font-weight: 600; display: block; }
+.guide-links span { display: block; margin-top: 4px; color: var(--muted); font-size: 14px; }
+.guide-links a:hover { border-color: var(--brand); }
