@@ -13,9 +13,16 @@
   <link rel="canonical" href="https://bakememo.cn/">
   <link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/">
   <link rel="alternate" hreflang="en" href="https://bakememo.cn/en/">
+  <link rel="alternate" hreflang="zh-Hant" href="https://bakememo.cn/zh-hant/">
+  <link rel="alternate" hreflang="ja" href="https://bakememo.cn/ja/">
+  <link rel="alternate" hreflang="ko" href="https://bakememo.cn/ko/">
+  <link rel="alternate" hreflang="de" href="https://bakememo.cn/de/">
+  <link rel="alternate" hreflang="fr" href="https://bakememo.cn/fr/">
+  <link rel="alternate" hreflang="es" href="https://bakememo.cn/es/">
+  <link rel="alternate" hreflang="ru" href="https://bakememo.cn/ru/">
   <link rel="alternate" hreflang="x-default" href="https://bakememo.cn/">
   <script>
-    /* 按系统语言选页：首选语言是中文（含繁体）留在中文页，其他跳到 /en/。手动点过语言切换会被记住。无追踪、不发送任何数据。 */
+    /* 按系统语言选页：简体中文留在本页，繁体中文与日韩德法西俄进对应语言页，其他跳到 /en/。手动点过语言切换会被记住。无追踪、不发送任何数据。 */
     (function () {
       /* 搜索引擎爬虫不跳转，各语言页面都能被收录（页面已用 hreflang 互相标注）。 */
       if (/bot|crawl|spider|slurp|mediapartners|google|baidu|bing|yandex|sogou|360spider|bytespider|petalbot/i.test(navigator.userAgent || "")) return;
@@ -25,8 +32,13 @@
         pref = localStorage.getItem("bm-lang");
       } catch (e) {}
       if (/[?&]lang=zh\b/.test(q) || pref === "zh") return;
-      var first = (navigator.languages && navigator.languages[0]) || navigator.language || "";
-      if (pref === "en" || !/^zh\b/i.test(first)) location.replace("/en/" + location.hash);
+      var pages = {en: 1, "zh-hant": 1, ja: 1, ko: 1, de: 1, fr: 1, es: 1, ru: 1};
+      if (pref && pages[pref]) return location.replace("/" + pref + "/" + location.hash);
+      var first = ((navigator.languages && navigator.languages[0]) || navigator.language || "").toLowerCase();
+      if (/^zh-(hant|tw|hk|mo)\b/.test(first)) return location.replace("/zh-hant/" + location.hash);
+      if (/^zh\b/.test(first)) return;
+      var code = first.slice(0, 2);
+      location.replace("/" + (pages[code] ? code : "en") + "/" + location.hash);
     })();
   </script>
   <meta property="og:type" content="website">
@@ -257,6 +269,7 @@
       <span>微信小程序：搜「焙可记」</span>
       <a href="/en/?lang=en" lang="en" hreflang="en">English</a>
       <a class="sp" href="https://beian.miit.gov.cn/" rel="noreferrer">粤ICP备2026075524号</a>
+      <nav class="langs" aria-label="Language"><a href="/?lang=zh" lang="zh-Hans" hreflang="zh-Hans" aria-current="page">简体中文</a><a href="/en/?lang=en" lang="en" hreflang="en">English</a><a href="/zh-hant/?lang=zh-hant" lang="zh-Hant" hreflang="zh-Hant">繁體中文</a><a href="/ja/?lang=ja" lang="ja" hreflang="ja">日本語</a><a href="/ko/?lang=ko" lang="ko" hreflang="ko">한국어</a><a href="/de/?lang=de" lang="de" hreflang="de">Deutsch</a><a href="/fr/?lang=fr" lang="fr" hreflang="fr">Français</a><a href="/es/?lang=es" lang="es" hreflang="es">Español</a><a href="/ru/?lang=ru" lang="ru" hreflang="ru">Русский</a></nav>
     </div>
   </footer>
 

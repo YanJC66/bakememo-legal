@@ -2,16 +2,128 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://bakememo.cn/</loc>
-    <lastmod>2026-10-24</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://bakememo.cn/zh-hant/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://bakememo.cn/ja/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://bakememo.cn/ko/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://bakememo.cn/de/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bakememo.cn/fr/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bakememo.cn/es/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://bakememo.cn/ru/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/"/>
   </url>
   <url>
     <loc>https://bakememo.cn/en/</loc>
-    <lastmod>2026-10-24</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://bakememo.cn/zh-hant/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://bakememo.cn/ja/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://bakememo.cn/ko/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://bakememo.cn/de/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bakememo.cn/fr/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bakememo.cn/es/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://bakememo.cn/ru/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/"/>
+  </url>
+  <url>
+    <loc>https://bakememo.cn/zh-hant/</loc>
+    <lastmod>2026-10-31</lastmod>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://bakememo.cn/zh-hant/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://bakememo.cn/ja/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://bakememo.cn/ko/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://bakememo.cn/de/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bakememo.cn/fr/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bakememo.cn/es/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://bakememo.cn/ru/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/"/>
+  </url>
+  <url>
+    <loc>https://bakememo.cn/ja/</loc>
+    <lastmod>2026-10-31</lastmod>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://bakememo.cn/zh-hant/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://bakememo.cn/ja/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://bakememo.cn/ko/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://bakememo.cn/de/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bakememo.cn/fr/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bakememo.cn/es/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://bakememo.cn/ru/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/"/>
+  </url>
+  <url>
+    <loc>https://bakememo.cn/ko/</loc>
+    <lastmod>2026-10-31</lastmod>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://bakememo.cn/zh-hant/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://bakememo.cn/ja/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://bakememo.cn/ko/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://bakememo.cn/de/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bakememo.cn/fr/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bakememo.cn/es/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://bakememo.cn/ru/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/"/>
+  </url>
+  <url>
+    <loc>https://bakememo.cn/de/</loc>
+    <lastmod>2026-10-31</lastmod>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://bakememo.cn/zh-hant/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://bakememo.cn/ja/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://bakememo.cn/ko/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://bakememo.cn/de/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bakememo.cn/fr/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bakememo.cn/es/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://bakememo.cn/ru/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/"/>
+  </url>
+  <url>
+    <loc>https://bakememo.cn/fr/</loc>
+    <lastmod>2026-10-31</lastmod>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://bakememo.cn/zh-hant/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://bakememo.cn/ja/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://bakememo.cn/ko/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://bakememo.cn/de/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bakememo.cn/fr/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bakememo.cn/es/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://bakememo.cn/ru/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/"/>
+  </url>
+  <url>
+    <loc>https://bakememo.cn/es/</loc>
+    <lastmod>2026-10-31</lastmod>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://bakememo.cn/zh-hant/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://bakememo.cn/ja/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://bakememo.cn/ko/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://bakememo.cn/de/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bakememo.cn/fr/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bakememo.cn/es/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://bakememo.cn/ru/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/"/>
+  </url>
+  <url>
+    <loc>https://bakememo.cn/ru/</loc>
+    <lastmod>2026-10-31</lastmod>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://bakememo.cn/zh-hant/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://bakememo.cn/ja/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://bakememo.cn/ko/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://bakememo.cn/de/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://bakememo.cn/fr/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://bakememo.cn/es/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://bakememo.cn/ru/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/"/>
   </url>
   <url>

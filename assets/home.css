@@ -287,3 +287,7 @@ a { color: var(--brand); text-underline-offset: 3px; }
 .guide-links b { font-family: var(--serif); font-size: 1.12rem; font-weight: 600; display: block; }
 .guide-links span { display: block; margin-top: 4px; color: var(--muted); font-size: 14px; }
 .guide-links a:hover { border-color: var(--brand); }
+
+/* 多语言主页 · 语言列表 */
+.langs { display: flex; flex-wrap: wrap; gap: 6px 16px; width: 100%; }
+.langs a[aria-current] { color: var(--ink); text-decoration: none; }
