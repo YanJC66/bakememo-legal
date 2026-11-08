@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="applicable-device" content="pc,mobile">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <title>Калькулятор пекарских процентов: гидратация и пересчёт теста · BakeMemo</title>
+  <meta name="description" content="Бесплатный калькулятор пекарских процентов: проценты, гидратация и общая гидратация с закваской по граммам, а также пересчёт на любой вес теста.">
+  <meta name="apple-itunes-app" content="app-id=6792324050">
+  <link rel="canonical" href="https://bakememo.cn/ru/calculator/">
+  <link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/calculator/">
+  <link rel="alternate" hreflang="en" href="https://bakememo.cn/en/calculator/">
+  <link rel="alternate" hreflang="zh-Hant" href="https://bakememo.cn/zh-hant/calculator/">
+  <link rel="alternate" hreflang="ja" href="https://bakememo.cn/ja/calculator/">
+  <link rel="alternate" hreflang="ko" href="https://bakememo.cn/ko/calculator/">
+  <link rel="alternate" hreflang="de" href="https://bakememo.cn/de/calculator/">
+  <link rel="alternate" hreflang="fr" href="https://bakememo.cn/fr/calculator/">
+  <link rel="alternate" hreflang="es" href="https://bakememo.cn/es/calculator/">
+  <link rel="alternate" hreflang="ru" href="https://bakememo.cn/ru/calculator/">
+  <link rel="alternate" hreflang="x-default" href="https://bakememo.cn/calculator/">
+  <script>
+    /* 记住手动选择的语言。 */
+    try { if (/[?&]lang=ru\b/.test(location.search)) localStorage.setItem("bm-lang", "ru"); } catch (e) {}
+  </script>
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:title" content="Калькулятор пекарских процентов">
+  <meta property="og:description" content="Бесплатный калькулятор пекарских процентов: проценты, гидратация и общая гидратация с закваской по граммам, а также пересчёт на любой вес теста.">
+  <meta property="og:url" content="https://bakememo.cn/ru/calculator/">
+  <meta property="og:image" content="https://bakememo.cn/assets/img/og-en.png">
+  <link rel="icon" href="/assets/img/favicon-64.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/home.css">
+  <link rel="stylesheet" href="/assets/support.css">
+  <style>
+    .calc { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 18px; margin: 8px 0 18px; }
+    .calc-head, .calc-row { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr) 5em 5.5em 2.2em; gap: 8px; align-items: center; }
+    .calc-head { font-size: 13px; color: var(--muted); font-weight: 650; padding: 0 2px 6px; }
+    .calc-row { padding: 6px 0; border-top: 1px dashed var(--line); }
+    .calc input, .calc select { font: inherit; font-size: 16px; width: 100%; min-width: 0; padding: 9px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--ink); }
+    .calc output { font-variant-numeric: tabular-nums; text-align: right; color: var(--ink); }
+    .calc .del { border: 0; background: none; color: var(--muted); font-size: 1.3rem; cursor: pointer; padding: 4px; }
+    .calc .add { margin: 10px 0 4px; border: 1px dashed var(--brand); background: var(--brand-wash); color: var(--brand-deep); border-radius: 10px; padding: 9px 14px; font: inherit; font-weight: 650; cursor: pointer; }
+    .calc-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 6px; }
+    .calc-opts label { font-size: 14px; color: var(--muted); font-weight: 650; display: grid; gap: 6px; }
+    .calc-sum { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 14px 0 0; }
+    .calc-sum div { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+    .calc-sum dt { font-size: 12.5px; color: var(--muted); }
+    .calc-sum dd { margin: 2px 0 0; font-family: var(--serif); font-size: 1.35rem; color: var(--ink); font-variant-numeric: tabular-nums; }
+    @media (max-width: 640px) {
+      .calc-head { display: none; }
+      .calc-row { grid-template-columns: 1fr 1fr 2.2em; grid-template-areas: "name name del" "g kind kind" "pct sc sc"; }
+      .calc-row .c-name { grid-area: name; } .calc-row .c-g { grid-area: g; } .calc-row .c-kind { grid-area: kind; }
+      .calc-row .c-pct { grid-area: pct; text-align: left; } .calc-row .c-sc { grid-area: sc; text-align: left; } .calc-row .del { grid-area: del; }
+      .calc-row output::before { content: attr(data-l) " "; color: var(--muted); font-size: 13px; }
+      .calc-opts, .calc-sum { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","inLanguage":"ru","url":"https://bakememo.cn/ru/calculator/","name":"Калькулятор пекарских процентов","description":"Бесплатный калькулятор пекарских процентов: проценты, гидратация и общая гидратация с закваской по граммам, а также пересчёт на любой вес теста.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Главная","item":"https://bakememo.cn/ru/"},{"@type":"ListItem","position":2,"name":"Калькулятор пекарских процентов","item":"https://bakememo.cn/ru/calculator/"}]}]}</script>
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap">
+      <a class="brand" href="/ru/" aria-label="BakeMemo"><img src="/assets/img/icon.webp" alt="" width="34" height="34">BakeMemo</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="/ru/">Главная</a>
+        <a href="/bakememo/support/#en">Помощь</a>
+        <a class="lang hide-s" href="/en/calculator/?lang=en" lang="en" hreflang="en">EN</a>
+        <a class="btn btn-primary btn-sm" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-calc-ru-nav&amp;mt=8">App Store</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap help guide">
+    <article>
+      <section class="help-hero">
+        <p class="eyebrow">Инструмент для выпечки</p>
+        <h1>Калькулятор пекарских процентов</h1>
+        <p class="lede">Введите каждый ингредиент в граммах — и получите пекарские проценты, гидратацию и общую гидратацию с учётом закваски. Укажите нужный вес теста, и все ингредиенты пересчитаются.</p>
+      </section>
+
+      <section class="calc" id="calc" hidden aria-label="Калькулятор пекарских процентов">
+        <div class="calc-head"><span>Ингредиент</span><span>Граммы</span><span>Тип</span><span style="text-align:right">Пекарский %</span><span style="text-align:right">Пересчёт</span><span></span></div>
+        <div class="calc-rows"></div>
+        <button type="button" class="add">+ Добавить ингредиент</button>
+        <div class="calc-opts">
+          <label>Влажность закваски (%)<input id="sh" type="number" inputmode="decimal" min="0" step="any" value="100"></label>
+          <label>Нужный вес теста (г, необязательно)<input id="target" type="number" inputmode="decimal" min="0" step="any" placeholder="напр. 1600"></label>
+        </div>
+        <dl class="calc-sum">
+          <div><dt>Вся мука (100 %)</dt><dd id="o-flour">–</dd></div>
+          <div><dt>Вес теста</dt><dd id="o-total">–</dd></div>
+          <div><dt>Гидратация (добавленная вода)</dt><dd id="o-hyd">–</dd></div>
+          <div><dt>Общая гидратация (с закваской)</dt><dd id="o-thyd">–</dd></div>
+        </dl>
+      </section>
+      <noscript><p class="note">Для калькулятора нужен JavaScript. Формулы ниже можно посчитать вручную.</p></noscript>
+      <p class="note">Всё считается в вашем браузере; ничего не отправляется и не сохраняется. Пример по умолчанию: 500 г муки + 350 г воды + 100 г закваски (из основ выпечки в BakeMemo) и 10 г соли.</p>
+
+      <h2>Как это считается</h2>
+      <p class="formula">Пекарский % = вес ингредиента ÷ вся мука × 100 %</p>
+      <ul>
+        <li><b>Вся мука</b> — только строки с типом «Мука»; несколько видов муки вместе дают 100 %. Мука в закваске здесь не учитывается — так записано большинство рецептур.</li>
+        <li><b>Гидратация</b> = вся «Вода» ÷ вся мука.</li>
+        <li><b>Общая гидратация</b> сначала делит закваску на муку и воду по её влажности (мука в закваске = закваска ÷ (1 + влажность)), а затем считает (вода + вода закваски) ÷ (мука + мука закваски).</li>
+        <li><b>Пересчёт</b>: коэффициент = нужный вес ÷ текущий вес; он применяется ко всем ингредиентам, поэтому пропорции не меняются. Добавьте 2–3 % на потери при замесе и формовке.</li>
+      </ul>
+      <p>В молоке, яйцах и сливочном масле тоже есть вода. Здесь они считаются «Другим» и не входят в гидратацию; при необходимости пересчитайте их по содержанию воды.</p>
+
+      <h2>Читать дальше</h2>
+      <p>Руководства о том, как считать пекарские проценты (<a href="/en/guide/bakers-percentage/" hreflang="en">на английском</a>) и гидратацию теста (<a href="/en/guide/hydration/" hreflang="en">на английском</a>), подробно объясняют формулу и пересчёт.</p>
+
+      <section class="inline-cta">
+        <h3>Все рецептуры — в iPhone</h3>
+        <p>Думайте пекарскими процентами: влажность закваски, пересчёт по весу теста и разбор после выпечки, который подскажет, что менять. Импорт ссылок foodgeek.</p>
+        <a class="btn btn-primary" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-calc-ru-inline&amp;mt=8"><span class="two"><small>Загрузите в</small>App Store</span></a>
+      </section>
+    </article>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <span>© 2026 Jiahui Xu · BakeMemo</span>
+      <a href="/ru/">Главная</a>
+      <a href="/en/guide/">Руководства по выпечке (на английском)</a>
+      <a href="/bakememo/support/#en">Помощь</a>
+      <a href="/bakememo/privacy/#en">Политика конфиденциальности</a>
+      <a class="sp" href="https://beian.miit.gov.cn/" rel="noreferrer">粤ICP备2026075524号</a>
+      <nav class="langs" aria-label="Language"><a href="/calculator/?lang=zh" lang="zh-Hans" hreflang="zh-Hans">简体中文</a><a href="/en/calculator/?lang=en" lang="en" hreflang="en">English</a><a href="/zh-hant/calculator/?lang=zh-hant" lang="zh-Hant" hreflang="zh-Hant">繁體中文</a><a href="/ja/calculator/?lang=ja" lang="ja" hreflang="ja">日本語</a><a href="/ko/calculator/?lang=ko" lang="ko" hreflang="ko">한국어</a><a href="/de/calculator/?lang=de" lang="de" hreflang="de">Deutsch</a><a href="/fr/calculator/?lang=fr" lang="fr" hreflang="fr">Français</a><a href="/es/calculator/?lang=es" lang="es" hreflang="es">Español</a><a href="/ru/calculator/?lang=ru" lang="ru" hreflang="ru" aria-current="page">Русский</a></nav>
+    </div>
+  </footer>
+
+  <div class="dock" role="complementary" aria-label="App Store">
+    <img src="/assets/img/icon.webp" alt="" width="40" height="40">
+    <div class="t"><b>BakeMemo</b><span>Пеките по пропорциям</span></div>
+    <a class="btn btn-primary" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-calc-ru-dock&amp;mt=8">App Store</a>
+  </div>
+  <script>
+    /* 烘焙百分比计算器：只在本页计算，不发送、不保存任何数据。 */
+    (function () {
+      var root = document.getElementById("calc"); if (!root) return;
+      var T = {"name": "Ингредиент", "grams": "Граммы", "pct": "Пекарский %", "sc": "Пересчёт", "del": "Удалить строку", "dec": ",", "kinds": [["flour", "Мука"], ["water", "Вода"], ["starter", "Закваска"], ["other", "Другое"]], "rows": [["Пшеничная мука", 500, "flour"], ["Вода", 350, "water"], ["Соль", 10, "other"], ["Закваска", 100, "starter"]]};
+      var list = root.querySelector(".calc-rows");
+      function num(v) { var n = parseFloat(String(v).replace(",", ".")); return isFinite(n) && n > 0 ? n : 0; }
+      function fmt(n, d) { if (!isFinite(n)) return "–"; var s = n.toFixed(d); s = s.indexOf(".") >= 0 ? s.replace(/\.?0+$/, "") : s; return s.replace(".", T.dec); }
+      function g(n) { return n >= 100 ? fmt(n, 0) : n >= 10 ? fmt(n, 1) : fmt(n, 2); }
+      function addRow(name, grams, kind) {
+        var r = document.createElement("div"); r.className = "calc-row";
+        var opts = T.kinds.map(function (k) { return '<option value="' + k[0] + '"' + (k[0] === kind ? " selected" : "") + ">" + k[1] + "</option>"; }).join("");
+        r.innerHTML = '<input class="c-name" aria-label="' + T.name + '">' +
+          '<input class="c-g" type="number" inputmode="decimal" min="0" step="any" aria-label="' + T.grams + '">' +
+          '<select class="c-kind" aria-label="' + T.name + '">' + opts + "</select>" +
+          '<output class="c-pct" data-l="' + T.pct + '"></output><output class="c-sc" data-l="' + T.sc + '"></output>' +
+          '<button type="button" class="del" aria-label="' + T.del + '">×</button>';
+        r.querySelector(".c-name").value = name; r.querySelector(".c-g").value = grams === "" ? "" : grams;
+        r.querySelector(".del").addEventListener("click", function () { r.remove(); calc(); });
+        list.appendChild(r);
+      }
+      function calc() {
+        var rows = [].slice.call(list.querySelectorAll(".calc-row"));
+        var sh = num(document.getElementById("sh").value) / 100, target = num(document.getElementById("target").value);
+        var flour = 0, water = 0, starter = 0, total = 0;
+        rows.forEach(function (r) {
+          var w = num(r.querySelector(".c-g").value), k = r.querySelector(".c-kind").value; total += w;
+          if (k === "flour") flour += w; else if (k === "water") water += w; else if (k === "starter") starter += w;
+        });
+        var sFlour = starter / (1 + sh), sWater = starter - sFlour, f = target > 0 && total > 0 ? target / total : 1;
+        rows.forEach(function (r) {
+          var w = num(r.querySelector(".c-g").value);
+          r.querySelector(".c-pct").value = flour > 0 && w > 0 ? fmt(w / flour * 100, 1) + "%" : "–";
+          r.querySelector(".c-sc").value = w > 0 ? g(w * f) + " g" : "–";
+        });
+        document.getElementById("o-flour").textContent = flour > 0 ? g(flour) + " g" : "–";
+        document.getElementById("o-total").textContent = total > 0 ? g(total * f) + " g" : "–";
+        document.getElementById("o-hyd").textContent = flour > 0 ? fmt(water / flour * 100, 1) + "%" : "–";
+        document.getElementById("o-thyd").textContent = flour + sFlour > 0 ? fmt((water + sWater) / (flour + sFlour) * 100, 1) + "%" : "–";
+      }
+      T.rows.forEach(function (x) { addRow(x[0], x[1], x[2]); });
+      root.querySelector(".add").addEventListener("click", function () { addRow("", "", "other"); calc(); list.lastChild.querySelector(".c-name").focus(); });
+      root.addEventListener("input", calc); root.addEventListener("change", calc);
+      root.hidden = false; calc();
+    })();
+  </script>
+</body>
+</html>

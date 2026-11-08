@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="applicable-device" content="pc,mobile">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <title>Calculadora de porcentaje panadero: hidratación y escalado de masa · BakeMemo</title>
+  <meta name="description" content="Calculadora gratuita de porcentaje panadero: porcentajes, hidratación e hidratación total con masa madre a partir de los gramos, y escalado a cualquier peso de masa.">
+  <meta name="apple-itunes-app" content="app-id=6792324050">
+  <link rel="canonical" href="https://bakememo.cn/es/calculator/">
+  <link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/calculator/">
+  <link rel="alternate" hreflang="en" href="https://bakememo.cn/en/calculator/">
+  <link rel="alternate" hreflang="zh-Hant" href="https://bakememo.cn/zh-hant/calculator/">
+  <link rel="alternate" hreflang="ja" href="https://bakememo.cn/ja/calculator/">
+  <link rel="alternate" hreflang="ko" href="https://bakememo.cn/ko/calculator/">
+  <link rel="alternate" hreflang="de" href="https://bakememo.cn/de/calculator/">
+  <link rel="alternate" hreflang="fr" href="https://bakememo.cn/fr/calculator/">
+  <link rel="alternate" hreflang="es" href="https://bakememo.cn/es/calculator/">
+  <link rel="alternate" hreflang="ru" href="https://bakememo.cn/ru/calculator/">
+  <link rel="alternate" hreflang="x-default" href="https://bakememo.cn/calculator/">
+  <script>
+    /* 记住手动选择的语言。 */
+    try { if (/[?&]lang=es\b/.test(location.search)) localStorage.setItem("bm-lang", "es"); } catch (e) {}
+  </script>
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:title" content="Calculadora de porcentaje panadero">
+  <meta property="og:description" content="Calculadora gratuita de porcentaje panadero: porcentajes, hidratación e hidratación total con masa madre a partir de los gramos, y escalado a cualquier peso de masa.">
+  <meta property="og:url" content="https://bakememo.cn/es/calculator/">
+  <meta property="og:image" content="https://bakememo.cn/assets/img/og-en.png">
+  <link rel="icon" href="/assets/img/favicon-64.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/home.css">
+  <link rel="stylesheet" href="/assets/support.css">
+  <style>
+    .calc { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 18px; margin: 8px 0 18px; }
+    .calc-head, .calc-row { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr) 5em 5.5em 2.2em; gap: 8px; align-items: center; }
+    .calc-head { font-size: 13px; color: var(--muted); font-weight: 650; padding: 0 2px 6px; }
+    .calc-row { padding: 6px 0; border-top: 1px dashed var(--line); }
+    .calc input, .calc select { font: inherit; font-size: 16px; width: 100%; min-width: 0; padding: 9px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--ink); }
+    .calc output { font-variant-numeric: tabular-nums; text-align: right; color: var(--ink); }
+    .calc .del { border: 0; background: none; color: var(--muted); font-size: 1.3rem; cursor: pointer; padding: 4px; }
+    .calc .add { margin: 10px 0 4px; border: 1px dashed var(--brand); background: var(--brand-wash); color: var(--brand-deep); border-radius: 10px; padding: 9px 14px; font: inherit; font-weight: 650; cursor: pointer; }
+    .calc-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 6px; }
+    .calc-opts label { font-size: 14px; color: var(--muted); font-weight: 650; display: grid; gap: 6px; }
+    .calc-sum { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 14px 0 0; }
+    .calc-sum div { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+    .calc-sum dt { font-size: 12.5px; color: var(--muted); }
+    .calc-sum dd { margin: 2px 0 0; font-family: var(--serif); font-size: 1.35rem; color: var(--ink); font-variant-numeric: tabular-nums; }
+    @media (max-width: 640px) {
+      .calc-head { display: none; }
+      .calc-row { grid-template-columns: 1fr 1fr 2.2em; grid-template-areas: "name name del" "g kind kind" "pct sc sc"; }
+      .calc-row .c-name { grid-area: name; } .calc-row .c-g { grid-area: g; } .calc-row .c-kind { grid-area: kind; }
+      .calc-row .c-pct { grid-area: pct; text-align: left; } .calc-row .c-sc { grid-area: sc; text-align: left; } .calc-row .del { grid-area: del; }
+      .calc-row output::before { content: attr(data-l) " "; color: var(--muted); font-size: 13px; }
+      .calc-opts, .calc-sum { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","inLanguage":"es","url":"https://bakememo.cn/es/calculator/","name":"Calculadora de porcentaje panadero","description":"Calculadora gratuita de porcentaje panadero: porcentajes, hidratación e hidratación total con masa madre a partir de los gramos, y escalado a cualquier peso de masa.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://bakememo.cn/es/"},{"@type":"ListItem","position":2,"name":"Calculadora de porcentaje panadero","item":"https://bakememo.cn/es/calculator/"}]}]}</script>
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap">
+      <a class="brand" href="/es/" aria-label="BakeMemo"><img src="/assets/img/icon.webp" alt="" width="34" height="34">BakeMemo</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="/es/">Inicio</a>
+        <a href="/bakememo/support/#en">Ayuda</a>
+        <a class="lang hide-s" href="/en/calculator/?lang=en" lang="en" hreflang="en">EN</a>
+        <a class="btn btn-primary btn-sm" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-calc-es-nav&amp;mt=8">App Store</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap help guide">
+    <article>
+      <section class="help-hero">
+        <p class="eyebrow">Herramienta de panadería</p>
+        <h1>Calculadora de porcentaje panadero</h1>
+        <p class="lede">Introduce cada ingrediente en gramos para obtener los porcentajes panaderos, la hidratación y la hidratación total contando la masa madre. Añade un peso de masa objetivo y cada ingrediente se escala.</p>
+      </section>
+
+      <section class="calc" id="calc" hidden aria-label="Calculadora de porcentaje panadero">
+        <div class="calc-head"><span>Ingrediente</span><span>Gramos</span><span>Tipo</span><span style="text-align:right">% panadero</span><span style="text-align:right">Escalado</span><span></span></div>
+        <div class="calc-rows"></div>
+        <button type="button" class="add">+ Añadir ingrediente</button>
+        <div class="calc-opts">
+          <label>Hidratación de la masa madre (%)<input id="sh" type="number" inputmode="decimal" min="0" step="any" value="100"></label>
+          <label>Peso de masa objetivo (g, opcional)<input id="target" type="number" inputmode="decimal" min="0" step="any" placeholder="p. ej. 1600"></label>
+        </div>
+        <dl class="calc-sum">
+          <div><dt>Harina total (100 %)</dt><dd id="o-flour">–</dd></div>
+          <div><dt>Peso de la masa</dt><dd id="o-total">–</dd></div>
+          <div><dt>Hidratación (agua añadida)</dt><dd id="o-hyd">–</dd></div>
+          <div><dt>Hidratación total (con masa madre)</dt><dd id="o-thyd">–</dd></div>
+        </dl>
+      </section>
+      <noscript><p class="note">La calculadora necesita JavaScript. Las fórmulas de abajo también sirven a mano.</p></noscript>
+      <p class="note">Todo se calcula en tu navegador; no se sube ni se guarda nada. Ejemplo por defecto: 500 g de harina + 350 g de agua + 100 g de masa madre (de las nociones básicas de panadería en BakeMemo), más 10 g de sal.</p>
+
+      <h2>Cómo funciona</h2>
+      <p class="formula">% panadero = peso del ingrediente ÷ harina total × 100 %</p>
+      <ul>
+        <li><b>Harina total</b> solo suma las filas «Harina»; varias harinas juntas son el 100 %. La harina de la masa madre no se cuenta aquí, como en la mayoría de las fórmulas.</li>
+        <li><b>Hidratación</b> = total de «Agua» ÷ harina total.</li>
+        <li><b>Hidratación total</b> primero separa la masa madre en harina y agua según su hidratación (harina de la masa madre = masa madre ÷ (1 + hidratación)) y luego calcula (agua + agua de la masa madre) ÷ (harina + harina de la masa madre).</li>
+        <li><b>Escalado</b>: factor = peso objetivo ÷ peso actual, aplicado a cada ingrediente para que las proporciones no cambien. Prepara un 2–3 % más por las pérdidas al amasar y formar.</li>
+      </ul>
+      <p>La leche, los huevos y la mantequilla también contienen agua. Aquí cuentan como «Otro» y no entran en la hidratación; conviértelos según su contenido de agua si lo necesitas.</p>
+
+      <h2>Más lecturas</h2>
+      <p>Las guías para calcular el porcentaje panadero (<a href="/en/guide/bakers-percentage/" hreflang="en">en inglés</a>) y la hidratación de la masa (<a href="/en/guide/hydration/" hreflang="en">en inglés</a>) explican la fórmula y el escalado.</p>
+
+      <section class="inline-cta">
+        <h3>Todas tus fórmulas en el iPhone</h3>
+        <p>Piensa en porcentajes panaderos: ajusta la hidratación de la masa madre, calcula por peso y deja que la revisión te diga qué cambiar. Importa de foodgeek.</p>
+        <a class="btn btn-primary" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-calc-es-inline&amp;mt=8"><span class="two"><small>Descárgalo en el</small>App Store</span></a>
+      </section>
+    </article>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <span>© 2026 Jiahui Xu · BakeMemo</span>
+      <a href="/es/">Inicio</a>
+      <a href="/en/guide/">Guías de panadería (en inglés)</a>
+      <a href="/bakememo/support/#en">Ayuda</a>
+      <a href="/bakememo/privacy/#en">Política de privacidad</a>
+      <a class="sp" href="https://beian.miit.gov.cn/" rel="noreferrer">粤ICP备2026075524号</a>
+      <nav class="langs" aria-label="Language"><a href="/calculator/?lang=zh" lang="zh-Hans" hreflang="zh-Hans">简体中文</a><a href="/en/calculator/?lang=en" lang="en" hreflang="en">English</a><a href="/zh-hant/calculator/?lang=zh-hant" lang="zh-Hant" hreflang="zh-Hant">繁體中文</a><a href="/ja/calculator/?lang=ja" lang="ja" hreflang="ja">日本語</a><a href="/ko/calculator/?lang=ko" lang="ko" hreflang="ko">한국어</a><a href="/de/calculator/?lang=de" lang="de" hreflang="de">Deutsch</a><a href="/fr/calculator/?lang=fr" lang="fr" hreflang="fr">Français</a><a href="/es/calculator/?lang=es" lang="es" hreflang="es" aria-current="page">Español</a><a href="/ru/calculator/?lang=ru" lang="ru" hreflang="ru">Русский</a></nav>
+    </div>
+  </footer>
+
+  <div class="dock" role="complementary" aria-label="App Store">
+    <img src="/assets/img/icon.webp" alt="" width="40" height="40">
+    <div class="t"><b>BakeMemo</b><span>Hornea por proporción</span></div>
+    <a class="btn btn-primary" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-calc-es-dock&amp;mt=8">App Store</a>
+  </div>
+  <script>
+    /* 烘焙百分比计算器：只在本页计算，不发送、不保存任何数据。 */
+    (function () {
+      var root = document.getElementById("calc"); if (!root) return;
+      var T = {"name": "Ingrediente", "grams": "Gramos", "pct": "% panadero", "sc": "Escalado", "del": "Eliminar fila", "dec": ",", "kinds": [["flour", "Harina"], ["water", "Agua"], ["starter", "Masa madre"], ["other", "Otro"]], "rows": [["Harina de fuerza", 500, "flour"], ["Agua", 350, "water"], ["Sal", 10, "other"], ["Masa madre", 100, "starter"]]};
+      var list = root.querySelector(".calc-rows");
+      function num(v) { var n = parseFloat(String(v).replace(",", ".")); return isFinite(n) && n > 0 ? n : 0; }
+      function fmt(n, d) { if (!isFinite(n)) return "–"; var s = n.toFixed(d); s = s.indexOf(".") >= 0 ? s.replace(/\.?0+$/, "") : s; return s.replace(".", T.dec); }
+      function g(n) { return n >= 100 ? fmt(n, 0) : n >= 10 ? fmt(n, 1) : fmt(n, 2); }
+      function addRow(name, grams, kind) {
+        var r = document.createElement("div"); r.className = "calc-row";
+        var opts = T.kinds.map(function (k) { return '<option value="' + k[0] + '"' + (k[0] === kind ? " selected" : "") + ">" + k[1] + "</option>"; }).join("");
+        r.innerHTML = '<input class="c-name" aria-label="' + T.name + '">' +
+          '<input class="c-g" type="number" inputmode="decimal" min="0" step="any" aria-label="' + T.grams + '">' +
+          '<select class="c-kind" aria-label="' + T.name + '">' + opts + "</select>" +
+          '<output class="c-pct" data-l="' + T.pct + '"></output><output class="c-sc" data-l="' + T.sc + '"></output>' +
+          '<button type="button" class="del" aria-label="' + T.del + '">×</button>';
+        r.querySelector(".c-name").value = name; r.querySelector(".c-g").value = grams === "" ? "" : grams;
+        r.querySelector(".del").addEventListener("click", function () { r.remove(); calc(); });
+        list.appendChild(r);
+      }
+      function calc() {
+        var rows = [].slice.call(list.querySelectorAll(".calc-row"));
+        var sh = num(document.getElementById("sh").value) / 100, target = num(document.getElementById("target").value);
+        var flour = 0, water = 0, starter = 0, total = 0;
+        rows.forEach(function (r) {
+          var w = num(r.querySelector(".c-g").value), k = r.querySelector(".c-kind").value; total += w;
+          if (k === "flour") flour += w; else if (k === "water") water += w; else if (k === "starter") starter += w;
+        });
+        var sFlour = starter / (1 + sh), sWater = starter - sFlour, f = target > 0 && total > 0 ? target / total : 1;
+        rows.forEach(function (r) {
+          var w = num(r.querySelector(".c-g").value);
+          r.querySelector(".c-pct").value = flour > 0 && w > 0 ? fmt(w / flour * 100, 1) + "%" : "–";
+          r.querySelector(".c-sc").value = w > 0 ? g(w * f) + " g" : "–";
+        });
+        document.getElementById("o-flour").textContent = flour > 0 ? g(flour) + " g" : "–";
+        document.getElementById("o-total").textContent = total > 0 ? g(total * f) + " g" : "–";
+        document.getElementById("o-hyd").textContent = flour > 0 ? fmt(water / flour * 100, 1) + "%" : "–";
+        document.getElementById("o-thyd").textContent = flour + sFlour > 0 ? fmt((water + sWater) / (flour + sFlour) * 100, 1) + "%" : "–";
+      }
+      T.rows.forEach(function (x) { addRow(x[0], x[1], x[2]); });
+      root.querySelector(".add").addEventListener("click", function () { addRow("", "", "other"); calc(); list.lastChild.querySelector(".c-name").focus(); });
+      root.addEventListener("input", calc); root.addEventListener("change", calc);
+      root.hidden = false; calc();
+    })();
+  </script>
+</body>
+</html>

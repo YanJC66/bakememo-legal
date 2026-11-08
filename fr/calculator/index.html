@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="applicable-device" content="pc,mobile">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <title>Calculateur de pourcentage du boulanger : hydratation et mise à l’échelle · BakeMemo</title>
+  <meta name="description" content="Calculateur gratuit de pourcentage du boulanger : pourcentages, hydratation et hydratation totale avec levain à partir des grammes, puis mise à l’échelle de la pâte.">
+  <meta name="apple-itunes-app" content="app-id=6792324050">
+  <link rel="canonical" href="https://bakememo.cn/fr/calculator/">
+  <link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/calculator/">
+  <link rel="alternate" hreflang="en" href="https://bakememo.cn/en/calculator/">
+  <link rel="alternate" hreflang="zh-Hant" href="https://bakememo.cn/zh-hant/calculator/">
+  <link rel="alternate" hreflang="ja" href="https://bakememo.cn/ja/calculator/">
+  <link rel="alternate" hreflang="ko" href="https://bakememo.cn/ko/calculator/">
+  <link rel="alternate" hreflang="de" href="https://bakememo.cn/de/calculator/">
+  <link rel="alternate" hreflang="fr" href="https://bakememo.cn/fr/calculator/">
+  <link rel="alternate" hreflang="es" href="https://bakememo.cn/es/calculator/">
+  <link rel="alternate" hreflang="ru" href="https://bakememo.cn/ru/calculator/">
+  <link rel="alternate" hreflang="x-default" href="https://bakememo.cn/calculator/">
+  <script>
+    /* 记住手动选择的语言。 */
+    try { if (/[?&]lang=fr\b/.test(location.search)) localStorage.setItem("bm-lang", "fr"); } catch (e) {}
+  </script>
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:title" content="Calculateur de pourcentage du boulanger">
+  <meta property="og:description" content="Calculateur gratuit de pourcentage du boulanger : pourcentages, hydratation et hydratation totale avec levain à partir des grammes, puis mise à l’échelle de la pâte.">
+  <meta property="og:url" content="https://bakememo.cn/fr/calculator/">
+  <meta property="og:image" content="https://bakememo.cn/assets/img/og-en.png">
+  <link rel="icon" href="/assets/img/favicon-64.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/home.css">
+  <link rel="stylesheet" href="/assets/support.css">
+  <style>
+    .calc { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 18px; margin: 8px 0 18px; }
+    .calc-head, .calc-row { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr) 5em 5.5em 2.2em; gap: 8px; align-items: center; }
+    .calc-head { font-size: 13px; color: var(--muted); font-weight: 650; padding: 0 2px 6px; }
+    .calc-row { padding: 6px 0; border-top: 1px dashed var(--line); }
+    .calc input, .calc select { font: inherit; font-size: 16px; width: 100%; min-width: 0; padding: 9px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--ink); }
+    .calc output { font-variant-numeric: tabular-nums; text-align: right; color: var(--ink); }
+    .calc .del { border: 0; background: none; color: var(--muted); font-size: 1.3rem; cursor: pointer; padding: 4px; }
+    .calc .add { margin: 10px 0 4px; border: 1px dashed var(--brand); background: var(--brand-wash); color: var(--brand-deep); border-radius: 10px; padding: 9px 14px; font: inherit; font-weight: 650; cursor: pointer; }
+    .calc-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 6px; }
+    .calc-opts label { font-size: 14px; color: var(--muted); font-weight: 650; display: grid; gap: 6px; }
+    .calc-sum { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 14px 0 0; }
+    .calc-sum div { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+    .calc-sum dt { font-size: 12.5px; color: var(--muted); }
+    .calc-sum dd { margin: 2px 0 0; font-family: var(--serif); font-size: 1.35rem; color: var(--ink); font-variant-numeric: tabular-nums; }
+    @media (max-width: 640px) {
+      .calc-head { display: none; }
+      .calc-row { grid-template-columns: 1fr 1fr 2.2em; grid-template-areas: "name name del" "g kind kind" "pct sc sc"; }
+      .calc-row .c-name { grid-area: name; } .calc-row .c-g { grid-area: g; } .calc-row .c-kind { grid-area: kind; }
+      .calc-row .c-pct { grid-area: pct; text-align: left; } .calc-row .c-sc { grid-area: sc; text-align: left; } .calc-row .del { grid-area: del; }
+      .calc-row output::before { content: attr(data-l) " "; color: var(--muted); font-size: 13px; }
+      .calc-opts, .calc-sum { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","inLanguage":"fr","url":"https://bakememo.cn/fr/calculator/","name":"Calculateur de pourcentage du boulanger","description":"Calculateur gratuit de pourcentage du boulanger : pourcentages, hydratation et hydratation totale avec levain à partir des grammes, puis mise à l’échelle de la pâte.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Accueil","item":"https://bakememo.cn/fr/"},{"@type":"ListItem","position":2,"name":"Calculateur de pourcentage du boulanger","item":"https://bakememo.cn/fr/calculator/"}]}]}</script>
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap">
+      <a class="brand" href="/fr/" aria-label="BakeMemo"><img src="/assets/img/icon.webp" alt="" width="34" height="34">BakeMemo</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="/fr/">Accueil</a>
+        <a href="/bakememo/support/#en">Aide</a>
+        <a class="lang hide-s" href="/en/calculator/?lang=en" lang="en" hreflang="en">EN</a>
+        <a class="btn btn-primary btn-sm" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-calc-fr-nav&amp;mt=8">App Store</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap help guide">
+    <article>
+      <section class="help-hero">
+        <p class="eyebrow">Outil de boulangerie</p>
+        <h1>Calculateur de pourcentage du boulanger</h1>
+        <p class="lede">Saisissez chaque ingrédient en grammes pour obtenir les pourcentages du boulanger, l’hydratation et l’hydratation totale, levain compris. Indiquez un poids de pâte cible et chaque ingrédient est recalculé.</p>
+      </section>
+
+      <section class="calc" id="calc" hidden aria-label="Calculateur de pourcentage du boulanger">
+        <div class="calc-head"><span>Ingrédient</span><span>Grammes</span><span>Type</span><span style="text-align:right">% boulanger</span><span style="text-align:right">Recalculé</span><span></span></div>
+        <div class="calc-rows"></div>
+        <button type="button" class="add">+ Ajouter un ingrédient</button>
+        <div class="calc-opts">
+          <label>Hydratation du levain (%)<input id="sh" type="number" inputmode="decimal" min="0" step="any" value="100"></label>
+          <label>Poids de pâte cible (g, facultatif)<input id="target" type="number" inputmode="decimal" min="0" step="any" placeholder="ex. 1600"></label>
+        </div>
+        <dl class="calc-sum">
+          <div><dt>Farine totale (100 %)</dt><dd id="o-flour">–</dd></div>
+          <div><dt>Poids de pâte</dt><dd id="o-total">–</dd></div>
+          <div><dt>Hydratation (eau ajoutée)</dt><dd id="o-hyd">–</dd></div>
+          <div><dt>Hydratation totale (avec levain)</dt><dd id="o-thyd">–</dd></div>
+        </dl>
+      </section>
+      <noscript><p class="note">Le calculateur nécessite JavaScript. Les formules ci-dessous fonctionnent aussi à la main.</p></noscript>
+      <p class="note">Tout est calculé dans votre navigateur ; rien n’est envoyé ni enregistré. Exemple par défaut : 500 g de farine + 350 g d’eau + 100 g de levain (tiré des bases de la boulangerie dans BakeMemo), plus 10 g de sel.</p>
+
+      <h2>Comment ça marche</h2>
+      <p class="formula">% boulanger = poids de l’ingrédient ÷ farine totale × 100 %</p>
+      <ul>
+        <li><b>Farine totale</b> ne compte que les lignes « Farine » ; plusieurs farines font ensemble 100 %. La farine du levain n’est pas comptée ici, comme dans la plupart des formules.</li>
+        <li><b>Hydratation</b> = total « Eau » ÷ farine totale.</li>
+        <li><b>Hydratation totale</b> sépare d’abord le levain en farine et en eau selon son hydratation (farine du levain = levain ÷ (1 + hydratation)), puis calcule (eau + eau du levain) ÷ (farine + farine du levain).</li>
+        <li><b>Mise à l’échelle</b> : facteur = poids cible ÷ poids actuel, appliqué à chaque ingrédient pour garder les mêmes ratios. Prévoyez 2 à 3 % de plus pour les pertes au pétrissage et au façonnage.</li>
+      </ul>
+      <p>Le lait, les œufs et le beurre contiennent aussi de l’eau. Ici, ils comptent comme « Autre » et ne sont pas inclus dans l’hydratation ; convertissez-les selon leur teneur en eau si besoin.</p>
+
+      <h2>Pour aller plus loin</h2>
+      <p>Les guides sur le calcul du pourcentage du boulanger (<a href="/en/guide/bakers-percentage/" hreflang="en">en anglais</a>) et de l’hydratation (<a href="/en/guide/hydration/" hreflang="en">en anglais</a>) détaillent la formule et la mise à l’échelle.</p>
+
+      <section class="inline-cta">
+        <h3>Toutes vos formules sur votre iPhone</h3>
+        <p>Pensez en pourcentages du boulanger : hydratation du levain réglable, calcul par poids de pâte, et un bilan après cuisson qui dit quoi changer. Import de liens foodgeek.</p>
+        <a class="btn btn-primary" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-calc-fr-inline&amp;mt=8"><span class="two"><small>Télécharger dans</small>App Store</span></a>
+      </section>
+    </article>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <span>© 2026 Jiahui Xu · BakeMemo</span>
+      <a href="/fr/">Accueil</a>
+      <a href="/en/guide/">Guides de boulangerie (en anglais)</a>
+      <a href="/bakememo/support/#en">Aide</a>
+      <a href="/bakememo/privacy/#en">Politique de confidentialité</a>
+      <a class="sp" href="https://beian.miit.gov.cn/" rel="noreferrer">粤ICP备2026075524号</a>
+      <nav class="langs" aria-label="Language"><a href="/calculator/?lang=zh" lang="zh-Hans" hreflang="zh-Hans">简体中文</a><a href="/en/calculator/?lang=en" lang="en" hreflang="en">English</a><a href="/zh-hant/calculator/?lang=zh-hant" lang="zh-Hant" hreflang="zh-Hant">繁體中文</a><a href="/ja/calculator/?lang=ja" lang="ja" hreflang="ja">日本語</a><a href="/ko/calculator/?lang=ko" lang="ko" hreflang="ko">한국어</a><a href="/de/calculator/?lang=de" lang="de" hreflang="de">Deutsch</a><a href="/fr/calculator/?lang=fr" lang="fr" hreflang="fr" aria-current="page">Français</a><a href="/es/calculator/?lang=es" lang="es" hreflang="es">Español</a><a href="/ru/calculator/?lang=ru" lang="ru" hreflang="ru">Русский</a></nav>
+    </div>
+  </footer>
+
+  <div class="dock" role="complementary" aria-label="App Store">
+    <img src="/assets/img/icon.webp" alt="" width="40" height="40">
+    <div class="t"><b>BakeMemo</b><span>Cuire au ratio, pas en recette</span></div>
+    <a class="btn btn-primary" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-calc-fr-dock&amp;mt=8">App Store</a>
+  </div>
+  <script>
+    /* 烘焙百分比计算器：只在本页计算，不发送、不保存任何数据。 */
+    (function () {
+      var root = document.getElementById("calc"); if (!root) return;
+      var T = {"name": "Ingrédient", "grams": "Grammes", "pct": "% boulanger", "sc": "Recalculé", "del": "Supprimer la ligne", "dec": ",", "kinds": [["flour", "Farine"], ["water", "Eau"], ["starter", "Levain"], ["other", "Autre"]], "rows": [["Farine T65", 500, "flour"], ["Eau", 350, "water"], ["Sel", 10, "other"], ["Levain", 100, "starter"]]};
+      var list = root.querySelector(".calc-rows");
+      function num(v) { var n = parseFloat(String(v).replace(",", ".")); return isFinite(n) && n > 0 ? n : 0; }
+      function fmt(n, d) { if (!isFinite(n)) return "–"; var s = n.toFixed(d); s = s.indexOf(".") >= 0 ? s.replace(/\.?0+$/, "") : s; return s.replace(".", T.dec); }
+      function g(n) { return n >= 100 ? fmt(n, 0) : n >= 10 ? fmt(n, 1) : fmt(n, 2); }
+      function addRow(name, grams, kind) {
+        var r = document.createElement("div"); r.className = "calc-row";
+        var opts = T.kinds.map(function (k) { return '<option value="' + k[0] + '"' + (k[0] === kind ? " selected" : "") + ">" + k[1] + "</option>"; }).join("");
+        r.innerHTML = '<input class="c-name" aria-label="' + T.name + '">' +
+          '<input class="c-g" type="number" inputmode="decimal" min="0" step="any" aria-label="' + T.grams + '">' +
+          '<select class="c-kind" aria-label="' + T.name + '">' + opts + "</select>" +
+          '<output class="c-pct" data-l="' + T.pct + '"></output><output class="c-sc" data-l="' + T.sc + '"></output>' +
+          '<button type="button" class="del" aria-label="' + T.del + '">×</button>';
+        r.querySelector(".c-name").value = name; r.querySelector(".c-g").value = grams === "" ? "" : grams;
+        r.querySelector(".del").addEventListener("click", function () { r.remove(); calc(); });
+        list.appendChild(r);
+      }
+      function calc() {
+        var rows = [].slice.call(list.querySelectorAll(".calc-row"));
+        var sh = num(document.getElementById("sh").value) / 100, target = num(document.getElementById("target").value);
+        var flour = 0, water = 0, starter = 0, total = 0;
+        rows.forEach(function (r) {
+          var w = num(r.querySelector(".c-g").value), k = r.querySelector(".c-kind").value; total += w;
+          if (k === "flour") flour += w; else if (k === "water") water += w; else if (k === "starter") starter += w;
+        });
+        var sFlour = starter / (1 + sh), sWater = starter - sFlour, f = target > 0 && total > 0 ? target / total : 1;
+        rows.forEach(function (r) {
+          var w = num(r.querySelector(".c-g").value);
+          r.querySelector(".c-pct").value = flour > 0 && w > 0 ? fmt(w / flour * 100, 1) + "%" : "–";
+          r.querySelector(".c-sc").value = w > 0 ? g(w * f) + " g" : "–";
+        });
+        document.getElementById("o-flour").textContent = flour > 0 ? g(flour) + " g" : "–";
+        document.getElementById("o-total").textContent = total > 0 ? g(total * f) + " g" : "–";
+        document.getElementById("o-hyd").textContent = flour > 0 ? fmt(water / flour * 100, 1) + "%" : "–";
+        document.getElementById("o-thyd").textContent = flour + sFlour > 0 ? fmt((water + sWater) / (flour + sFlour) * 100, 1) + "%" : "–";
+      }
+      T.rows.forEach(function (x) { addRow(x[0], x[1], x[2]); });
+      root.querySelector(".add").addEventListener("click", function () { addRow("", "", "other"); calc(); list.lastChild.querySelector(".c-name").focus(); });
+      root.addEventListener("input", calc); root.addEventListener("change", calc);
+      root.hidden = false; calc();
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="applicable-device" content="pc,mobile">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <title>베이커스 퍼센트 계산기: 수화율과 배합 환산 · BakeMemo</title>
+  <meta name="description" content="무료 베이커스 퍼센트 계산기. 그램을 입력하면 베이커스 퍼센트, 수화율, 르방을 포함한 총 수화율을 계산하고 원하는 반죽 무게로 환산해요. 계산은 브라우저 안에서만 하며 아무것도 전송하지 않아요.">
+  <meta name="apple-itunes-app" content="app-id=6792324050">
+  <link rel="canonical" href="https://bakememo.cn/ko/calculator/">
+  <link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/calculator/">
+  <link rel="alternate" hreflang="en" href="https://bakememo.cn/en/calculator/">
+  <link rel="alternate" hreflang="zh-Hant" href="https://bakememo.cn/zh-hant/calculator/">
+  <link rel="alternate" hreflang="ja" href="https://bakememo.cn/ja/calculator/">
+  <link rel="alternate" hreflang="ko" href="https://bakememo.cn/ko/calculator/">
+  <link rel="alternate" hreflang="de" href="https://bakememo.cn/de/calculator/">
+  <link rel="alternate" hreflang="fr" href="https://bakememo.cn/fr/calculator/">
+  <link rel="alternate" hreflang="es" href="https://bakememo.cn/es/calculator/">
+  <link rel="alternate" hreflang="ru" href="https://bakememo.cn/ru/calculator/">
+  <link rel="alternate" hreflang="x-default" href="https://bakememo.cn/calculator/">
+  <script>
+    /* 记住手动选择的语言。 */
+    try { if (/[?&]lang=ko\b/.test(location.search)) localStorage.setItem("bm-lang", "ko"); } catch (e) {}
+  </script>
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:title" content="베이커스 퍼센트 계산기">
+  <meta property="og:description" content="무료 베이커스 퍼센트 계산기. 그램을 입력하면 베이커스 퍼센트, 수화율, 르방을 포함한 총 수화율을 계산하고 원하는 반죽 무게로 환산해요. 계산은 브라우저 안에서만 하며 아무것도 전송하지 않아요.">
+  <meta property="og:url" content="https://bakememo.cn/ko/calculator/">
+  <meta property="og:image" content="https://bakememo.cn/assets/img/og-en.png">
+  <link rel="icon" href="/assets/img/favicon-64.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/home.css">
+  <link rel="stylesheet" href="/assets/support.css">
+  <style>
+    .calc { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 18px; margin: 8px 0 18px; }
+    .calc-head, .calc-row { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr) 5em 5.5em 2.2em; gap: 8px; align-items: center; }
+    .calc-head { font-size: 13px; color: var(--muted); font-weight: 650; padding: 0 2px 6px; }
+    .calc-row { padding: 6px 0; border-top: 1px dashed var(--line); }
+    .calc input, .calc select { font: inherit; font-size: 16px; width: 100%; min-width: 0; padding: 9px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--ink); }
+    .calc output { font-variant-numeric: tabular-nums; text-align: right; color: var(--ink); }
+    .calc .del { border: 0; background: none; color: var(--muted); font-size: 1.3rem; cursor: pointer; padding: 4px; }
+    .calc .add { margin: 10px 0 4px; border: 1px dashed var(--brand); background: var(--brand-wash); color: var(--brand-deep); border-radius: 10px; padding: 9px 14px; font: inherit; font-weight: 650; cursor: pointer; }
+    .calc-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 6px; }
+    .calc-opts label { font-size: 14px; color: var(--muted); font-weight: 650; display: grid; gap: 6px; }
+    .calc-sum { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 14px 0 0; }
+    .calc-sum div { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+    .calc-sum dt { font-size: 12.5px; color: var(--muted); }
+    .calc-sum dd { margin: 2px 0 0; font-family: var(--serif); font-size: 1.35rem; color: var(--ink); font-variant-numeric: tabular-nums; }
+    @media (max-width: 640px) {
+      .calc-head { display: none; }
+      .calc-row { grid-template-columns: 1fr 1fr 2.2em; grid-template-areas: "name name del" "g kind kind" "pct sc sc"; }
+      .calc-row .c-name { grid-area: name; } .calc-row .c-g { grid-area: g; } .calc-row .c-kind { grid-area: kind; }
+      .calc-row .c-pct { grid-area: pct; text-align: left; } .calc-row .c-sc { grid-area: sc; text-align: left; } .calc-row .del { grid-area: del; }
+      .calc-row output::before { content: attr(data-l) " "; color: var(--muted); font-size: 13px; }
+      .calc-opts, .calc-sum { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","inLanguage":"ko","url":"https://bakememo.cn/ko/calculator/","name":"베이커스 퍼센트 계산기","description":"무료 베이커스 퍼센트 계산기. 그램을 입력하면 베이커스 퍼센트, 수화율, 르방을 포함한 총 수화율을 계산하고 원하는 반죽 무게로 환산해요. 계산은 브라우저 안에서만 하며 아무것도 전송하지 않아요.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"홈","item":"https://bakememo.cn/ko/"},{"@type":"ListItem","position":2,"name":"베이커스 퍼센트 계산기","item":"https://bakememo.cn/ko/calculator/"}]}]}</script>
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap">
+      <a class="brand" href="/ko/" aria-label="BakeMemo"><img src="/assets/img/icon.webp" alt="" width="34" height="34">BakeMemo</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="/ko/">홈</a>
+        <a href="/bakememo/support/#en">도움말</a>
+        <a class="lang hide-s" href="/en/calculator/?lang=en" lang="en" hreflang="en">EN</a>
+        <a class="btn btn-primary btn-sm" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-calc-ko-nav&amp;mt=8">App Store</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap help guide">
+    <article>
+      <section class="help-hero">
+        <p class="eyebrow">베이킹 도구</p>
+        <h1>베이커스 퍼센트 계산기</h1>
+        <p class="lede">재료마다 그램을 입력하면 베이커스 퍼센트와 수화율, 르방 속 밀가루와 물까지 넣은 총 수화율이 나와요. 목표 반죽 무게를 넣으면 모든 재료가 같은 비율로 환산돼요.</p>
+      </section>
+
+      <section class="calc" id="calc" hidden aria-label="베이커스 퍼센트 계산기">
+        <div class="calc-head"><span>재료</span><span>그램</span><span>종류</span><span style="text-align:right">베이커스 %</span><span style="text-align:right">환산</span><span></span></div>
+        <div class="calc-rows"></div>
+        <button type="button" class="add">+ 재료 추가</button>
+        <div class="calc-opts">
+          <label>르방 수화율(%)<input id="sh" type="number" inputmode="decimal" min="0" step="any" value="100"></label>
+          <label>목표 반죽 무게(g, 선택)<input id="target" type="number" inputmode="decimal" min="0" step="any" placeholder="예: 1600"></label>
+        </div>
+        <dl class="calc-sum">
+          <div><dt>밀가루 합계(100%)</dt><dd id="o-flour">–</dd></div>
+          <div><dt>반죽 총무게</dt><dd id="o-total">–</dd></div>
+          <div><dt>수화율(넣은 물)</dt><dd id="o-hyd">–</dd></div>
+          <div><dt>총 수화율(르방 포함)</dt><dd id="o-thyd">–</dd></div>
+        </dl>
+      </section>
+      <noscript><p class="note">계산기를 쓰려면 JavaScript가 필요해요. 아래 공식으로 직접 계산할 수도 있어요.</p></noscript>
+      <p class="note">모든 계산은 브라우저 안에서 이루어지며 전송하거나 저장하지 않아요. 기본 예시: 밀가루 500 g + 물 350 g + 르방 100 g(BakeMemo 앱의 기초 수업 예시), 소금 10 g.</p>
+
+      <h2>계산 방법</h2>
+      <p class="formula">베이커스 % = 재료 무게 ÷ 밀가루 합계 × 100%</p>
+      <ul>
+        <li><b>밀가루 합계</b>는 ‘밀가루’로 표시한 줄만 더해요. 여러 가루를 합쳐 100%예요. 르방 속 밀가루는 여기에 넣지 않아요(대부분의 배합표와 같은 방식).</li>
+        <li><b>수화율</b> = ‘물’ 합계 ÷ 밀가루 합계.</li>
+        <li><b>총 수화율</b>은 먼저 르방을 수화율에 따라 밀가루와 물로 나누고(르방 속 밀가루 = 르방 ÷ (1 + 수화율)), (물 + 르방 속 물) ÷ (밀가루 + 르방 속 밀가루)로 계산해요.</li>
+        <li><b>환산</b>: 배수 = 목표 무게 ÷ 현재 무게. 모든 재료에 같은 배수를 곱하므로 비율은 그대로예요. 반죽과 성형 손실을 생각해 2–3% 넉넉히 준비하세요.</li>
+      </ul>
+      <p>우유, 달걀, 버터에도 수분이 있지만 여기서는 ‘기타’로 두고 수화율에 넣지 않아요. 필요하면 수분량으로 직접 환산하세요.</p>
+
+      <h2>더 읽기</h2>
+      <p>베이커스 퍼센트 계산법(<a href="/en/guide/bakers-percentage/" hreflang="en">영어</a>)과 수화율 계산법(<a href="/en/guide/hydration/" hreflang="en">영어</a>)에서 공식과 환산을 자세히 설명해요.</p>
+
+      <section class="inline-cta">
+        <h3>배합을 휴대폰에 남기세요</h3>
+        <p>베이커스 퍼센트로 생각하기: 르방 수화율 설정, 총 무게로 계산, 굽기 후 점검이 다음에 바꿀 한 가지를 알려 줘요. foodgeek 링크로 배합을 가져올 수 있어요.</p>
+        <a class="btn btn-primary" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-calc-ko-inline&amp;mt=8"><span class="two"><small>다운로드</small>App Store</span></a>
+      </section>
+    </article>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <span>© 2026 Jiahui Xu · BakeMemo</span>
+      <a href="/ko/">홈</a>
+      <a href="/en/guide/">베이킹 가이드(영어)</a>
+      <a href="/bakememo/support/#en">도움말</a>
+      <a href="/bakememo/privacy/#en">개인정보 처리방침</a>
+      <a class="sp" href="https://beian.miit.gov.cn/" rel="noreferrer">粤ICP备2026075524号</a>
+      <nav class="langs" aria-label="Language"><a href="/calculator/?lang=zh" lang="zh-Hans" hreflang="zh-Hans">简体中文</a><a href="/en/calculator/?lang=en" lang="en" hreflang="en">English</a><a href="/zh-hant/calculator/?lang=zh-hant" lang="zh-Hant" hreflang="zh-Hant">繁體中文</a><a href="/ja/calculator/?lang=ja" lang="ja" hreflang="ja">日本語</a><a href="/ko/calculator/?lang=ko" lang="ko" hreflang="ko" aria-current="page">한국어</a><a href="/de/calculator/?lang=de" lang="de" hreflang="de">Deutsch</a><a href="/fr/calculator/?lang=fr" lang="fr" hreflang="fr">Français</a><a href="/es/calculator/?lang=es" lang="es" hreflang="es">Español</a><a href="/ru/calculator/?lang=ru" lang="ru" hreflang="ru">Русский</a></nav>
+    </div>
+  </footer>
+
+  <div class="dock" role="complementary" aria-label="App Store">
+    <img src="/assets/img/icon.webp" alt="" width="40" height="40">
+    <div class="t"><b>BakeMemo</b><span>레시피보다 비율로 굽기</span></div>
+    <a class="btn btn-primary" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-calc-ko-dock&amp;mt=8">App Store</a>
+  </div>
+  <script>
+    /* 烘焙百分比计算器：只在本页计算，不发送、不保存任何数据。 */
+    (function () {
+      var root = document.getElementById("calc"); if (!root) return;
+      var T = {"name": "재료", "grams": "그램", "pct": "베이커스 %", "sc": "환산", "del": "이 줄 삭제", "dec": ".", "kinds": [["flour", "밀가루"], ["water", "물"], ["starter", "르방"], ["other", "기타"]], "rows": [["강력분", 500, "flour"], ["물", 350, "water"], ["소금", 10, "other"], ["르방", 100, "starter"]]};
+      var list = root.querySelector(".calc-rows");
+      function num(v) { var n = parseFloat(String(v).replace(",", ".")); return isFinite(n) && n > 0 ? n : 0; }
+      function fmt(n, d) { if (!isFinite(n)) return "–"; var s = n.toFixed(d); s = s.indexOf(".") >= 0 ? s.replace(/\.?0+$/, "") : s; return s.replace(".", T.dec); }
+      function g(n) { return n >= 100 ? fmt(n, 0) : n >= 10 ? fmt(n, 1) : fmt(n, 2); }
+      function addRow(name, grams, kind) {
+        var r = document.createElement("div"); r.className = "calc-row";
+        var opts = T.kinds.map(function (k) { return '<option value="' + k[0] + '"' + (k[0] === kind ? " selected" : "") + ">" + k[1] + "</option>"; }).join("");
+        r.innerHTML = '<input class="c-name" aria-label="' + T.name + '">' +
+          '<input class="c-g" type="number" inputmode="decimal" min="0" step="any" aria-label="' + T.grams + '">' +
+          '<select class="c-kind" aria-label="' + T.name + '">' + opts + "</select>" +
+          '<output class="c-pct" data-l="' + T.pct + '"></output><output class="c-sc" data-l="' + T.sc + '"></output>' +
+          '<button type="button" class="del" aria-label="' + T.del + '">×</button>';
+        r.querySelector(".c-name").value = name; r.querySelector(".c-g").value = grams === "" ? "" : grams;
+        r.querySelector(".del").addEventListener("click", function () { r.remove(); calc(); });
+        list.appendChild(r);
+      }
+      function calc() {
+        var rows = [].slice.call(list.querySelectorAll(".calc-row"));
+        var sh = num(document.getElementById("sh").value) / 100, target = num(document.getElementById("target").value);
+        var flour = 0, water = 0, starter = 0, total = 0;
+        rows.forEach(function (r) {
+          var w = num(r.querySelector(".c-g").value), k = r.querySelector(".c-kind").value; total += w;
+          if (k === "flour") flour += w; else if (k === "water") water += w; else if (k === "starter") starter += w;
+        });
+        var sFlour = starter / (1 + sh), sWater = starter - sFlour, f = target > 0 && total > 0 ? target / total : 1;
+        rows.forEach(function (r) {
+          var w = num(r.querySelector(".c-g").value);
+          r.querySelector(".c-pct").value = flour > 0 && w > 0 ? fmt(w / flour * 100, 1) + "%" : "–";
+          r.querySelector(".c-sc").value = w > 0 ? g(w * f) + " g" : "–";
+        });
+        document.getElementById("o-flour").textContent = flour > 0 ? g(flour) + " g" : "–";
+        document.getElementById("o-total").textContent = total > 0 ? g(total * f) + " g" : "–";
+        document.getElementById("o-hyd").textContent = flour > 0 ? fmt(water / flour * 100, 1) + "%" : "–";
+        document.getElementById("o-thyd").textContent = flour + sFlour > 0 ? fmt((water + sWater) / (flour + sFlour) * 100, 1) + "%" : "–";
+      }
+      T.rows.forEach(function (x) { addRow(x[0], x[1], x[2]); });
+      root.querySelector(".add").addEventListener("click", function () { addRow("", "", "other"); calc(); list.lastChild.querySelector(".c-name").focus(); });
+      root.addEventListener("input", calc); root.addEventListener("change", calc);
+      root.hidden = false; calc();
+    })();
+  </script>
+</body>
+</html>

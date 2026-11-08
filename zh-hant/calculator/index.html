@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="applicable-device" content="pc,mobile">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <title>烘焙百分比計算器：水合率與配方換算 · 焙可記</title>
+  <meta name="description" content="免費烘焙百分比（麵包師百分比）計算器：輸入克數，算出百分比、水合率和含酵種的總水合，填目標麵團總重即可按比例換算。只在瀏覽器裡計算，不上傳任何資料。">
+  <meta name="apple-itunes-app" content="app-id=6792324050">
+  <link rel="canonical" href="https://bakememo.cn/zh-hant/calculator/">
+  <link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/calculator/">
+  <link rel="alternate" hreflang="en" href="https://bakememo.cn/en/calculator/">
+  <link rel="alternate" hreflang="zh-Hant" href="https://bakememo.cn/zh-hant/calculator/">
+  <link rel="alternate" hreflang="ja" href="https://bakememo.cn/ja/calculator/">
+  <link rel="alternate" hreflang="ko" href="https://bakememo.cn/ko/calculator/">
+  <link rel="alternate" hreflang="de" href="https://bakememo.cn/de/calculator/">
+  <link rel="alternate" hreflang="fr" href="https://bakememo.cn/fr/calculator/">
+  <link rel="alternate" hreflang="es" href="https://bakememo.cn/es/calculator/">
+  <link rel="alternate" hreflang="ru" href="https://bakememo.cn/ru/calculator/">
+  <link rel="alternate" hreflang="x-default" href="https://bakememo.cn/calculator/">
+  <script>
+    /* 记住手动选择的语言。 */
+    try { if (/[?&]lang=zh-hant\b/.test(location.search)) localStorage.setItem("bm-lang", "zh-hant"); } catch (e) {}
+  </script>
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="zh_TW">
+  <meta property="og:title" content="烘焙百分比計算器">
+  <meta property="og:description" content="免費烘焙百分比（麵包師百分比）計算器：輸入克數，算出百分比、水合率和含酵種的總水合，填目標麵團總重即可按比例換算。只在瀏覽器裡計算，不上傳任何資料。">
+  <meta property="og:url" content="https://bakememo.cn/zh-hant/calculator/">
+  <meta property="og:image" content="https://bakememo.cn/assets/img/og-zh.png">
+  <link rel="icon" href="/assets/img/favicon-64.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/home.css">
+  <link rel="stylesheet" href="/assets/support.css">
+  <style>
+    .calc { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 18px; margin: 8px 0 18px; }
+    .calc-head, .calc-row { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr) 5em 5.5em 2.2em; gap: 8px; align-items: center; }
+    .calc-head { font-size: 13px; color: var(--muted); font-weight: 650; padding: 0 2px 6px; }
+    .calc-row { padding: 6px 0; border-top: 1px dashed var(--line); }
+    .calc input, .calc select { font: inherit; font-size: 16px; width: 100%; min-width: 0; padding: 9px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--ink); }
+    .calc output { font-variant-numeric: tabular-nums; text-align: right; color: var(--ink); }
+    .calc .del { border: 0; background: none; color: var(--muted); font-size: 1.3rem; cursor: pointer; padding: 4px; }
+    .calc .add { margin: 10px 0 4px; border: 1px dashed var(--brand); background: var(--brand-wash); color: var(--brand-deep); border-radius: 10px; padding: 9px 14px; font: inherit; font-weight: 650; cursor: pointer; }
+    .calc-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 6px; }
+    .calc-opts label { font-size: 14px; color: var(--muted); font-weight: 650; display: grid; gap: 6px; }
+    .calc-sum { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 14px 0 0; }
+    .calc-sum div { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+    .calc-sum dt { font-size: 12.5px; color: var(--muted); }
+    .calc-sum dd { margin: 2px 0 0; font-family: var(--serif); font-size: 1.35rem; color: var(--ink); font-variant-numeric: tabular-nums; }
+    @media (max-width: 640px) {
+      .calc-head { display: none; }
+      .calc-row { grid-template-columns: 1fr 1fr 2.2em; grid-template-areas: "name name del" "g kind kind" "pct sc sc"; }
+      .calc-row .c-name { grid-area: name; } .calc-row .c-g { grid-area: g; } .calc-row .c-kind { grid-area: kind; }
+      .calc-row .c-pct { grid-area: pct; text-align: left; } .calc-row .c-sc { grid-area: sc; text-align: left; } .calc-row .del { grid-area: del; }
+      .calc-row output::before { content: attr(data-l) " "; color: var(--muted); font-size: 13px; }
+      .calc-opts, .calc-sum { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","inLanguage":"zh-Hant","url":"https://bakememo.cn/zh-hant/calculator/","name":"烘焙百分比計算器","description":"免費烘焙百分比（麵包師百分比）計算器：輸入克數，算出百分比、水合率和含酵種的總水合，填目標麵團總重即可按比例換算。只在瀏覽器裡計算，不上傳任何資料。","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首頁","item":"https://bakememo.cn/zh-hant/"},{"@type":"ListItem","position":2,"name":"烘焙百分比計算器","item":"https://bakememo.cn/zh-hant/calculator/"}]}]}</script>
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap">
+      <a class="brand" href="/zh-hant/" aria-label="BakeMemo"><img src="/assets/img/icon.webp" alt="" width="34" height="34">BakeMemo</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="/zh-hant/">首頁</a>
+        <a href="/bakememo/support/">幫助與支援</a>
+        <a class="lang hide-s" href="/en/calculator/?lang=en" lang="en" hreflang="en">EN</a>
+        <a class="btn btn-primary btn-sm" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-calc-zh-hant-nav&amp;mt=8">App Store</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap help guide">
+    <article>
+      <section class="help-hero">
+        <p class="eyebrow">烘焙工具</p>
+        <h1>烘焙百分比計算器</h1>
+        <p class="lede">輸入每樣原料的克數，算出烘焙百分比、水合率，以及把酵種算進去的總水合。填上目標麵團總重，所有原料按比例換算。</p>
+      </section>
+
+      <section class="calc" id="calc" hidden aria-label="烘焙百分比計算器">
+        <div class="calc-head"><span>原料</span><span>克數</span><span>類型</span><span style="text-align:right">百分比</span><span style="text-align:right">換算後</span><span></span></div>
+        <div class="calc-rows"></div>
+        <button type="button" class="add">+ 新增原料</button>
+        <div class="calc-opts">
+          <label>酵種水合度（%）<input id="sh" type="number" inputmode="decimal" min="0" step="any" value="100"></label>
+          <label>目標麵團總重（克，可不填）<input id="target" type="number" inputmode="decimal" min="0" step="any" placeholder="例如 1600"></label>
+        </div>
+        <dl class="calc-sum">
+          <div><dt>總粉量（100%）</dt><dd id="o-flour">–</dd></div>
+          <div><dt>麵團總重</dt><dd id="o-total">–</dd></div>
+          <div><dt>水合率（加入的水）</dt><dd id="o-hyd">–</dd></div>
+          <div><dt>總水合（含酵種）</dt><dd id="o-thyd">–</dd></div>
+        </dl>
+      </section>
+      <noscript><p class="note">計算器需要 JavaScript。下面的公式也可以手算。</p></noscript>
+      <p class="note">所有計算都在你的瀏覽器裡完成，不上傳、不保存。預設例子：500 克麵粉 + 350 克水 + 100 克酵種（取自焙可記「烘焙基礎」第 2 課），再加 10 克鹽。</p>
+
+      <h2>怎麼算</h2>
+      <p class="formula">烘焙百分比 = 原料重量 ÷ 總粉量 × 100%</p>
+      <ul>
+        <li><b>總粉量</b>只算標為「粉」的行；幾種粉加起來算 100%。酵種裡的粉不算在這裡，和多數配方的寫法一致。</li>
+        <li><b>水合率</b> = 所有「水」÷ 總粉量。</li>
+        <li><b>總水合</b>先按酵種水合度把酵種拆成粉和水（酵種裡的粉 = 酵種 ÷（1 + 水合度）），再算（水 + 酵種裡的水）÷（粉 + 酵種裡的粉）。</li>
+        <li><b>換算</b>：係數 = 目標總重 ÷ 目前總重，所有原料乘同一個係數，比例不變。攪拌和整形有損耗，可多備 2–3%。</li>
+      </ul>
+      <p>牛奶、雞蛋和奶油也含水。這裡把它們算作「其他」，不計入水合；需要的話請按含水量自行換算。</p>
+
+      <h2>延伸閱讀</h2>
+      <p><a href="/guide/bakers-percentage/" hreflang="zh-Hans">烘焙百分比怎麼算</a>和<a href="/guide/hydration/" hreflang="zh-Hans">水合率怎麼算</a>（簡體中文）把公式和換算講得更細。</p>
+
+      <section class="inline-cta">
+        <h3>把每個配方存在手機裡</h3>
+        <p>用麵包師百分比做麵包：酵種水合可設、按總重換算，烤後復盤告訴你下一爐改哪一處。貼上 foodgeek 連結即可匯入配方。前三爐免費。</p>
+        <a class="btn btn-primary" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-calc-zh-hant-inline&amp;mt=8"><span class="two"><small>在 App Store 下載</small>App Store</span></a>
+      </section>
+    </article>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <span>© 2026 Jiahui Xu · BakeMemo</span>
+      <a href="/zh-hant/">首頁</a>
+      <a href="/guide/">烘焙指南（簡體中文）</a>
+      <a href="/bakememo/support/">幫助與支援</a>
+      <a href="/bakememo/privacy/">隱私政策</a>
+      <a class="sp" href="https://beian.miit.gov.cn/" rel="noreferrer">粤ICP备2026075524号</a>
+      <nav class="langs" aria-label="Language"><a href="/calculator/?lang=zh" lang="zh-Hans" hreflang="zh-Hans">简体中文</a><a href="/en/calculator/?lang=en" lang="en" hreflang="en">English</a><a href="/zh-hant/calculator/?lang=zh-hant" lang="zh-Hant" hreflang="zh-Hant" aria-current="page">繁體中文</a><a href="/ja/calculator/?lang=ja" lang="ja" hreflang="ja">日本語</a><a href="/ko/calculator/?lang=ko" lang="ko" hreflang="ko">한국어</a><a href="/de/calculator/?lang=de" lang="de" hreflang="de">Deutsch</a><a href="/fr/calculator/?lang=fr" lang="fr" hreflang="fr">Français</a><a href="/es/calculator/?lang=es" lang="es" hreflang="es">Español</a><a href="/ru/calculator/?lang=ru" lang="ru" hreflang="ru">Русский</a></nav>
+    </div>
+  </footer>
+
+  <div class="dock" role="complementary" aria-label="App Store">
+    <img src="/assets/img/icon.webp" alt="" width="40" height="40">
+    <div class="t"><b>BakeMemo</b><span>按比例做麵包，只記改了什麼</span></div>
+    <a class="btn btn-primary" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-calc-zh-hant-dock&amp;mt=8">App Store</a>
+  </div>
+  <script>
+    /* 烘焙百分比计算器：只在本页计算，不发送、不保存任何数据。 */
+    (function () {
+      var root = document.getElementById("calc"); if (!root) return;
+      var T = {"name": "原料", "grams": "克數", "pct": "百分比", "sc": "換算後", "del": "刪除這一行", "dec": ".", "kinds": [["flour", "粉"], ["water", "水"], ["starter", "酵種"], ["other", "其他"]], "rows": [["高筋麵粉", 500, "flour"], ["水", 350, "water"], ["鹽", 10, "other"], ["天然酵種", 100, "starter"]]};
+      var list = root.querySelector(".calc-rows");
+      function num(v) { var n = parseFloat(String(v).replace(",", ".")); return isFinite(n) && n > 0 ? n : 0; }
+      function fmt(n, d) { if (!isFinite(n)) return "–"; var s = n.toFixed(d); s = s.indexOf(".") >= 0 ? s.replace(/\.?0+$/, "") : s; return s.replace(".", T.dec); }
+      function g(n) { return n >= 100 ? fmt(n, 0) : n >= 10 ? fmt(n, 1) : fmt(n, 2); }
+      function addRow(name, grams, kind) {
+        var r = document.createElement("div"); r.className = "calc-row";
+        var opts = T.kinds.map(function (k) { return '<option value="' + k[0] + '"' + (k[0] === kind ? " selected" : "") + ">" + k[1] + "</option>"; }).join("");
+        r.innerHTML = '<input class="c-name" aria-label="' + T.name + '">' +
+          '<input class="c-g" type="number" inputmode="decimal" min="0" step="any" aria-label="' + T.grams + '">' +
+          '<select class="c-kind" aria-label="' + T.name + '">' + opts + "</select>" +
+          '<output class="c-pct" data-l="' + T.pct + '"></output><output class="c-sc" data-l="' + T.sc + '"></output>' +
+          '<button type="button" class="del" aria-label="' + T.del + '">×</button>';
+        r.querySelector(".c-name").value = name; r.querySelector(".c-g").value = grams === "" ? "" : grams;
+        r.querySelector(".del").addEventListener("click", function () { r.remove(); calc(); });
+        list.appendChild(r);
+      }
+      function calc() {
+        var rows = [].slice.call(list.querySelectorAll(".calc-row"));
+        var sh = num(document.getElementById("sh").value) / 100, target = num(document.getElementById("target").value);
+        var flour = 0, water = 0, starter = 0, total = 0;
+        rows.forEach(function (r) {
+          var w = num(r.querySelector(".c-g").value), k = r.querySelector(".c-kind").value; total += w;
+          if (k === "flour") flour += w; else if (k === "water") water += w; else if (k === "starter") starter += w;
+        });
+        var sFlour = starter / (1 + sh), sWater = starter - sFlour, f = target > 0 && total > 0 ? target / total : 1;
+        rows.forEach(function (r) {
+          var w = num(r.querySelector(".c-g").value);
+          r.querySelector(".c-pct").value = flour > 0 && w > 0 ? fmt(w / flour * 100, 1) + "%" : "–";
+          r.querySelector(".c-sc").value = w > 0 ? g(w * f) + " g" : "–";
+        });
+        document.getElementById("o-flour").textContent = flour > 0 ? g(flour) + " g" : "–";
+        document.getElementById("o-total").textContent = total > 0 ? g(total * f) + " g" : "–";
+        document.getElementById("o-hyd").textContent = flour > 0 ? fmt(water / flour * 100, 1) + "%" : "–";
+        document.getElementById("o-thyd").textContent = flour + sFlour > 0 ? fmt((water + sWater) / (flour + sFlour) * 100, 1) + "%" : "–";
+      }
+      T.rows.forEach(function (x) { addRow(x[0], x[1], x[2]); });
+      root.querySelector(".add").addEventListener("click", function () { addRow("", "", "other"); calc(); list.lastChild.querySelector(".c-name").focus(); });
+      root.addEventListener("input", calc); root.addEventListener("change", calc);
+      root.hidden = false; calc();
+    })();
+  </script>
+</body>
+</html>
