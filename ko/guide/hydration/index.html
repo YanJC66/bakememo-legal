@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="applicable-device" content="pc,mobile">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <title>수화율 계산법: 르방을 포함한 총 수화율 · BakeMemo</title>
+  <meta name="description" content="수화율은 밀가루 대비 물의 비율이에요. 르방을 쓴다면 르방 속 밀가루와 물도 세야 해요. 계산 예시, 흔한 빵의 수화율, 한 번에 얼마나 바꿀지.">
+  <meta name="apple-itunes-app" content="app-id=6792324050">
+  <link rel="canonical" href="https://bakememo.cn/ko/guide/hydration/">
+  <link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/guide/hydration/">
+  <link rel="alternate" hreflang="en" href="https://bakememo.cn/en/guide/hydration/">
+  <link rel="alternate" hreflang="zh-Hant" href="https://bakememo.cn/zh-hant/guide/hydration/">
+  <link rel="alternate" hreflang="ja" href="https://bakememo.cn/ja/guide/hydration/">
+  <link rel="alternate" hreflang="ko" href="https://bakememo.cn/ko/guide/hydration/">
+  <link rel="alternate" hreflang="de" href="https://bakememo.cn/de/guide/hydration/">
+  <link rel="alternate" hreflang="fr" href="https://bakememo.cn/fr/guide/hydration/">
+  <link rel="alternate" hreflang="es" href="https://bakememo.cn/es/guide/hydration/">
+  <link rel="alternate" hreflang="ru" href="https://bakememo.cn/ru/guide/hydration/">
+  <link rel="alternate" hreflang="x-default" href="https://bakememo.cn/guide/hydration/">
+  <script>
+    /* 记住手动选择的语言。 */
+    try { if (/[?&]lang=ko\b/.test(location.search)) localStorage.setItem("bm-lang", "ko"); } catch (e) {}
+  </script>
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:title" content="반죽 수화율 계산법">
+  <meta property="og:description" content="수화율은 밀가루 대비 물의 비율이에요. 르방을 쓴다면 르방 속 밀가루와 물도 세야 해요. 계산 예시, 흔한 빵의 수화율, 한 번에 얼마나 바꿀지.">
+  <meta property="og:url" content="https://bakememo.cn/ko/guide/hydration/">
+  <meta property="og:image" content="https://bakememo.cn/assets/img/og-en.png">
+  <link rel="icon" href="/assets/img/favicon-64.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/home.css">
+  <link rel="stylesheet" href="/assets/support.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"반죽 수화율 계산법","description":"수화율은 밀가루 대비 물의 비율이에요. 르방을 쓴다면 르방 속 밀가루와 물도 세야 해요. 계산 예시, 흔한 빵의 수화율, 한 번에 얼마나 바꿀지.","inLanguage":"ko","datePublished":"2026-11-10","dateModified":"2026-11-10","author":{"@type":"Person","name":"Jiahui Xu"},"publisher":{"@type":"Person","name":"Jiahui Xu"},"mainEntityOfPage":"https://bakememo.cn/ko/guide/hydration/","image":"https://bakememo.cn/assets/img/og-en.png"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"홈","item":"https://bakememo.cn/ko/"},{"@type":"ListItem","position":2,"name":"반죽 수화율 계산법","item":"https://bakememo.cn/ko/guide/hydration/"}]}]}</script>
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap">
+      <a class="brand" href="/ko/" aria-label="BakeMemo"><img src="/assets/img/icon.webp" alt="" width="34" height="34">BakeMemo</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="/ko/">홈</a>
+        <a class="hide-s" href="/ko/calculator/">베이커스 퍼센트 계산기</a>
+        <a class="lang hide-s" href="/en/guide/hydration/?lang=en" lang="en" hreflang="en">EN</a>
+        <a class="btn btn-primary btn-sm" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-guide-hyd-ko-nav&amp;mt=8">App Store</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap help guide">
+    <article>
+      <section class="help-hero">
+        <p class="eyebrow">베이킹 가이드</p>
+        <h1>반죽 수화율 계산법</h1>
+        <p class="lede">수화율은 밀가루 대비 물의 비율이에요. 르방(사워도우 스타터)을 쓴다면 르방 속 밀가루와 물도 세야 해요. 빼면 숫자가 낮게 나와요.</p>
+      </section>
+
+      <h2>기본 공식</h2>
+      <p class="formula">수화율 = 물 무게 ÷ 밀가루 무게 × 100%</p>
+      <p>결국 물의 <a href="/ko/guide/bakers-percentage/">베이커스 퍼센트</a>예요. 밀가루 500 g에 물 350 g이면 수화율 70%. 밀가루가 여러 가지라면 합계를 100%로 둬요.</p>
+
+      <h2>르방이 있을 때: 밀가루와 물로 나누기</h2>
+      <p>르방은 밀가루와 물이에요. 르방 수화율이 100%라면 르방 100 g은 밀가루 50 g과 물 50 g이에요.</p>
+      <p class="formula">르방 속 밀가루 = 르방 무게 ÷ (1 + 르방 수화율)<br>르방 속 물 = 르방 무게 − 르방 속 밀가루</p>
+      <p>예시: 밀가루 500 g + 물 350 g + 르방 100 g.</p>
+      <div class="tbl">
+        <table>
+          <thead><tr><th>세는 방법</th><th class="n">밀가루</th><th class="n">물</th><th class="n">수화율</th></tr></thead>
+          <tbody>
+            <tr><td>넣은 물만</td><td class="n">500 g</td><td class="n">350 g</td><td class="n">70%</td></tr>
+            <tr><td>르방 포함(수화율 100% 르방)</td><td class="n">550 g</td><td class="n">400 g</td><td class="n">72.7%</td></tr>
+            <tr><td>르방 포함(수화율 80% 르방)</td><td class="n">555.6 g</td><td class="n">394.4 g</td><td class="n">71.0%</td></tr>
+            <tr><td>르방 포함(50%, 된 르방)</td><td class="n">566.7 g</td><td class="n">383.3 g</td><td class="n">67.6%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>같은 공식이라도 넣은 물만 세면 70%, 르방을 포함하면 72.7%예요. 다른 사람의 배합과 비교하거나 반죽이 예상보다 질다고 느껴질 때, 서로 어느 숫자를 말하는지 확인하세요.</p>
+
+      <h2>흔한 빵의 수화율</h2>
+      <p>BakeMemo 내장 레시피의 수화율(넣은 물 기준)이에요. 출발점일 뿐 규칙은 아니에요. 밀가루마다 흡수율이 달라 같은 숫자라도 촉감이 다를 수 있어요.</p>
+      <div class="tbl">
+        <table>
+          <thead><tr><th>빵</th><th class="n">수화율</th></tr></thead>
+          <tbody>
+            <tr><td>만터우(중국식 찐빵)</td><td class="n">48%</td></tr>
+            <tr><td>플레인 베이글</td><td class="n">56%</td></tr>
+            <tr><td>나폴리 피자 반죽, 피타</td><td class="n">62%</td></tr>
+            <tr><td>바게트</td><td class="n">72%</td></tr>
+            <tr><td>기본 화이트 사워도우(르방 20% 별도)</td><td class="n">72%</td></tr>
+            <tr><td>노니드 캉파뉴</td><td class="n">76%</td></tr>
+            <tr><td>통밀 캉파뉴</td><td class="n">78%</td></tr>
+            <tr><td>치아바타, 클래식 포카치아</td><td class="n">80%</td></tr>
+            <tr><td>호밀 사워도우(르방 20% 별도)</td><td class="n">80%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>기본 화이트 사워도우는 강력분 450 g, 물 324 g, 르방 90 g, 소금 9 g이에요. 르방(수화율 100%)을 포함하면 밀가루 495 g, 물 369 g으로 총 수화율은 약 74.5%예요.</p>
+
+      <h2>수화율 바꾸기: 한 번에 얼마나</h2>
+      <ul>
+        <li><b>수화율만 바꾸세요.</b> BakeMemo 기초 수업의 예시: 기본 배합으로 한 번 굽고, 다음엔 수화율만 3% 올려 비교한 뒤 유지할지 정해요.</li>
+        <li><b>너무 질고 끈적해서 성형이 어렵다면:</b> 수화율이 이미 75% 이상일 때 BakeMemo의 굽기 후 점검은 물이 많을 수 있다고 알려 주고, 다른 건 그대로 두고 수화율을 3–5% 낮추라고 제안해요. 대가는 속결이 조금 더 촘촘해질 수 있다는 점이에요.</li>
+        <li><b>수화율이 높지 않은데 끈적하다면:</b> 글루텐이 덜 잡혔을 수 있어요. 밀가루를 더하기보다 폴딩을 몇 세트 더 하고 젖은 손으로 다루세요.</li>
+      </ul>
+      <p>이번 굽기의 수화율, 반죽 온도, 결과를 적어 두면 다음 굽기에서 그 3%가 무엇을 했는지 보여요.</p>
+
+      <section class="inline-cta">
+        <h3>총 수화율은 앱이 계산해요</h3>
+        <p>베이커스 퍼센트로 생각하기: 르방 수화율 설정, 총 무게로 계산, 굽기 후 점검이 다음에 바꿀 한 가지를 알려 줘요. foodgeek 링크로 배합을 가져올 수 있어요.</p>
+        <a class="btn btn-primary" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-guide-hyd-ko-inline&amp;mt=8"><span class="two"><small>다운로드</small>App Store</span></a>
+      </section>
+      <nav class="related" aria-label="다른 가이드"><h2>다른 가이드</h2><ul><li><a href="/ko/guide/bakers-percentage/">베이커스 퍼센트 계산법</a></li><li><a href="/ko/calculator/">베이커스 퍼센트 계산기</a></li><li><a href="/en/guide/">베이킹 가이드(영어)</a></li></ul></nav>
+    </article>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <span>© 2026 Jiahui Xu · BakeMemo</span>
+      <a href="/ko/">홈</a>
+      <a href="/bakememo/support/#en">도움말</a>
+      <a href="/bakememo/privacy/#en">개인정보 처리방침</a>
+      <a class="sp" href="https://beian.miit.gov.cn/" rel="noreferrer">粤ICP备2026075524号</a>
+      <nav class="langs" aria-label="Language"><a href="/guide/hydration/?lang=zh" lang="zh-Hans" hreflang="zh-Hans">简体中文</a><a href="/en/guide/hydration/?lang=en" lang="en" hreflang="en">English</a><a href="/zh-hant/guide/hydration/?lang=zh-hant" lang="zh-Hant" hreflang="zh-Hant">繁體中文</a><a href="/ja/guide/hydration/?lang=ja" lang="ja" hreflang="ja">日本語</a><a href="/ko/guide/hydration/?lang=ko" lang="ko" hreflang="ko" aria-current="page">한국어</a><a href="/de/guide/hydration/?lang=de" lang="de" hreflang="de">Deutsch</a><a href="/fr/guide/hydration/?lang=fr" lang="fr" hreflang="fr">Français</a><a href="/es/guide/hydration/?lang=es" lang="es" hreflang="es">Español</a><a href="/ru/guide/hydration/?lang=ru" lang="ru" hreflang="ru">Русский</a></nav>
+    </div>
+  </footer>
+
+  <div class="dock" role="complementary" aria-label="App Store">
+    <img src="/assets/img/icon.webp" alt="" width="40" height="40">
+    <div class="t"><b>BakeMemo</b><span>레시피보다 비율로 굽기</span></div>
+    <a class="btn btn-primary" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-guide-hyd-ko-dock&amp;mt=8">App Store</a>
+  </div>
+</body>
+</html>

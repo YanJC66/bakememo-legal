@@ -7,6 +7,7 @@ Public routes:
 - `/` — product homepage (zh-Hans), `/en/` — English homepage
 - `/zh-hant/`, `/ja/`, `/ko/`, `/de/`, `/fr/`, `/es/`, `/ru/` — homepages in the other App Store languages, built from the store localizations and real localized screenshots by `intl_pages.py` (marketing repo, `website/bakememo-cn/tools/`); `/` sends visitors to their system language, crawlers are never redirected
 - `/guide/`, `/en/guide/` — baking guide index; each guide has a zh page at `/guide/<slug>/` and an en page at `/en/guide/<slug>/`
+- `/<lang>/guide/bakers-percentage/`, `/<lang>/guide/hydration/` — the two calculation guides in the seven other languages (no per-language guide index)
 - `/calculator/`, `/en/calculator/`, `/<lang>/calculator/` — baker's percentage calculator in all nine languages (runs entirely in the browser)
 - `/404.html` — bilingual not-found page (GitHub Pages serves it automatically)
 - `/bakememo/privacy` (required by App Store)
