@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="applicable-device" content="pc,mobile">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <title>Recipe Cost Calculator for Baking: Cost per Batch and per Piece · BakeMemo</title>
+  <meta name="description" content="Free baking recipe cost calculator: enter how much of each ingredient you use and what a pack costs to get ingredient cost per batch, per piece and per 100 g, plus a reference price. Runs in your browser.">
+  <meta name="apple-itunes-app" content="app-id=6792324050">
+  <link rel="canonical" href="https://bakememo.cn/en/cost-calculator/">
+  <link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/cost-calculator/">
+  <link rel="alternate" hreflang="en" href="https://bakememo.cn/en/cost-calculator/">
+  <link rel="alternate" hreflang="x-default" href="https://bakememo.cn/cost-calculator/">
+  <script>
+    /* Remember a manual switch to English. */
+    try { if (/[?&]lang=en\b/.test(location.search)) localStorage.setItem("bm-lang", "en"); } catch (e) {}
+  </script>
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Baking recipe cost calculator">
+  <meta property="og:description" content="Ingredient cost per batch, per piece and per 100 g, with a reference price.">
+  <meta property="og:url" content="https://bakememo.cn/en/cost-calculator/">
+  <meta property="og:image" content="https://bakememo.cn/assets/img/og-en.png">
+  <link rel="icon" href="/assets/img/favicon-64.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/home.css">
+  <link rel="stylesheet" href="/assets/support.css">
+  <style>
+    .calc { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 18px; margin: 8px 0 18px; }
+    .calc-head, .calc-row { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) 5.5em 2.2em; gap: 8px; align-items: center; }
+    .calc-head { font-size: 13px; color: var(--muted); font-weight: 650; padding: 0 2px 6px; }
+    .calc-row { padding: 6px 0; border-top: 1px dashed var(--line); }
+    .calc input { font: inherit; font-size: 16px; width: 100%; min-width: 0; padding: 9px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--ink); }
+    .calc .f { display: block; min-width: 0; } .calc .f span { display: none; }
+    .calc output { font-variant-numeric: tabular-nums; text-align: right; color: var(--ink); }
+    .calc .del { border: 0; background: none; color: var(--muted); font-size: 1.3rem; cursor: pointer; padding: 4px; }
+    .calc .add { margin: 10px 0 4px; border: 1px dashed var(--brand); background: var(--brand-wash); color: var(--brand-deep); border-radius: 10px; padding: 9px 14px; font: inherit; font-weight: 650; cursor: pointer; }
+    .calc-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 6px; }
+    .calc-opts label { font-size: 14px; color: var(--muted); font-weight: 650; display: grid; gap: 6px; align-content: end; }
+    .calc-sum { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin: 14px 0 0; }
+    .calc-sum div { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+    .calc-sum dt { font-size: 12.5px; color: var(--muted); }
+    .calc-sum dd { margin: 2px 0 0; font-family: var(--serif); font-size: 1.35rem; color: var(--ink); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+    @media (max-width: 760px) { .calc-sum { grid-template-columns: 1fr 1fr; } .calc-sum div:first-child { grid-column: 1 / -1; } }
+    @media (max-width: 640px) {
+      .calc-head { display: none; }
+      .calc-row { grid-template-columns: 1fr 1fr 2.2em; grid-template-areas: "name name del" "used price pack" "cost cost cost"; grid-template-columns: 1fr 1fr 1fr; }
+      .calc-row .c-name { grid-column: 1 / 3; } .calc-row .del { grid-column: 3; justify-self: end; }
+      .calc .f span { display: block; font-size: 12.5px; color: var(--muted); margin: 0 0 3px 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .calc-row .c-used { grid-area: used; } .calc-row .c-price { grid-area: price; }
+      .calc-row .c-pack { grid-area: pack; } .calc-row .c-cost { grid-area: cost; text-align: left; }
+      .calc-row output::before { content: attr(data-l) " "; color: var(--muted); font-size: 13px; }
+      .calc-opts { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","inLanguage":"en","url":"https://bakememo.cn/en/cost-calculator/","name":"Baking recipe cost calculator","description":"Free baking recipe cost calculator: enter how much of each ingredient you use and what a pack costs to get ingredient cost per batch, per piece and per 100 g, plus a reference price. Runs in your browser.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://bakememo.cn/en/"},{"@type":"ListItem","position":2,"name":"Recipe cost calculator","item":"https://bakememo.cn/en/cost-calculator/"}]}]}</script>
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap">
+      <a class="brand" href="/en/" aria-label="BakeMemo home"><img src="/assets/img/icon.webp" alt="" width="34" height="34">BakeMemo</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="/en/">Home</a>
+        <a class="hide-s" href="/en/guide/">Guides</a>
+        <a href="/bakememo/support/#en">Help</a>
+        <a class="lang" href="/cost-calculator/?lang=zh" lang="zh-Hans" hreflang="zh-Hans">中文</a>
+        <a class="btn btn-primary btn-sm" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-cost-en-nav&amp;mt=8">Get it free</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap help guide">
+    <article>
+      <section class="help-hero">
+        <p class="eyebrow">Baking tool</p>
+        <h1>Recipe cost calculator for baking</h1>
+        <p class="lede">Enter how many grams of each ingredient you use, what a pack costs and how much it weighs. You get the ingredient cost of the batch, then the cost of each piece. If you sell your bakes, add a target cost share to work back to a reference price.</p>
+      </section>
+
+      <section class="calc" id="calc" hidden aria-label="Baking recipe cost calculator">
+        <div class="calc-head"><span>Ingredient</span><span>Used (g)</span><span>Pack price</span><span>Pack weight (g)</span><span style="text-align:right">Row cost</span><span></span></div>
+        <div class="calc-rows"></div>
+        <button type="button" class="add">+ Add ingredient</button>
+        <div class="calc-opts">
+          <label>Pieces / servings in the batch<input id="yield" type="number" inputmode="decimal" min="0" step="any" value="24"></label>
+          <label>Ingredient cost as % of selling price (optional)<input id="share" type="number" inputmode="decimal" min="0" max="100" step="any" placeholder="e.g. 30"></label>
+        </div>
+        <dl class="calc-sum">
+          <div><dt>Batch ingredient cost</dt><dd id="o-batch">–</dd></div>
+          <div><dt>Total ingredient weight</dt><dd id="o-weight">–</dd></div>
+          <div><dt>Per piece / serving</dt><dd id="o-each">–</dd></div>
+          <div><dt>Per 100 g</dt><dd id="o-100">–</dd></div>
+          <div><dt>Reference price (each)</dt><dd id="o-price">–</dd></div>
+        </dl>
+      </section>
+      <noscript><p class="note">The calculator needs JavaScript. The formulas below work by hand.</p></noscript>
+      <p class="note">Everything is calculated in your browser; nothing is uploaded or saved. The default example is a batch of butter cookies. Its prices are placeholders, so replace them with what you actually pay. Any currency works: the result is in whatever you type.</p>
+
+      <h2>How it works</h2>
+      <p class="formula">Row cost = grams used ÷ pack weight × pack price</p>
+      <ul>
+        <li><b>Batch ingredient cost</b> adds up every row. A row with no pack price or pack weight counts as 0.</li>
+        <li><b>Per piece</b> = batch ingredient cost ÷ pieces in the batch.</li>
+        <li><b>Per 100 g</b> = batch ingredient cost ÷ total ingredient weight × 100. This uses the weight <strong>before baking</strong>; bakes lose water in the oven, so the cost per 100 g of the finished bake is somewhat higher.</li>
+        <li><b>Reference price</b> = cost per piece ÷ cost share. If a cookie costs 0.50 in ingredients and you want ingredients to be 30% of the price, the reference price is 0.50 ÷ 30% ≈ 1.67.</li>
+      </ul>
+
+      <h2>What it leaves out</h2>
+      <p>This counts <strong>ingredients only</strong>. Packaging, energy, equipment, platform or market fees, delivery and your own time are not included, so the result is an estimated ingredient cost, not your full cost and not your profit. Add those separately when you set a price. There is no single right cost share; it depends on what you bake and where you sell.</p>
+
+      <h2>Three places the numbers go wrong</h2>
+      <ul>
+        <li><b>Keep everything in grams.</b> Enter eggs by their weight without the shell. For milk or cream sold by volume, use the net weight on the pack or weigh it once.</li>
+        <li><b>Pack price means the whole pack</b>, not a unit price. A 1,000 g bag of flour that costs 2.00 goes in as 2.00 and 1000.</li>
+        <li><b>Update when prices move.</b> Butter, cream and chocolate change often; re-enter what you last paid.</li>
+      </ul>
+
+      <h2>Read more</h2>
+      <p>Scaling the recipe up or down first? Use the <a href="/en/calculator/">baker’s percentage calculator</a> to get the new gram amounts, then cost them here. <a href="/en/guide/bakers-percentage/">How to calculate baker’s percentage</a> explains the scaling.</p>
+
+      <section class="inline-cta">
+        <h3>Keep the cost with every bake you log</h3>
+        <p>BakeMemo estimates the ingredient cost of each bake you log from reference prices. With Pro you enter your own package prices in any of 28 currencies and see the estimate per serving and per 100 g. 62 recipes and your first three bakes are free, no sign-up.</p>
+        <a class="btn btn-primary" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-cost-en-inline&amp;mt=8"><span class="two"><small>Download on the</small>App Store — free</span></a>
+      </section>
+    </article>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <span>© 2026 Jiahui Xu · BakeMemo</span>
+      <a href="/en/">Home</a>
+      <a href="/en/guide/">Baking guides</a>
+      <a href="/en/cost-calculator/">Recipe cost calculator</a>
+      <a href="/en/calculator/">Baker’s percentage calculator</a>
+      <a href="/bakememo/support/#en">Support</a>
+      <a href="/bakememo/privacy/#en">Privacy Policy</a>
+      <a class="sp" href="https://beian.miit.gov.cn/" rel="noreferrer">粤ICP备2026075524号</a>
+      <nav class="langs" aria-label="Language"><a href="/cost-calculator/?lang=zh" lang="zh-Hans" hreflang="zh-Hans">简体中文</a><a href="/en/cost-calculator/?lang=en" lang="en" hreflang="en" aria-current="page">English</a></nav>
+    </div>
+  </footer>
+
+  <div class="dock" role="complementary" aria-label="Download">
+    <img src="/assets/img/icon.webp" alt="" width="40" height="40">
+    <div class="t"><b>BakeMemo</b><span>Free to start · estimated cost per bake</span></div>
+    <a class="btn btn-primary" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-cost-en-dock&amp;mt=8">Get</a>
+  </div>
+  <script>
+    /* 烘焙成本计算器：只在本页计算，不发送、不保存任何数据。 */
+    (function () {
+      var root = document.getElementById("calc"); if (!root) return;
+      var T = {"name": "Ingredient", "used": "Used (g)", "price": "Pack price", "pack": "Pack weight (g)", "cost": "Cost", "dele": "Remove this row", "rows": [["Plain flour", 250, 2.0, 1000], ["Butter", 200, 3.5, 250], ["Sugar", 100, 2.0, 1000], ["Eggs", 50, 4.0, 600]]};
+      var list = root.querySelector(".calc-rows");
+      function num(v) { var n = parseFloat(String(v).replace(",", ".")); return isFinite(n) && n > 0 ? n : 0; }
+      function money(n) { return isFinite(n) && n > 0 ? n.toFixed(2) : "–"; }
+      function grams(n) { return n > 0 ? (Math.round(n * 10) / 10) + " g" : "–"; }
+      function field(cls, label) { return '<label class="f ' + cls + '"><span>' + label + '</span><input type="number" inputmode="decimal" min="0" step="any"></label>'; }
+      function addRow(x) {
+        var r = document.createElement("div"); r.className = "calc-row";
+        r.innerHTML = '<input class="c-name" aria-label="' + T.name + '" placeholder="' + T.name + '">' + field("c-used", T.used) + field("c-price", T.price) + field("c-pack", T.pack) +
+          '<output class="c-cost" data-l="' + T.cost + '"></output><button type="button" class="del" aria-label="' + T.dele + '">×</button>';
+        if (x) { r.querySelector(".c-name").value = x[0]; r.querySelector(".c-used input").value = x[1]; r.querySelector(".c-price input").value = x[2]; r.querySelector(".c-pack input").value = x[3]; }
+        r.querySelector(".del").addEventListener("click", function () { r.remove(); calc(); });
+        list.appendChild(r);
+      }
+      function calc() {
+        var total = 0, weight = 0;
+        [].forEach.call(list.querySelectorAll(".calc-row"), function (r) {
+          var used = num(r.querySelector(".c-used input").value), price = num(r.querySelector(".c-price input").value), pack = num(r.querySelector(".c-pack input").value);
+          var c = pack > 0 ? used / pack * price : 0; total += c; weight += used;
+          r.querySelector(".c-cost").value = c > 0 ? c.toFixed(2) : "–";
+        });
+        var n = num(document.getElementById("yield").value), share = num(document.getElementById("share").value) / 100;
+        var each = n > 0 ? total / n : 0;
+        document.getElementById("o-batch").textContent = money(total);
+        document.getElementById("o-weight").textContent = grams(weight);
+        document.getElementById("o-each").textContent = money(each);
+        document.getElementById("o-100").textContent = weight > 0 ? money(total / weight * 100) : "–";
+        document.getElementById("o-price").textContent = share > 0 && share <= 1 ? money(each / share) : "–";
+      }
+      T.rows.forEach(addRow);
+      root.querySelector(".add").addEventListener("click", function () { addRow(null); calc(); list.lastChild.querySelector(".c-name").focus(); });
+      root.addEventListener("input", calc); root.addEventListener("change", calc);
+      root.hidden = false; calc();
+    })();
+  </script>
+</body>
+</html>

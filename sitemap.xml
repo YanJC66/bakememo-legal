@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://bakememo.cn/</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/"/>
     <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://bakememo.cn/zh-hant/"/>
@@ -16,7 +16,7 @@
   </url>
   <url>
     <loc>https://bakememo.cn/en/</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/"/>
     <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://bakememo.cn/zh-hant/"/>
@@ -128,14 +128,14 @@
   </url>
   <url>
     <loc>https://bakememo.cn/guide/</loc>
-    <lastmod>2026-10-24</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/guide/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/guide/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/guide/"/>
   </url>
   <url>
     <loc>https://bakememo.cn/en/guide/</loc>
-    <lastmod>2026-10-24</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/guide/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/guide/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/guide/"/>
@@ -234,7 +234,7 @@
   </url>
   <url>
     <loc>https://bakememo.cn/calculator/</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/calculator/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/calculator/"/>
     <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://bakememo.cn/zh-hant/calculator/"/>
@@ -248,7 +248,7 @@
   </url>
   <url>
     <loc>https://bakememo.cn/en/calculator/</loc>
-    <lastmod>2026-11-10</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/calculator/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/calculator/"/>
     <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://bakememo.cn/zh-hant/calculator/"/>
@@ -609,5 +609,19 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://bakememo.cn/es/guide/hydration/"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://bakememo.cn/ru/guide/hydration/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/guide/hydration/"/>
+  </url>
+  <url>
+    <loc>https://bakememo.cn/cost-calculator/</loc>
+    <lastmod>2026-11-13</lastmod>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/cost-calculator/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/cost-calculator/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/cost-calculator/"/>
+  </url>
+  <url>
+    <loc>https://bakememo.cn/en/cost-calculator/</loc>
+    <lastmod>2026-11-13</lastmod>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/cost-calculator/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/cost-calculator/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/cost-calculator/"/>
   </url>
 </urlset>
