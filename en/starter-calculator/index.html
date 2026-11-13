@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="applicable-device" content="pc,mobile">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <title>Sourdough Starter Feeding Calculator: 1:2:2, 1:5:5 in Grams · BakeMemo</title>
+  <meta name="description" content="Free sourdough starter feeding calculator: enter how much starter you want and the ratio (starter : flour : water) to get grams of old starter, flour and water. Runs in your browser.">
+  <meta name="apple-itunes-app" content="app-id=6792324050">
+  <link rel="canonical" href="https://bakememo.cn/en/starter-calculator/">
+  <link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/starter-calculator/">
+  <link rel="alternate" hreflang="en" href="https://bakememo.cn/en/starter-calculator/">
+  <link rel="alternate" hreflang="x-default" href="https://bakememo.cn/starter-calculator/">
+  <script>
+    /* Remember a manual switch to English. */
+    try { if (/[?&]lang=en\b/.test(location.search)) localStorage.setItem("bm-lang", "en"); } catch (e) {}
+  </script>
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Sourdough starter feeding calculator">
+  <meta property="og:description" content="Enter how much starter you want and the ratio; get grams of old starter, flour and water.">
+  <meta property="og:url" content="https://bakememo.cn/en/starter-calculator/">
+  <meta property="og:image" content="https://bakememo.cn/assets/img/og-en.png">
+  <link rel="icon" href="/assets/img/favicon-64.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/home.css">
+  <link rel="stylesheet" href="/assets/support.css">
+  <style>
+    .calc { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 18px; margin: 8px 0 18px; }
+    .calc-head, .calc-row { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) 5.5em 2.2em; gap: 8px; align-items: center; }
+    .calc-head { font-size: 13px; color: var(--muted); font-weight: 650; padding: 0 2px 6px; }
+    .calc-row { padding: 6px 0; border-top: 1px dashed var(--line); }
+    .calc input { font: inherit; font-size: 16px; width: 100%; min-width: 0; padding: 9px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--ink); }
+    .calc .f { display: block; min-width: 0; } .calc .f span { display: none; }
+    .calc output { font-variant-numeric: tabular-nums; text-align: right; color: var(--ink); }
+    .calc .del { border: 0; background: none; color: var(--muted); font-size: 1.3rem; cursor: pointer; padding: 4px; }
+    .calc .add { margin: 10px 0 4px; border: 1px dashed var(--brand); background: var(--brand-wash); color: var(--brand-deep); border-radius: 10px; padding: 9px 14px; font: inherit; font-weight: 650; cursor: pointer; }
+    .calc-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 6px; }
+    .calc-opts label { font-size: 14px; color: var(--muted); font-weight: 650; display: grid; gap: 6px; align-content: end; }
+    .calc-sum { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin: 14px 0 0; }
+    .calc-sum div { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+    .calc-sum dt { font-size: 12.5px; color: var(--muted); }
+    .calc-sum dd { margin: 2px 0 0; font-family: var(--serif); font-size: 1.35rem; color: var(--ink); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+    @media (max-width: 760px) { .calc-sum { grid-template-columns: 1fr 1fr; } .calc-sum div:first-child { grid-column: 1 / -1; } }
+    @media (max-width: 640px) {
+      .calc-head { display: none; }
+      .calc-row { grid-template-columns: 1fr 1fr 2.2em; grid-template-areas: "name name del" "used price pack" "cost cost cost"; grid-template-columns: 1fr 1fr 1fr; }
+      .calc-row .c-name { grid-column: 1 / 3; } .calc-row .del { grid-column: 3; justify-self: end; }
+      .calc .f span { display: block; font-size: 12.5px; color: var(--muted); margin: 0 0 3px 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .calc-row .c-used { grid-area: used; } .calc-row .c-price { grid-area: price; }
+      .calc-row .c-pack { grid-area: pack; } .calc-row .c-cost { grid-area: cost; text-align: left; }
+      .calc-row output::before { content: attr(data-l) " "; color: var(--muted); font-size: 13px; }
+      .calc-opts { grid-template-columns: 1fr; }
+    }
+    .calc-opts.three { grid-template-columns: repeat(3, minmax(0, 1fr)); } .calc-opts select { font: inherit; font-size: 16px; width: 100%; padding: 9px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--ink); }
+    .calc-sum.auto { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); } .calc-sum.auto div:first-child { grid-column: auto; }
+    .calc.rows .calc-head, .calc.rows .calc-row { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) 6em 2.2em; grid-template-areas: none; }
+    .calc.rows .calc-row .c-name { grid-column: auto; } .calc.rows .calc-row .del { grid-column: auto; }
+    @media (max-width: 640px) { .calc-opts.three { grid-template-columns: 1fr; } .calc.rows .calc-row { grid-template-columns: 1fr 1fr 2.2em; grid-template-areas: "name name del" "g sc sc"; } .calc.rows .calc-row .c-name { grid-area: name; } .calc.rows .calc-row .c-g { grid-area: g; } .calc.rows .calc-row .c-sc { grid-area: sc; text-align: left; align-self: end; padding-bottom: 10px; } .calc.rows .calc-row .del { grid-area: del; } }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","inLanguage":"en","url":"https://bakememo.cn/en/starter-calculator/","name":"Sourdough starter feeding calculator","description":"Free sourdough starter feeding calculator: enter how much starter you want and the ratio (starter : flour : water) to get grams of old starter, flour and water. Runs in your browser.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://bakememo.cn/en/"},{"@type":"ListItem","position":2,"name":"Starter feeding calculator","item":"https://bakememo.cn/en/starter-calculator/"}]}]}</script>
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap">
+      <a class="brand" href="/en/" aria-label="BakeMemo home"><img src="/assets/img/icon.webp" alt="" width="34" height="34">BakeMemo</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="/en/">Home</a>
+        <a class="hide-s" href="/en/guide/">Guides</a>
+        <a href="/bakememo/support/#en">Help</a>
+        <a class="lang" href="/starter-calculator/?lang=zh" lang="zh-Hans" hreflang="zh-Hans">中文</a>
+        <a class="btn btn-primary btn-sm" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-starter-en-nav&amp;mt=8">Get it free</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap help guide">
+    <article>
+      <section class="help-hero">
+        <p class="eyebrow">Baking tool</p>
+        <h1>Sourdough starter feeding calculator</h1>
+        <p class="lede">Enter how many grams of starter you want and the feeding ratio. You get the grams of old starter, flour and water. Ratios are by weight, written starter : flour : water.</p>
+      </section>
+
+      <section class="calc" id="calc" hidden aria-label="Sourdough starter feeding calculator">
+        <div class="calc-opts three">
+          <label>Starter you want (g)<input id="f-total" type="number" inputmode="decimal" step="any" value="150"></label>
+          <label>Ratio · starter<input id="f-a" type="number" inputmode="decimal" step="any" value="1"></label>
+          <label>Ratio · flour<input id="f-b" type="number" inputmode="decimal" step="any" value="5"></label>
+          <label>Ratio · water<input id="f-c" type="number" inputmode="decimal" step="any" value="5"></label>
+        </div>
+        <dl class="calc-sum auto">
+          <div><dt>Old starter</dt><dd id="o-seed">–</dd></div>
+          <div><dt>Flour</dt><dd id="o-flour">–</dd></div>
+          <div><dt>Water</dt><dd id="o-water">–</dd></div>
+          <div><dt>Water ÷ flour fed</dt><dd id="o-hyd">–</dd></div>
+        </dl>
+      </section>
+      <noscript><p class="note">The calculator needs JavaScript. The formulas below work by hand.</p></noscript>
+      <p class="note">Everything is calculated in your browser; nothing is uploaded or saved.Default example: 150 g of starter fed at 1:5:5.</p>
+
+      <h2>How it works</h2>
+      <p class="formula">One part = starter you want ÷ (the three ratio numbers added up)</p><p>1:5:5 is 11 parts. For 150 g of starter, one part is about 13.6 g: 13.6 g old starter, 68.2 g each of flour and water.</p><p>When the flour and water numbers match (1:1:1, 1:2:2, 1:5:5) you are feeding equal flour and water, which is a 100% hydration starter.</p>
+
+      <h2>Choosing a ratio</h2>
+      <p>1:1:1 has the least food and peaks fastest, good for using it the same day or in a cool kitchen. 1:2:2 is a medium pace for everyday feeding. 1:5:5 or higher is slow to peak with milder sourness, good for hot weather or overnight builds. Time to peak depends heavily on temperature: the same ratio can peak in a few hours in a warm kitchen and take much longer when it’s cool.</p><p>More in <a href="/en/guide/starter-feeding/">how to feed a sourdough starter</a>.</p>
+
+      <h2>Make a little extra</h2>
+      <p>Feed for a bit more than the recipe needs. What is left over is the old starter for your next feed.</p>
+
+      <section class="inline-cta">
+        <h3>The flour and water in your starter, counted for you</h3>
+        <p>In BakeMemo’s recipe sheet you set your starter’s hydration (100% by default), and the flour and water inside the starter count toward total hydration. 62 recipes and your first three bakes are free, no sign-up.</p>
+        <a class="btn btn-primary" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-starter-en-inline&amp;mt=8"><span class="two"><small>Download on the</small>App Store — free</span></a>
+      </section>
+    </article>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <span>© 2026 Jiahui Xu · BakeMemo</span>
+      <a href="/en/">Home</a>
+      <a href="/en/guide/">Baking guides</a>
+      <a href="/en/cost-calculator/">Recipe cost calculator</a>
+      <a href="/en/calculator/">Baker’s percentage calculator</a>
+      <a href="/bakememo/support/#en">Support</a>
+      <a href="/bakememo/privacy/#en">Privacy Policy</a>
+      <a class="sp" href="https://beian.miit.gov.cn/" rel="noreferrer">粤ICP备2026075524号</a>
+      <nav class="langs" aria-label="Language"><a href="/starter-calculator/?lang=zh" lang="zh-Hans" hreflang="zh-Hans">简体中文</a><a href="/en/starter-calculator/?lang=en" lang="en" hreflang="en" aria-current="page">English</a></nav>
+    </div>
+  </footer>
+
+  <div class="dock" role="complementary" aria-label="Download">
+    <img src="/assets/img/icon.webp" alt="" width="40" height="40">
+    <div class="t"><b>BakeMemo</b><span>Free to start · starter counts in hydration</span></div>
+    <a class="btn btn-primary" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-starter-en-dock&amp;mt=8">Get</a>
+  </div>
+  <script>
+    /* 只在本页计算，不发送、不保存任何数据。 */
+    (function () {
+      var root = document.getElementById("calc"); if (!root) return;
+      var T = {}, ALLOW0 = false;
+      function num(x) { var n = parseFloat(String(x).replace(",", ".")); return isFinite(n) && (ALLOW0 || n > 0) ? n : 0; }
+      function trim(s) { return s.indexOf(".") >= 0 ? s.replace(/\.?0+$/, "") : s; }
+      function g(n) { return trim(n.toFixed(n >= 100 ? 0 : 1)) + " g"; }
+      function n1(n) { return trim(n.toFixed(1)); }
+      function pct(n) { return trim(n.toFixed(1)) + "%"; }
+      function out(id, s) { document.getElementById("o-" + id).textContent = s; }
+      function show(id, on) { document.getElementById("f-" + id).parentNode.hidden = !on; }
+      var list = root.querySelector(".calc-rows");
+      function rows() { return list ? [].slice.call(list.querySelectorAll(".calc-row")) : []; }
+      function addRow(x) {
+        var r = document.createElement("div"); r.className = "calc-row";
+        r.innerHTML = '<input class="c-name" aria-label="' + T.name + '" placeholder="' + T.name + '"><label class="f c-g"><span>' + T.g + '</span><input type="number" inputmode="decimal" min="0" step="any" aria-label="' + T.g + '"></label>' +
+          '<output class="c-sc" data-l="' + T.sc + '"></output><button type="button" class="del" aria-label="' + T.dele + '">×</button>';
+        if (x) { r.querySelector(".c-name").value = x[0]; r.querySelector(".c-g input").value = x[1]; }
+        r.querySelector(".del").addEventListener("click", function () { r.remove(); calc(); });
+        list.appendChild(r);
+      }
+      function calc() {
+        var v = {}, raw = {}, S = {};
+        [].forEach.call(root.querySelectorAll("[id^=f-]"), function (e) { var k = e.id.slice(2); if (e.tagName === "SELECT") S[k] = e.value; else { raw[k] = e.value.trim(); v[k] = num(e.value); } });
+        var p = v.total / (v.a + v.b + v.c); var ok = v.total > 0 && v.a > 0 && v.b > 0 && v.c > 0;
+      out("seed", ok ? g(p * v.a) : "–"); out("flour", ok ? g(p * v.b) : "–"); out("water", ok ? g(p * v.c) : "–");
+      out("hyd", v.b > 0 && v.c > 0 ? pct(v.c / v.b * 100) : "–");
+      }
+      if (list) { T.rows.forEach(addRow); root.querySelector(".add").addEventListener("click", function () { addRow(null); calc(); list.lastChild.querySelector(".c-name").focus(); }); }
+      root.addEventListener("input", calc); root.addEventListener("change", calc);
+      root.hidden = false; calc();
+    })();
+  </script>
+</body>
+</html>

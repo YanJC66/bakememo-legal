@@ -624,4 +624,60 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/cost-calculator/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/cost-calculator/"/>
   </url>
+  <url>
+    <loc>https://bakememo.cn/starter-calculator/</loc>
+    <lastmod>2026-11-13</lastmod>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/starter-calculator/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/starter-calculator/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/starter-calculator/"/>
+  </url>
+  <url>
+    <loc>https://bakememo.cn/en/starter-calculator/</loc>
+    <lastmod>2026-11-13</lastmod>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/starter-calculator/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/starter-calculator/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/starter-calculator/"/>
+  </url>
+  <url>
+    <loc>https://bakememo.cn/pan-calculator/</loc>
+    <lastmod>2026-11-13</lastmod>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/pan-calculator/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/pan-calculator/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/pan-calculator/"/>
+  </url>
+  <url>
+    <loc>https://bakememo.cn/en/pan-calculator/</loc>
+    <lastmod>2026-11-13</lastmod>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/pan-calculator/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/pan-calculator/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/pan-calculator/"/>
+  </url>
+  <url>
+    <loc>https://bakememo.cn/dough-temperature-calculator/</loc>
+    <lastmod>2026-11-13</lastmod>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/dough-temperature-calculator/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/dough-temperature-calculator/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/dough-temperature-calculator/"/>
+  </url>
+  <url>
+    <loc>https://bakememo.cn/en/dough-temperature-calculator/</loc>
+    <lastmod>2026-11-13</lastmod>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/dough-temperature-calculator/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/dough-temperature-calculator/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/dough-temperature-calculator/"/>
+  </url>
+  <url>
+    <loc>https://bakememo.cn/recipe-scaler/</loc>
+    <lastmod>2026-11-13</lastmod>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/recipe-scaler/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/recipe-scaler/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/recipe-scaler/"/>
+  </url>
+  <url>
+    <loc>https://bakememo.cn/en/recipe-scaler/</loc>
+    <lastmod>2026-11-13</lastmod>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/recipe-scaler/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/recipe-scaler/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/recipe-scaler/"/>
+  </url>
 </urlset>

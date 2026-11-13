@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="applicable-device" content="pc,mobile">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <title>Recipe Scaler: Scale a Baking Recipe by Servings or Total Weight · BakeMemo</title>
+  <meta name="description" content="Free baking recipe scaler: enter each ingredient in grams and scale by servings (12 cookies to 30) or to a target total weight. Every ingredient gets the same factor. Runs in your browser.">
+  <meta name="apple-itunes-app" content="app-id=6792324050">
+  <link rel="canonical" href="https://bakememo.cn/en/recipe-scaler/">
+  <link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/recipe-scaler/">
+  <link rel="alternate" hreflang="en" href="https://bakememo.cn/en/recipe-scaler/">
+  <link rel="alternate" hreflang="x-default" href="https://bakememo.cn/recipe-scaler/">
+  <script>
+    /* Remember a manual switch to English. */
+    try { if (/[?&]lang=en\b/.test(location.search)) localStorage.setItem("bm-lang", "en"); } catch (e) {}
+  </script>
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Recipe scaler for baking">
+  <meta property="og:description" content="Enter each ingredient in grams and scale by servings or to a target total weight.">
+  <meta property="og:url" content="https://bakememo.cn/en/recipe-scaler/">
+  <meta property="og:image" content="https://bakememo.cn/assets/img/og-en.png">
+  <link rel="icon" href="/assets/img/favicon-64.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/home.css">
+  <link rel="stylesheet" href="/assets/support.css">
+  <style>
+    .calc { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 18px; margin: 8px 0 18px; }
+    .calc-head, .calc-row { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) 5.5em 2.2em; gap: 8px; align-items: center; }
+    .calc-head { font-size: 13px; color: var(--muted); font-weight: 650; padding: 0 2px 6px; }
+    .calc-row { padding: 6px 0; border-top: 1px dashed var(--line); }
+    .calc input { font: inherit; font-size: 16px; width: 100%; min-width: 0; padding: 9px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--ink); }
+    .calc .f { display: block; min-width: 0; } .calc .f span { display: none; }
+    .calc output { font-variant-numeric: tabular-nums; text-align: right; color: var(--ink); }
+    .calc .del { border: 0; background: none; color: var(--muted); font-size: 1.3rem; cursor: pointer; padding: 4px; }
+    .calc .add { margin: 10px 0 4px; border: 1px dashed var(--brand); background: var(--brand-wash); color: var(--brand-deep); border-radius: 10px; padding: 9px 14px; font: inherit; font-weight: 650; cursor: pointer; }
+    .calc-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 6px; }
+    .calc-opts label { font-size: 14px; color: var(--muted); font-weight: 650; display: grid; gap: 6px; align-content: end; }
+    .calc-sum { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin: 14px 0 0; }
+    .calc-sum div { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+    .calc-sum dt { font-size: 12.5px; color: var(--muted); }
+    .calc-sum dd { margin: 2px 0 0; font-family: var(--serif); font-size: 1.35rem; color: var(--ink); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+    @media (max-width: 760px) { .calc-sum { grid-template-columns: 1fr 1fr; } .calc-sum div:first-child { grid-column: 1 / -1; } }
+    @media (max-width: 640px) {
+      .calc-head { display: none; }
+      .calc-row { grid-template-columns: 1fr 1fr 2.2em; grid-template-areas: "name name del" "used price pack" "cost cost cost"; grid-template-columns: 1fr 1fr 1fr; }
+      .calc-row .c-name { grid-column: 1 / 3; } .calc-row .del { grid-column: 3; justify-self: end; }
+      .calc .f span { display: block; font-size: 12.5px; color: var(--muted); margin: 0 0 3px 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .calc-row .c-used { grid-area: used; } .calc-row .c-price { grid-area: price; }
+      .calc-row .c-pack { grid-area: pack; } .calc-row .c-cost { grid-area: cost; text-align: left; }
+      .calc-row output::before { content: attr(data-l) " "; color: var(--muted); font-size: 13px; }
+      .calc-opts { grid-template-columns: 1fr; }
+    }
+    .calc-opts.three { grid-template-columns: repeat(3, minmax(0, 1fr)); } .calc-opts select { font: inherit; font-size: 16px; width: 100%; padding: 9px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--ink); }
+    .calc-sum.auto { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); } .calc-sum.auto div:first-child { grid-column: auto; }
+    .calc.rows .calc-head, .calc.rows .calc-row { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) 6em 2.2em; grid-template-areas: none; }
+    .calc.rows .calc-row .c-name { grid-column: auto; } .calc.rows .calc-row .del { grid-column: auto; }
+    @media (max-width: 640px) { .calc-opts.three { grid-template-columns: 1fr; } .calc.rows .calc-row { grid-template-columns: 1fr 1fr 2.2em; grid-template-areas: "name name del" "g sc sc"; } .calc.rows .calc-row .c-name { grid-area: name; } .calc.rows .calc-row .c-g { grid-area: g; } .calc.rows .calc-row .c-sc { grid-area: sc; text-align: left; align-self: end; padding-bottom: 10px; } .calc.rows .calc-row .del { grid-area: del; } }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","inLanguage":"en","url":"https://bakememo.cn/en/recipe-scaler/","name":"Recipe scaler for baking","description":"Free baking recipe scaler: enter each ingredient in grams and scale by servings (12 cookies to 30) or to a target total weight. Every ingredient gets the same factor. Runs in your browser.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://bakememo.cn/en/"},{"@type":"ListItem","position":2,"name":"Recipe scaler","item":"https://bakememo.cn/en/recipe-scaler/"}]}]}</script>
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap">
+      <a class="brand" href="/en/" aria-label="BakeMemo home"><img src="/assets/img/icon.webp" alt="" width="34" height="34">BakeMemo</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="/en/">Home</a>
+        <a class="hide-s" href="/en/guide/">Guides</a>
+        <a href="/bakememo/support/#en">Help</a>
+        <a class="lang" href="/recipe-scaler/?lang=zh" lang="zh-Hans" hreflang="zh-Hans">中文</a>
+        <a class="btn btn-primary btn-sm" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-scale-en-nav&amp;mt=8">Get it free</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap help guide">
+    <article>
+      <section class="help-hero">
+        <p class="eyebrow">Baking tool</p>
+        <h1>Recipe scaler for baking</h1>
+        <p class="lede">The recipe makes 12 and you need 30, or you want the batch to hit a round total weight. Enter each ingredient in grams and scale by servings or by target weight.</p>
+      </section>
+
+      <section class="calc rows" id="calc" hidden aria-label="Recipe scaler for baking">
+        <div class="calc-head"><span>Ingredient</span><span>Grams</span><span style="text-align:right">Scaled</span><span></span></div>
+        <div class="calc-rows"></div>
+        <button type="button" class="add">+ Add ingredient</button>
+        <div class="calc-opts three">
+          <label>Recipe makes (pieces / servings)<input id="f-from" type="number" inputmode="decimal" step="any" value="12"></label>
+          <label>You want (pieces / servings)<input id="f-to" type="number" inputmode="decimal" step="any" value="30"></label>
+          <label>Or: target total weight (g; used when filled)<input id="f-target" type="number" inputmode="decimal" step="any" value=""></label>
+        </div>
+        <dl class="calc-sum auto">
+          <div><dt>Factor</dt><dd id="o-f">–</dd></div>
+          <div><dt>Original total</dt><dd id="o-t0">–</dd></div>
+          <div><dt>Scaled total</dt><dd id="o-t1">–</dd></div>
+        </dl>
+      </section>
+      <noscript><p class="note">The calculator needs JavaScript. The formulas below work by hand.</p></noscript>
+      <p class="note">Everything is calculated in your browser; nothing is uploaded or saved.Default example: a batch of 12 butter cookies scaled to 30, a factor of 2.5.</p>
+
+      <h2>How it works</h2>
+      <p class="formula">Factor = servings you want ÷ servings the recipe makes　or　target weight ÷ original weight</p><p>Every ingredient is multiplied by the same factor, so the ratios stay the same. When a target weight is filled in, it is used and the servings are ignored.</p>
+
+      <h2>What to watch after scaling</h2>
+      <ul><li><b>Eggs</b>: when the result isn’t a whole egg, beat them and weigh out the grams.</li><li><b>Pans and trays</b>: a different amount usually needs a different pan; see the <a href="/en/pan-calculator/">pan conversion calculator</a>.</li><li><b>Time</b>: this tool scales amounts only. Mixing, proofing and baking times may change with the batch size; go by the checks in your recipe.</li></ul>
+
+      <h2>For bread</h2>
+      <p>Bread formulas are easier in baker’s percentages: the <a href="/en/calculator/">baker’s percentage calculator</a> scales and also shows hydration and total hydration with starter.</p>
+
+      <section class="inline-cta">
+        <h3>Scale it, then bake from it</h3>
+        <p>BakeMemo’s recipe sheet rescales every ingredient to a target dough weight in one step, with undo, and the shopping list works out what to buy for the number of batches you plan. 62 recipes and your first three bakes are free, no sign-up.</p>
+        <a class="btn btn-primary" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-scale-en-inline&amp;mt=8"><span class="two"><small>Download on the</small>App Store — free</span></a>
+      </section>
+    </article>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <span>© 2026 Jiahui Xu · BakeMemo</span>
+      <a href="/en/">Home</a>
+      <a href="/en/guide/">Baking guides</a>
+      <a href="/en/cost-calculator/">Recipe cost calculator</a>
+      <a href="/en/calculator/">Baker’s percentage calculator</a>
+      <a href="/bakememo/support/#en">Support</a>
+      <a href="/bakememo/privacy/#en">Privacy Policy</a>
+      <a class="sp" href="https://beian.miit.gov.cn/" rel="noreferrer">粤ICP备2026075524号</a>
+      <nav class="langs" aria-label="Language"><a href="/recipe-scaler/?lang=zh" lang="zh-Hans" hreflang="zh-Hans">简体中文</a><a href="/en/recipe-scaler/?lang=en" lang="en" hreflang="en" aria-current="page">English</a></nav>
+    </div>
+  </footer>
+
+  <div class="dock" role="complementary" aria-label="Download">
+    <img src="/assets/img/icon.webp" alt="" width="40" height="40">
+    <div class="t"><b>BakeMemo</b><span>Free to start · scale by dough weight</span></div>
+    <a class="btn btn-primary" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-scale-en-dock&amp;mt=8">Get</a>
+  </div>
+  <script>
+    /* 只在本页计算，不发送、不保存任何数据。 */
+    (function () {
+      var root = document.getElementById("calc"); if (!root) return;
+      var T = {"name": "Ingredient", "g": "Grams", "sc": "Scaled", "dele": "Remove this row", "rows": [["Plain flour", 250], ["Butter", 200], ["Sugar", 100], ["Eggs", 50]]}, ALLOW0 = false;
+      function num(x) { var n = parseFloat(String(x).replace(",", ".")); return isFinite(n) && (ALLOW0 || n > 0) ? n : 0; }
+      function trim(s) { return s.indexOf(".") >= 0 ? s.replace(/\.?0+$/, "") : s; }
+      function g(n) { return trim(n.toFixed(n >= 100 ? 0 : 1)) + " g"; }
+      function n1(n) { return trim(n.toFixed(1)); }
+      function pct(n) { return trim(n.toFixed(1)) + "%"; }
+      function out(id, s) { document.getElementById("o-" + id).textContent = s; }
+      function show(id, on) { document.getElementById("f-" + id).parentNode.hidden = !on; }
+      var list = root.querySelector(".calc-rows");
+      function rows() { return list ? [].slice.call(list.querySelectorAll(".calc-row")) : []; }
+      function addRow(x) {
+        var r = document.createElement("div"); r.className = "calc-row";
+        r.innerHTML = '<input class="c-name" aria-label="' + T.name + '" placeholder="' + T.name + '"><label class="f c-g"><span>' + T.g + '</span><input type="number" inputmode="decimal" min="0" step="any" aria-label="' + T.g + '"></label>' +
+          '<output class="c-sc" data-l="' + T.sc + '"></output><button type="button" class="del" aria-label="' + T.dele + '">×</button>';
+        if (x) { r.querySelector(".c-name").value = x[0]; r.querySelector(".c-g input").value = x[1]; }
+        r.querySelector(".del").addEventListener("click", function () { r.remove(); calc(); });
+        list.appendChild(r);
+      }
+      function calc() {
+        var v = {}, raw = {}, S = {};
+        [].forEach.call(root.querySelectorAll("[id^=f-]"), function (e) { var k = e.id.slice(2); if (e.tagName === "SELECT") S[k] = e.value; else { raw[k] = e.value.trim(); v[k] = num(e.value); } });
+        var total = 0; rows().forEach(function (r) { total += num(r.querySelector(".c-g input").value); });
+      var f = v.target > 0 && total > 0 ? v.target / total : (v.from > 0 && v.to > 0 ? v.to / v.from : 0);
+      rows().forEach(function (r) { var w = num(r.querySelector(".c-g input").value); r.querySelector(".c-sc").value = f > 0 && w > 0 ? g(w * f) : "–"; });
+      out("f", f > 0 ? "× " + f.toFixed(2) : "–"); out("t0", total > 0 ? g(total) : "–"); out("t1", f > 0 && total > 0 ? g(total * f) : "–");
+      }
+      if (list) { T.rows.forEach(addRow); root.querySelector(".add").addEventListener("click", function () { addRow(null); calc(); list.lastChild.querySelector(".c-name").focus(); }); }
+      root.addEventListener("input", calc); root.addEventListener("change", calc);
+      root.hidden = false; calc();
+    })();
+  </script>
+</body>
+</html>

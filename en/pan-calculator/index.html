@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="applicable-device" content="pc,mobile">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <title>Cake Pan Conversion Calculator: Scale a Recipe to Another Pan · BakeMemo</title>
+  <meta name="description" content="Free cake pan conversion calculator: enter the original and new pan sizes (round diameter or rectangle length and width) to get the recipe multiplier by base area, then convert any ingredient. Runs in your browser.">
+  <meta name="apple-itunes-app" content="app-id=6792324050">
+  <link rel="canonical" href="https://bakememo.cn/en/pan-calculator/">
+  <link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/pan-calculator/">
+  <link rel="alternate" hreflang="en" href="https://bakememo.cn/en/pan-calculator/">
+  <link rel="alternate" hreflang="x-default" href="https://bakememo.cn/pan-calculator/">
+  <script>
+    /* Remember a manual switch to English. */
+    try { if (/[?&]lang=en\b/.test(location.search)) localStorage.setItem("bm-lang", "en"); } catch (e) {}
+  </script>
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Cake pan conversion calculator">
+  <meta property="og:description" content="Enter two pan sizes to get the recipe multiplier by base area and convert ingredient amounts.">
+  <meta property="og:url" content="https://bakememo.cn/en/pan-calculator/">
+  <meta property="og:image" content="https://bakememo.cn/assets/img/og-en.png">
+  <link rel="icon" href="/assets/img/favicon-64.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/home.css">
+  <link rel="stylesheet" href="/assets/support.css">
+  <style>
+    .calc { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 18px; margin: 8px 0 18px; }
+    .calc-head, .calc-row { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) 5.5em 2.2em; gap: 8px; align-items: center; }
+    .calc-head { font-size: 13px; color: var(--muted); font-weight: 650; padding: 0 2px 6px; }
+    .calc-row { padding: 6px 0; border-top: 1px dashed var(--line); }
+    .calc input { font: inherit; font-size: 16px; width: 100%; min-width: 0; padding: 9px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--ink); }
+    .calc .f { display: block; min-width: 0; } .calc .f span { display: none; }
+    .calc output { font-variant-numeric: tabular-nums; text-align: right; color: var(--ink); }
+    .calc .del { border: 0; background: none; color: var(--muted); font-size: 1.3rem; cursor: pointer; padding: 4px; }
+    .calc .add { margin: 10px 0 4px; border: 1px dashed var(--brand); background: var(--brand-wash); color: var(--brand-deep); border-radius: 10px; padding: 9px 14px; font: inherit; font-weight: 650; cursor: pointer; }
+    .calc-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 6px; }
+    .calc-opts label { font-size: 14px; color: var(--muted); font-weight: 650; display: grid; gap: 6px; align-content: end; }
+    .calc-sum { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin: 14px 0 0; }
+    .calc-sum div { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+    .calc-sum dt { font-size: 12.5px; color: var(--muted); }
+    .calc-sum dd { margin: 2px 0 0; font-family: var(--serif); font-size: 1.35rem; color: var(--ink); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+    @media (max-width: 760px) { .calc-sum { grid-template-columns: 1fr 1fr; } .calc-sum div:first-child { grid-column: 1 / -1; } }
+    @media (max-width: 640px) {
+      .calc-head { display: none; }
+      .calc-row { grid-template-columns: 1fr 1fr 2.2em; grid-template-areas: "name name del" "used price pack" "cost cost cost"; grid-template-columns: 1fr 1fr 1fr; }
+      .calc-row .c-name { grid-column: 1 / 3; } .calc-row .del { grid-column: 3; justify-self: end; }
+      .calc .f span { display: block; font-size: 12.5px; color: var(--muted); margin: 0 0 3px 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .calc-row .c-used { grid-area: used; } .calc-row .c-price { grid-area: price; }
+      .calc-row .c-pack { grid-area: pack; } .calc-row .c-cost { grid-area: cost; text-align: left; }
+      .calc-row output::before { content: attr(data-l) " "; color: var(--muted); font-size: 13px; }
+      .calc-opts { grid-template-columns: 1fr; }
+    }
+    .calc-opts.three { grid-template-columns: repeat(3, minmax(0, 1fr)); } .calc-opts select { font: inherit; font-size: 16px; width: 100%; padding: 9px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--ink); }
+    .calc-sum.auto { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); } .calc-sum.auto div:first-child { grid-column: auto; }
+    .calc.rows .calc-head, .calc.rows .calc-row { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) 6em 2.2em; grid-template-areas: none; }
+    .calc.rows .calc-row .c-name { grid-column: auto; } .calc.rows .calc-row .del { grid-column: auto; }
+    @media (max-width: 640px) { .calc-opts.three { grid-template-columns: 1fr; } .calc.rows .calc-row { grid-template-columns: 1fr 1fr 2.2em; grid-template-areas: "name name del" "g sc sc"; } .calc.rows .calc-row .c-name { grid-area: name; } .calc.rows .calc-row .c-g { grid-area: g; } .calc.rows .calc-row .c-sc { grid-area: sc; text-align: left; align-self: end; padding-bottom: 10px; } .calc.rows .calc-row .del { grid-area: del; } }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","inLanguage":"en","url":"https://bakememo.cn/en/pan-calculator/","name":"Cake pan conversion calculator","description":"Free cake pan conversion calculator: enter the original and new pan sizes (round diameter or rectangle length and width) to get the recipe multiplier by base area, then convert any ingredient. Runs in your browser.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://bakememo.cn/en/"},{"@type":"ListItem","position":2,"name":"Pan conversion calculator","item":"https://bakememo.cn/en/pan-calculator/"}]}]}</script>
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap">
+      <a class="brand" href="/en/" aria-label="BakeMemo home"><img src="/assets/img/icon.webp" alt="" width="34" height="34">BakeMemo</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="/en/">Home</a>
+        <a class="hide-s" href="/en/guide/">Guides</a>
+        <a href="/bakememo/support/#en">Help</a>
+        <a class="lang" href="/pan-calculator/?lang=zh" lang="zh-Hans" hreflang="zh-Hans">中文</a>
+        <a class="btn btn-primary btn-sm" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-pan-en-nav&amp;mt=8">Get it free</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap help guide">
+    <article>
+      <section class="help-hero">
+        <p class="eyebrow">Baking tool</p>
+        <h1>Cake pan conversion calculator</h1>
+        <p class="lede">The recipe is written for one pan and you have another. Enter both pan sizes to get the recipe multiplier by base area, then type an ingredient amount to see it converted.</p>
+      </section>
+
+      <section class="calc" id="calc" hidden aria-label="Cake pan conversion calculator">
+        <div class="calc-opts three">
+          <label>Original pan shape<select id="f-s1"><option value="round" selected>Round</option><option value="rect">Square / rectangle</option></select></label>
+          <label>Original pan diameter / length<input id="f-d1" type="number" inputmode="decimal" step="any" value="15"></label>
+          <label>Original pan width<input id="f-w1" type="number" inputmode="decimal" step="any" value=""></label>
+          <label>New pan shape<select id="f-s2"><option value="round" selected>Round</option><option value="rect">Square / rectangle</option></select></label>
+          <label>New pan diameter / length<input id="f-d2" type="number" inputmode="decimal" step="any" value="20"></label>
+          <label>New pan width<input id="f-w2" type="number" inputmode="decimal" step="any" value=""></label>
+          <label>An ingredient amount (g)<input id="f-amt" type="number" inputmode="decimal" step="any" value="100"></label>
+        </div>
+        <dl class="calc-sum auto">
+          <div><dt>Original base area</dt><dd id="o-a1">–</dd></div>
+          <div><dt>New base area</dt><dd id="o-a2">–</dd></div>
+          <div><dt>Recipe multiplier</dt><dd id="o-f">–</dd></div>
+          <div><dt>Converted amount</dt><dd id="o-conv">–</dd></div>
+        </dl>
+      </section>
+      <noscript><p class="note">The calculator needs JavaScript. The formulas below work by hand.</p></noscript>
+      <p class="note">Everything is calculated in your browser; nothing is uploaded or saved.Default example: a 15 round pan to a 20 round pan. Use the same unit for both pans (all centimetres or all inches).</p>
+
+      <h2>How it works</h2>
+      <p class="formula">Multiplier = new pan base area ÷ original pan base area</p><ul><li>Round pan area = 3.1416 × diameter × diameter ÷ 4</li><li>Rectangular pan area = length × width</li></ul><p>From a 15 round to a 20 round: 20 × 20 ÷ (15 × 15) ≈ 1.78, so multiply every ingredient by 1.78.</p>
+
+      <h2>What it assumes</h2>
+      <p>This assumes the batter sits at the <strong>same depth</strong> in both pans. For a deeper pan or a taller bake, add more on top. Baking time usually changes with the pan too, and this tool can’t work that out: go by the doneness check in your recipe, not the clock alone.</p>
+
+      <h2>What about eggs?</h2>
+      <p>When the multiplier isn’t a whole number, weigh the eggs: beat them and measure out the grams you need.</p>
+
+      <section class="inline-cta">
+        <h3>Keep the converted recipe as your own version</h3>
+        <p>BakeMemo’s recipe sheet rescales every ingredient to a target dough weight in one step, with undo. Archive the bake and start the next one from that version. 62 recipes and your first three bakes are free, no sign-up.</p>
+        <a class="btn btn-primary" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-pan-en-inline&amp;mt=8"><span class="two"><small>Download on the</small>App Store — free</span></a>
+      </section>
+    </article>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <span>© 2026 Jiahui Xu · BakeMemo</span>
+      <a href="/en/">Home</a>
+      <a href="/en/guide/">Baking guides</a>
+      <a href="/en/cost-calculator/">Recipe cost calculator</a>
+      <a href="/en/calculator/">Baker’s percentage calculator</a>
+      <a href="/bakememo/support/#en">Support</a>
+      <a href="/bakememo/privacy/#en">Privacy Policy</a>
+      <a class="sp" href="https://beian.miit.gov.cn/" rel="noreferrer">粤ICP备2026075524号</a>
+      <nav class="langs" aria-label="Language"><a href="/pan-calculator/?lang=zh" lang="zh-Hans" hreflang="zh-Hans">简体中文</a><a href="/en/pan-calculator/?lang=en" lang="en" hreflang="en" aria-current="page">English</a></nav>
+    </div>
+  </footer>
+
+  <div class="dock" role="complementary" aria-label="Download">
+    <img src="/assets/img/icon.webp" alt="" width="40" height="40">
+    <div class="t"><b>BakeMemo</b><span>Free to start · scale by dough weight</span></div>
+    <a class="btn btn-primary" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-pan-en-dock&amp;mt=8">Get</a>
+  </div>
+  <script>
+    /* 只在本页计算，不发送、不保存任何数据。 */
+    (function () {
+      var root = document.getElementById("calc"); if (!root) return;
+      var T = {}, ALLOW0 = false;
+      function num(x) { var n = parseFloat(String(x).replace(",", ".")); return isFinite(n) && (ALLOW0 || n > 0) ? n : 0; }
+      function trim(s) { return s.indexOf(".") >= 0 ? s.replace(/\.?0+$/, "") : s; }
+      function g(n) { return trim(n.toFixed(n >= 100 ? 0 : 1)) + " g"; }
+      function n1(n) { return trim(n.toFixed(1)); }
+      function pct(n) { return trim(n.toFixed(1)) + "%"; }
+      function out(id, s) { document.getElementById("o-" + id).textContent = s; }
+      function show(id, on) { document.getElementById("f-" + id).parentNode.hidden = !on; }
+      var list = root.querySelector(".calc-rows");
+      function rows() { return list ? [].slice.call(list.querySelectorAll(".calc-row")) : []; }
+      function addRow(x) {
+        var r = document.createElement("div"); r.className = "calc-row";
+        r.innerHTML = '<input class="c-name" aria-label="' + T.name + '" placeholder="' + T.name + '"><label class="f c-g"><span>' + T.g + '</span><input type="number" inputmode="decimal" min="0" step="any" aria-label="' + T.g + '"></label>' +
+          '<output class="c-sc" data-l="' + T.sc + '"></output><button type="button" class="del" aria-label="' + T.dele + '">×</button>';
+        if (x) { r.querySelector(".c-name").value = x[0]; r.querySelector(".c-g input").value = x[1]; }
+        r.querySelector(".del").addEventListener("click", function () { r.remove(); calc(); });
+        list.appendChild(r);
+      }
+      function calc() {
+        var v = {}, raw = {}, S = {};
+        [].forEach.call(root.querySelectorAll("[id^=f-]"), function (e) { var k = e.id.slice(2); if (e.tagName === "SELECT") S[k] = e.value; else { raw[k] = e.value.trim(); v[k] = num(e.value); } });
+        function area(s, d, w) { return s === "round" ? Math.PI * d * d / 4 : d * w; }
+      var a1 = area(S.s1, v.d1, v.w1), a2 = area(S.s2, v.d2, v.w2), f = a1 > 0 && a2 > 0 ? a2 / a1 : 0;
+      show("w1", S.s1 === "rect"); show("w2", S.s2 === "rect");
+      out("a1", a1 > 0 ? n1(a1) : "–"); out("a2", a2 > 0 ? n1(a2) : "–"); out("f", f > 0 ? "× " + f.toFixed(2) : "–");
+      out("conv", f > 0 && v.amt > 0 ? g(v.amt * f) : "–");
+      }
+      if (list) { T.rows.forEach(addRow); root.querySelector(".add").addEventListener("click", function () { addRow(null); calc(); list.lastChild.querySelector(".c-name").focus(); }); }
+      root.addEventListener("input", calc); root.addEventListener("change", calc);
+      root.hidden = false; calc();
+    })();
+  </script>
+</body>
+</html>
