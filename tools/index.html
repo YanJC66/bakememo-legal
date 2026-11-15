@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="applicable-device" content="pc,mobile">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <title>烘焙计算器合集：百分比、水合率、面温、换算、成本 · 焙可记</title>
+  <meta name="description" content="六个免费烘焙计算器：烘焙百分比与水合率、面团温度、酵种喂养比例、配方缩放、模具换算、烘焙成本。全部只在浏览器里计算，不上传、不用注册。">
+  <meta name="apple-itunes-app" content="app-id=6792324050">
+  <link rel="canonical" href="https://bakememo.cn/tools/">
+  <link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/tools/">
+  <link rel="alternate" hreflang="en" href="https://bakememo.cn/en/tools/">
+  <link rel="alternate" hreflang="x-default" href="https://bakememo.cn/tools/">
+  <script>
+    /* 按系统语言选页，规则与主页相同。 */
+    (function () {
+      /* 搜索引擎爬虫不跳转，各语言页面都能被收录（页面已用 hreflang 互相标注）。 */
+      if (/bot|crawl|spider|slurp|mediapartners|google|baidu|bing|yandex|sogou|360spider|bytespider|petalbot/i.test(navigator.userAgent || "")) return;
+      var pref = null, q = location.search;
+      try {
+        if (/[?&]lang=zh\b/.test(q)) localStorage.setItem("bm-lang", "zh");
+        pref = localStorage.getItem("bm-lang");
+      } catch (e) {}
+      if (/[?&]lang=zh\b/.test(q) || pref === "zh") return;
+      var first = (navigator.languages && navigator.languages[0]) || navigator.language || "";
+      if (pref === "en" || !/^zh\b/i.test(first)) location.replace("/en/tools/" + location.hash);
+    })();
+  </script>
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="烘焙计算器">
+  <meta property="og:description" content="六个免费烘焙计算器：烘焙百分比与水合率、面团温度、酵种喂养比例、配方缩放、模具换算、烘焙成本。全部只在浏览器里计算，不上传、不用注册。">
+  <meta property="og:url" content="https://bakememo.cn/tools/">
+  <meta property="og:image" content="https://bakememo.cn/assets/img/og-zh.png">
+  <link rel="icon" href="/assets/img/favicon-64.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/home.css">
+  <link rel="stylesheet" href="/assets/support.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"CollectionPage","inLanguage":"zh-Hans","url":"https://bakememo.cn/tools/","name":"烘焙计算器","description":"六个免费烘焙计算器：烘焙百分比与水合率、面团温度、酵种喂养比例、配方缩放、模具换算、烘焙成本。全部只在浏览器里计算，不上传、不用注册。","mainEntity":{"@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"烘焙百分比计算器","url":"https://bakememo.cn/calculator/"},{"@type":"ListItem","position":2,"name":"面团温度计算器","url":"https://bakememo.cn/dough-temperature-calculator/"},{"@type":"ListItem","position":3,"name":"酵种喂养比例计算器","url":"https://bakememo.cn/starter-calculator/"},{"@type":"ListItem","position":4,"name":"配方缩放计算器","url":"https://bakememo.cn/recipe-scaler/"},{"@type":"ListItem","position":5,"name":"模具换算计算器","url":"https://bakememo.cn/pan-calculator/"},{"@type":"ListItem","position":6,"name":"烘焙成本计算器","url":"https://bakememo.cn/cost-calculator/"}]}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"主页","item":"https://bakememo.cn/"},{"@type":"ListItem","position":2,"name":"烘焙计算器","item":"https://bakememo.cn/tools/"}]}]}</script>
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="焙可记 首页"><img src="/assets/img/icon.webp" alt="" width="34" height="34">焙可记 <small>BakeMemo</small></a>
+      <nav class="nav-links" aria-label="主导航">
+        <a href="/">主页</a>
+        <a class="hide-s" href="/guide/">烘焙指南</a>
+        <a href="/bakememo/support/">帮助</a>
+        <a class="lang" href="/en/tools/?lang=en" lang="en" hreflang="en">EN</a>
+        <a class="btn btn-primary btn-sm" href="https://apps.apple.com/cn/app/id6792324050?pt=129189349&amp;ct=web-tools-zh-nav&amp;mt=8">免费下载</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap help guide">
+    <section class="help-hero">
+      <p class="eyebrow">烘焙工具</p>
+      <h1>烘焙计算器</h1>
+      <p class="lede">做面包和甜点时最常要算的六件事，各一个小工具。全部只在你的浏览器里计算，不上传、不保存，也不用注册。</p>
+    </section>
+    <ul class="guide-list"><li><a href="/calculator/"><b>烘焙百分比计算器</b></a><span>输入克数，自动算面包师百分比、水合率和含酵种的总水合，填目标面团总重即可按比例换算。</span></li><li><a href="/dough-temperature-calculator/"><b>面团温度计算器</b></a><span>填目标面温、室温、粉温和揉面升温，算出该用多少度的水。</span></li><li><a href="/starter-calculator/"><b>酵种喂养比例计算器</b></a><span>填酵种总量和喂养比例，算旧酵种、面粉和水各多少克。</span></li><li><a href="/recipe-scaler/"><b>配方缩放计算器</b></a><span>填每样原料的克数，按份数或目标总重等比例换算。</span></li><li><a href="/pan-calculator/"><b>模具换算计算器</b></a><span>填两个模具的尺寸，按底面积算配方倍数，并换算原料克数。</span></li><li><a href="/cost-calculator/"><b>烘焙成本计算器</b></a><span>填用量和包装价，算一炉的原料成本、每个和每 100 克的成本，并按成本占比反推参考售价。只在浏览器里计算。</span></li></ul>
+    <section class="inline-cta">
+      <h3>这些计算，App 里跟着配方走</h3>
+      <p>焙可记的配方表实时算烘焙百分比和水合率，可按目标总重换算；每一炉入档后会有一个预估的原料成本。62 道食谱和前三炉免费，无需注册。</p>
+      <a class="btn btn-primary" href="https://apps.apple.com/cn/app/id6792324050?pt=129189349&amp;ct=web-tools-zh-inline&amp;mt=8"><span class="two"><small>在 App Store</small>免费下载</span></a>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <span>© 2026 Jiahui Xu · 焙可记 BakeMemo</span>
+      <a href="/">主页</a>
+      <a href="/guide/">烘焙指南</a>
+      <a href="/cost-calculator/">烘焙成本计算器</a>
+      <a href="/tools/">烘焙计算器</a>
+      <a href="/calculator/">烘焙百分比计算器</a>
+      <a href="/bakememo/support/">帮助</a>
+      <a href="/bakememo/privacy/">隐私政策</a>
+      <a class="sp" href="https://beian.miit.gov.cn/" rel="noreferrer">粤ICP备2026075524号</a>
+      <nav class="langs" aria-label="Language"><a href="/tools/?lang=zh" lang="zh-Hans" hreflang="zh-Hans" aria-current="page">简体中文</a><a href="/en/tools/?lang=en" lang="en" hreflang="en">English</a></nav>
+    </div>
+  </footer>
+
+  <div class="dock" role="complementary" aria-label="下载">
+    <img src="/assets/img/icon.webp" alt="" width="40" height="40">
+    <div class="t"><b>焙可记</b><span>免费 · 实时算烘焙百分比</span></div>
+    <a class="btn btn-primary" href="https://apps.apple.com/cn/app/id6792324050?pt=129189349&amp;ct=web-tools-zh-dock&amp;mt=8">获取</a>
+  </div>
+</body>
+</html>

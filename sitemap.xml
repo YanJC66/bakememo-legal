@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://bakememo.cn/</loc>
-    <lastmod>2026-11-13</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/"/>
     <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://bakememo.cn/zh-hant/"/>
@@ -16,7 +16,7 @@
   </url>
   <url>
     <loc>https://bakememo.cn/en/</loc>
-    <lastmod>2026-11-13</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/"/>
     <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://bakememo.cn/zh-hant/"/>
@@ -128,14 +128,14 @@
   </url>
   <url>
     <loc>https://bakememo.cn/guide/</loc>
-    <lastmod>2026-11-13</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/guide/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/guide/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/guide/"/>
   </url>
   <url>
     <loc>https://bakememo.cn/en/guide/</loc>
-    <lastmod>2026-11-13</lastmod>
+    <lastmod>2026-11-15</lastmod>
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/guide/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/guide/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/guide/"/>
@@ -679,5 +679,19 @@
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/recipe-scaler/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/recipe-scaler/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/recipe-scaler/"/>
+  </url>
+  <url>
+    <loc>https://bakememo.cn/tools/</loc>
+    <lastmod>2026-11-15</lastmod>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/tools/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/tools/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/tools/"/>
+  </url>
+  <url>
+    <loc>https://bakememo.cn/en/tools/</loc>
+    <lastmod>2026-11-15</lastmod>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/tools/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://bakememo.cn/en/tools/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://bakememo.cn/tools/"/>
   </url>
 </urlset>
