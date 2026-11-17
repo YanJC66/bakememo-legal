@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="applicable-device" content="pc,mobile">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <title>配方縮放計算器：按份數或目標總重換算克數 · 焙可記</title>
+  <meta name="description" content="免費配方縮放計算器：填每樣原料的克數，按份數（12 個變 30 個）或目標總重等比例換算，所有原料乘同一個倍數。只在瀏覽器裡計算。">
+  <meta name="apple-itunes-app" content="app-id=6792324050">
+  <link rel="canonical" href="https://bakememo.cn/zh-hant/recipe-scaler/">
+  <link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/recipe-scaler/">
+  <link rel="alternate" hreflang="en" href="https://bakememo.cn/en/recipe-scaler/">
+  <link rel="alternate" hreflang="zh-Hant" href="https://bakememo.cn/zh-hant/recipe-scaler/">
+  <link rel="alternate" hreflang="ja" href="https://bakememo.cn/ja/recipe-scaler/">
+  <link rel="alternate" hreflang="ko" href="https://bakememo.cn/ko/recipe-scaler/">
+  <link rel="alternate" hreflang="x-default" href="https://bakememo.cn/recipe-scaler/">
+  <script>
+    /* 记住手动选择的语言。 */
+    try { if (/[?&]lang=zh-hant\b/.test(location.search)) localStorage.setItem("bm-lang", "zh-hant"); } catch (e) {}
+  </script>
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="zh_TW">
+  <meta property="og:title" content="配方縮放計算器">
+  <meta property="og:description" content="填每樣原料的克數，按份數或目標總重等比例換算。">
+  <meta property="og:url" content="https://bakememo.cn/zh-hant/recipe-scaler/">
+  <meta property="og:image" content="https://bakememo.cn/assets/img/og-zh.png">
+  <link rel="icon" href="/assets/img/favicon-64.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/home.css">
+  <link rel="stylesheet" href="/assets/support.css">
+  <style>
+    .calc { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 18px; margin: 8px 0 18px; }
+    .calc-head, .calc-row { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) 5.5em 2.2em; gap: 8px; align-items: center; }
+    .calc-head { font-size: 13px; color: var(--muted); font-weight: 650; padding: 0 2px 6px; }
+    .calc-row { padding: 6px 0; border-top: 1px dashed var(--line); }
+    .calc input { font: inherit; font-size: 16px; width: 100%; min-width: 0; padding: 9px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--ink); }
+    .calc .f { display: block; min-width: 0; } .calc .f span { display: none; }
+    .calc output { font-variant-numeric: tabular-nums; text-align: right; color: var(--ink); }
+    .calc .del { border: 0; background: none; color: var(--muted); font-size: 1.3rem; cursor: pointer; padding: 4px; }
+    .calc .add { margin: 10px 0 4px; border: 1px dashed var(--brand); background: var(--brand-wash); color: var(--brand-deep); border-radius: 10px; padding: 9px 14px; font: inherit; font-weight: 650; cursor: pointer; }
+    .calc-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 6px; }
+    .calc-opts label { font-size: 14px; color: var(--muted); font-weight: 650; display: grid; gap: 6px; align-content: end; }
+    .calc-sum { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin: 14px 0 0; }
+    .calc-sum div { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+    .calc-sum dt { font-size: 12.5px; color: var(--muted); }
+    .calc-sum dd { margin: 2px 0 0; font-family: var(--serif); font-size: 1.35rem; color: var(--ink); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+    @media (max-width: 760px) { .calc-sum { grid-template-columns: 1fr 1fr; } .calc-sum div:first-child { grid-column: 1 / -1; } }
+    @media (max-width: 640px) {
+      .calc-head { display: none; }
+      .calc-row { grid-template-columns: 1fr 1fr 2.2em; grid-template-areas: "name name del" "used price pack" "cost cost cost"; grid-template-columns: 1fr 1fr 1fr; }
+      .calc-row .c-name { grid-column: 1 / 3; } .calc-row .del { grid-column: 3; justify-self: end; }
+      .calc .f span { display: block; font-size: 12.5px; color: var(--muted); margin: 0 0 3px 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .calc-row .c-used { grid-area: used; } .calc-row .c-price { grid-area: price; }
+      .calc-row .c-pack { grid-area: pack; } .calc-row .c-cost { grid-area: cost; text-align: left; }
+      .calc-row output::before { content: attr(data-l) " "; color: var(--muted); font-size: 13px; }
+      .calc-opts { grid-template-columns: 1fr; }
+    }
+    .calc-opts.three { grid-template-columns: repeat(3, minmax(0, 1fr)); } .calc-opts label[hidden] { display: none; } .calc-opts select { font: inherit; font-size: 16px; width: 100%; padding: 9px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--ink); }
+    .calc-sum.auto { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); } .calc-sum.auto div:first-child { grid-column: auto; }
+    .calc.rows .calc-head, .calc.rows .calc-row { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) 6em 2.2em; grid-template-areas: none; }
+    .calc.rows .calc-row .c-name { grid-column: auto; } .calc.rows .calc-row .del { grid-column: auto; }
+    @media (max-width: 640px) { .calc-opts.three { grid-template-columns: 1fr; } .calc.rows .calc-row { grid-template-columns: 1fr 1fr 2.2em; grid-template-areas: "name name del" "g sc sc"; } .calc.rows .calc-row .c-name { grid-area: name; } .calc.rows .calc-row .c-g { grid-area: g; } .calc.rows .calc-row .c-sc { grid-area: sc; text-align: left; align-self: end; padding-bottom: 10px; } .calc.rows .calc-row .del { grid-area: del; } }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","inLanguage":"zh-Hant","url":"https://bakememo.cn/zh-hant/recipe-scaler/","name":"配方縮放計算器","description":"免費配方縮放計算器：填每樣原料的克數，按份數（12 個變 30 個）或目標總重等比例換算，所有原料乘同一個倍數。只在瀏覽器裡計算。","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首頁","item":"https://bakememo.cn/zh-hant/"},{"@type":"ListItem","position":2,"name":"配方縮放計算器","item":"https://bakememo.cn/zh-hant/recipe-scaler/"}]}]}</script>
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap">
+      <a class="brand" href="/zh-hant/" aria-label="BakeMemo"><img src="/assets/img/icon.webp" alt="" width="34" height="34">BakeMemo</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="/zh-hant/">首頁</a>
+        <a href="/bakememo/support/">幫助與支援</a>
+        <a class="lang hide-s" href="/en/recipe-scaler/?lang=en" lang="en" hreflang="en">EN</a>
+        <a class="btn btn-primary btn-sm" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-scale-zh-hant-nav&amp;mt=8">App Store</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap help guide">
+    <article>
+      <section class="help-hero">
+        <p class="eyebrow">烘焙工具</p>
+        <h1>配方縮放計算器</h1>
+        <p class="lede">配方做 12 個，你要 30 個；或者想把總重湊到一個整數。填每樣原料的克數，按份數或目標總重等比例換算。</p>
+      </section>
+
+      <section class="calc rows" id="calc" hidden aria-label="配方縮放計算器">
+        <div class="calc-head"><span>原料</span><span>克數</span><span style="text-align:right">換算後</span><span></span></div>
+        <div class="calc-rows"></div>
+        <button type="button" class="add">+ 新增原料</button>
+        <div class="calc-opts three">
+          <label>原配方做幾個 / 份<input id="f-from" type="number" inputmode="decimal" step="any" value="12"></label>
+          <label>想做幾個 / 份<input id="f-to" type="number" inputmode="decimal" step="any" value="30"></label>
+          <label>或：目標總重（克，填了就按它算）<input id="f-target" type="number" inputmode="decimal" step="any" value=""></label>
+        </div>
+        <dl class="calc-sum auto">
+          <div><dt>倍數</dt><dd id="o-f">–</dd></div>
+          <div><dt>原總重</dt><dd id="o-t0">–</dd></div>
+          <div><dt>換算後總重</dt><dd id="o-t1">–</dd></div>
+        </dl>
+      </section>
+      <noscript><p class="note">計算器需要開啟 JavaScript。下面的公式可以手算。</p></noscript>
+      <p class="note">全部在你的瀏覽器裡計算，不上傳、不保存。預設例子：一爐 12 個的奶油餅乾放大到 30 個，倍數 2.5。</p>
+
+      <h2>怎麼算</h2>
+      <p class="formula">倍數 = 想做的份數 ÷ 原配方份數　或　目標總重 ÷ 原總重</p><p>每樣原料乘同一個倍數，原料之間的比例不變。填了目標總重時，按總重算，份數不參與。</p>
+
+      <h2>換算之後要留意的</h2>
+      <ul><li><b>雞蛋</b>：換算出來不是整顆時，把蛋打散按克數秤。</li><li><b>模具和烤盤</b>：量變了，模具通常也要換，見<a href="/zh-hant/pan-calculator/">模具換算計算器</a>。</li><li><b>時間</b>：這個工具只換算用量。量變了，攪拌、發酵和烘烤的時間可能跟著變，按配方裡判斷狀態的方法來。</li></ul>
+
+      <h2>做麵包的話</h2>
+      <p>麵包配方用烘焙百分比更方便：<a href="/zh-hant/calculator/">烘焙百分比計算器</a>在換算的同時給出水合率和含酵種的總水合。</p>
+
+      <section class="inline-cta">
+        <h3>換算完，直接照著做</h3>
+        <p>焙可記的配方表可以按目標總重一步換算每樣原料，換錯了可以復原；購物清單會按你準備做的份數算好要買的量。62 道食譜和前三爐免費，無需註冊。</p>
+        <a class="btn btn-primary" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-scale-zh-hant-inline&amp;mt=8"><span class="two"><small>在 App Store 下載</small>App Store</span></a>
+      </section>
+      <nav class="related tools" aria-label="更多烘焙工具"><h2>更多烘焙工具</h2><ul><li><a href="/zh-hant/calculator/">烘焙百分比計算器</a></li><li><a href="/zh-hant/dough-temperature-calculator/">麵團溫度計算器</a></li><li><a href="/zh-hant/starter-calculator/">酵種餵養比例計算器</a></li><li><a href="/zh-hant/pan-calculator/">模具換算計算器</a></li></ul></nav>
+    </article>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <span>© 2026 Jiahui Xu · BakeMemo</span>
+      <a href="/zh-hant/">首頁</a>
+      <a href="/guide/">烘焙指南（簡體中文）</a>
+      <a href="/bakememo/support/">幫助與支援</a>
+      <a href="/bakememo/privacy/">隱私政策</a>
+      <a class="sp" href="https://beian.miit.gov.cn/" rel="noreferrer">粤ICP备2026075524号</a>
+      <nav class="langs" aria-label="Language"><a href="/recipe-scaler/?lang=zh" lang="zh-Hans" hreflang="zh-Hans">简体中文</a><a href="/en/recipe-scaler/?lang=en" lang="en" hreflang="en">English</a><a href="/zh-hant/recipe-scaler/?lang=zh-hant" lang="zh-Hant" hreflang="zh-Hant" aria-current="page">繁體中文</a><a href="/ja/recipe-scaler/?lang=ja" lang="ja" hreflang="ja">日本語</a><a href="/ko/recipe-scaler/?lang=ko" lang="ko" hreflang="ko">한국어</a></nav>
+    </div>
+  </footer>
+
+  <div class="dock" role="complementary" aria-label="App Store">
+    <img src="/assets/img/icon.webp" alt="" width="40" height="40">
+    <div class="t"><b>BakeMemo</b><span>免費 · 配方按總重換算</span></div>
+    <a class="btn btn-primary" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-scale-zh-hant-dock&amp;mt=8">App Store</a>
+  </div>
+  <script>
+    /* 只在本页计算，不发送、不保存任何数据。 */
+    (function () {
+      var root = document.getElementById("calc"); if (!root) return;
+      var T = {"name": "原料", "g": "克數", "sc": "換算後", "dele": "刪除這一行", "rows": [["低筋麵粉", 250], ["奶油", 200], ["細砂糖", 100], ["雞蛋", 50]]}, ALLOW0 = false;
+      function num(x) { var n = parseFloat(String(x).replace(",", ".")); return isFinite(n) && (ALLOW0 || n > 0) ? n : 0; }
+      function trim(s) { return s.indexOf(".") >= 0 ? s.replace(/\.?0+$/, "") : s; }
+      function g(n) { return trim(n.toFixed(n >= 100 ? 0 : 1)) + " g"; }
+      function n1(n) { return trim(n.toFixed(1)); }
+      function pct(n) { return trim(n.toFixed(1)) + "%"; }
+      function out(id, s) { document.getElementById("o-" + id).textContent = s; }
+      function show(id, on) { document.getElementById("f-" + id).parentNode.hidden = !on; }
+      var list = root.querySelector(".calc-rows");
+      function rows() { return list ? [].slice.call(list.querySelectorAll(".calc-row")) : []; }
+      function addRow(x) {
+        var r = document.createElement("div"); r.className = "calc-row";
+        r.innerHTML = '<input class="c-name" aria-label="' + T.name + '" placeholder="' + T.name + '"><label class="f c-g"><span>' + T.g + '</span><input type="number" inputmode="decimal" min="0" step="any" aria-label="' + T.g + '"></label>' +
+          '<output class="c-sc" data-l="' + T.sc + '"></output><button type="button" class="del" aria-label="' + T.dele + '">×</button>';
+        if (x) { r.querySelector(".c-name").value = x[0]; r.querySelector(".c-g input").value = x[1]; }
+        r.querySelector(".del").addEventListener("click", function () { r.remove(); calc(); });
+        list.appendChild(r);
+      }
+      function calc() {
+        var v = {}, raw = {}, S = {};
+        [].forEach.call(root.querySelectorAll("[id^=f-]"), function (e) { var k = e.id.slice(2); if (e.tagName === "SELECT") S[k] = e.value; else { raw[k] = e.value.trim(); v[k] = num(e.value); } });
+        var total = 0; rows().forEach(function (r) { total += num(r.querySelector(".c-g input").value); });
+      var f = v.target > 0 && total > 0 ? v.target / total : (v.from > 0 && v.to > 0 ? v.to / v.from : 0);
+      rows().forEach(function (r) { var w = num(r.querySelector(".c-g input").value); r.querySelector(".c-sc").value = f > 0 && w > 0 ? g(w * f) : "–"; });
+      out("f", f > 0 ? "× " + f.toFixed(2) : "–"); out("t0", total > 0 ? g(total) : "–"); out("t1", f > 0 && total > 0 ? g(total * f) : "–");
+      }
+      if (list) { T.rows.forEach(addRow); root.querySelector(".add").addEventListener("click", function () { addRow(null); calc(); list.lastChild.querySelector(".c-name").focus(); }); }
+      root.addEventListener("input", calc); root.addEventListener("change", calc);
+      root.hidden = false; calc();
+    })();
+  </script>
+</body>
+</html>

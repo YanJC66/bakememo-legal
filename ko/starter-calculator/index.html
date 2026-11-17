@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="applicable-device" content="pc,mobile">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <title>르방 먹이 비율 계산기: 1:2:2, 1:5:5를 그램으로 · BakeMemo</title>
+  <meta name="description" content="무료 르방 먹이 계산기. 원하는 르방 양과 비율(르방:밀가루:물)을 입력하면 기존 르방, 밀가루, 물을 각각 몇 그램 넣을지와 이번에 먹이는 물·밀가루 비율을 알려 줘요. 계산은 브라우저 안에서만 해요.">
+  <meta name="apple-itunes-app" content="app-id=6792324050">
+  <link rel="canonical" href="https://bakememo.cn/ko/starter-calculator/">
+  <link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/starter-calculator/">
+  <link rel="alternate" hreflang="en" href="https://bakememo.cn/en/starter-calculator/">
+  <link rel="alternate" hreflang="zh-Hant" href="https://bakememo.cn/zh-hant/starter-calculator/">
+  <link rel="alternate" hreflang="ja" href="https://bakememo.cn/ja/starter-calculator/">
+  <link rel="alternate" hreflang="ko" href="https://bakememo.cn/ko/starter-calculator/">
+  <link rel="alternate" hreflang="x-default" href="https://bakememo.cn/starter-calculator/">
+  <script>
+    /* 记住手动选择的语言。 */
+    try { if (/[?&]lang=ko\b/.test(location.search)) localStorage.setItem("bm-lang", "ko"); } catch (e) {}
+  </script>
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:title" content="르방 먹이 비율 계산기">
+  <meta property="og:description" content="원하는 르방 양과 비율로 기존 르방, 밀가루, 물의 그램을 계산해요.">
+  <meta property="og:url" content="https://bakememo.cn/ko/starter-calculator/">
+  <meta property="og:image" content="https://bakememo.cn/assets/img/og-en.png">
+  <link rel="icon" href="/assets/img/favicon-64.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/home.css">
+  <link rel="stylesheet" href="/assets/support.css">
+  <style>
+    .calc { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 18px; margin: 8px 0 18px; }
+    .calc-head, .calc-row { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) 5.5em 2.2em; gap: 8px; align-items: center; }
+    .calc-head { font-size: 13px; color: var(--muted); font-weight: 650; padding: 0 2px 6px; }
+    .calc-row { padding: 6px 0; border-top: 1px dashed var(--line); }
+    .calc input { font: inherit; font-size: 16px; width: 100%; min-width: 0; padding: 9px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--ink); }
+    .calc .f { display: block; min-width: 0; } .calc .f span { display: none; }
+    .calc output { font-variant-numeric: tabular-nums; text-align: right; color: var(--ink); }
+    .calc .del { border: 0; background: none; color: var(--muted); font-size: 1.3rem; cursor: pointer; padding: 4px; }
+    .calc .add { margin: 10px 0 4px; border: 1px dashed var(--brand); background: var(--brand-wash); color: var(--brand-deep); border-radius: 10px; padding: 9px 14px; font: inherit; font-weight: 650; cursor: pointer; }
+    .calc-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 6px; }
+    .calc-opts label { font-size: 14px; color: var(--muted); font-weight: 650; display: grid; gap: 6px; align-content: end; }
+    .calc-sum { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin: 14px 0 0; }
+    .calc-sum div { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+    .calc-sum dt { font-size: 12.5px; color: var(--muted); }
+    .calc-sum dd { margin: 2px 0 0; font-family: var(--serif); font-size: 1.35rem; color: var(--ink); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+    @media (max-width: 760px) { .calc-sum { grid-template-columns: 1fr 1fr; } .calc-sum div:first-child { grid-column: 1 / -1; } }
+    @media (max-width: 640px) {
+      .calc-head { display: none; }
+      .calc-row { grid-template-columns: 1fr 1fr 2.2em; grid-template-areas: "name name del" "used price pack" "cost cost cost"; grid-template-columns: 1fr 1fr 1fr; }
+      .calc-row .c-name { grid-column: 1 / 3; } .calc-row .del { grid-column: 3; justify-self: end; }
+      .calc .f span { display: block; font-size: 12.5px; color: var(--muted); margin: 0 0 3px 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .calc-row .c-used { grid-area: used; } .calc-row .c-price { grid-area: price; }
+      .calc-row .c-pack { grid-area: pack; } .calc-row .c-cost { grid-area: cost; text-align: left; }
+      .calc-row output::before { content: attr(data-l) " "; color: var(--muted); font-size: 13px; }
+      .calc-opts { grid-template-columns: 1fr; }
+    }
+    .calc-opts.three { grid-template-columns: repeat(3, minmax(0, 1fr)); } .calc-opts label[hidden] { display: none; } .calc-opts select { font: inherit; font-size: 16px; width: 100%; padding: 9px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--ink); }
+    .calc-sum.auto { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); } .calc-sum.auto div:first-child { grid-column: auto; }
+    .calc.rows .calc-head, .calc.rows .calc-row { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) 6em 2.2em; grid-template-areas: none; }
+    .calc.rows .calc-row .c-name { grid-column: auto; } .calc.rows .calc-row .del { grid-column: auto; }
+    @media (max-width: 640px) { .calc-opts.three { grid-template-columns: 1fr; } .calc.rows .calc-row { grid-template-columns: 1fr 1fr 2.2em; grid-template-areas: "name name del" "g sc sc"; } .calc.rows .calc-row .c-name { grid-area: name; } .calc.rows .calc-row .c-g { grid-area: g; } .calc.rows .calc-row .c-sc { grid-area: sc; text-align: left; align-self: end; padding-bottom: 10px; } .calc.rows .calc-row .del { grid-area: del; } }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","inLanguage":"ko","url":"https://bakememo.cn/ko/starter-calculator/","name":"르방 먹이 비율 계산기","description":"무료 르방 먹이 계산기. 원하는 르방 양과 비율(르방:밀가루:물)을 입력하면 기존 르방, 밀가루, 물을 각각 몇 그램 넣을지와 이번에 먹이는 물·밀가루 비율을 알려 줘요. 계산은 브라우저 안에서만 해요.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"홈","item":"https://bakememo.cn/ko/"},{"@type":"ListItem","position":2,"name":"르방 먹이 비율 계산기","item":"https://bakememo.cn/ko/starter-calculator/"}]}]}</script>
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap">
+      <a class="brand" href="/ko/" aria-label="BakeMemo"><img src="/assets/img/icon.webp" alt="" width="34" height="34">BakeMemo</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="/ko/">홈</a>
+        <a href="/bakememo/support/#en">도움말</a>
+        <a class="lang hide-s" href="/en/starter-calculator/?lang=en" lang="en" hreflang="en">EN</a>
+        <a class="btn btn-primary btn-sm" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-starter-ko-nav&amp;mt=8">App Store</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap help guide">
+    <article>
+      <section class="help-hero">
+        <p class="eyebrow">베이킹 도구</p>
+        <h1>르방 먹이 비율 계산기</h1>
+        <p class="lede">원하는 르방 양과 먹이 비율을 입력하면 기존 르방, 밀가루, 물을 각각 몇 그램 넣을지 나와요. 비율은 무게 기준으로 르방 : 밀가루 : 물 순서예요.</p>
+      </section>
+
+      <section class="calc" id="calc" hidden aria-label="르방 먹이 비율 계산기">
+        <div class="calc-opts three">
+          <label>원하는 르방 양(g)<input id="f-total" type="number" inputmode="decimal" step="any" value="150"></label>
+          <label>비율 · 르방<input id="f-a" type="number" inputmode="decimal" step="any" value="1"></label>
+          <label>비율 · 밀가루<input id="f-b" type="number" inputmode="decimal" step="any" value="5"></label>
+          <label>비율 · 물<input id="f-c" type="number" inputmode="decimal" step="any" value="5"></label>
+        </div>
+        <dl class="calc-sum auto">
+          <div><dt>기존 르방</dt><dd id="o-seed">–</dd></div>
+          <div><dt>밀가루</dt><dd id="o-flour">–</dd></div>
+          <div><dt>물</dt><dd id="o-water">–</dd></div>
+          <div><dt>먹인 물 ÷ 밀가루</dt><dd id="o-hyd">–</dd></div>
+        </dl>
+      </section>
+      <noscript><p class="note">계산기를 쓰려면 JavaScript가 필요해요. 아래 공식으로 직접 계산할 수도 있어요.</p></noscript>
+      <p class="note">모든 계산은 브라우저 안에서 하며 전송하거나 저장하지 않아요. 기본 예시: 1:5:5로 르방 150 g 만들기.</p>
+
+      <h2>계산 방법</h2>
+      <p class="formula">1단위 = 원하는 르방 양 ÷ (세 비율 숫자의 합)</p><p>1:5:5는 모두 11단위예요. 르방 150 g이 필요하면 1단위는 약 13.6 g이에요. 기존 르방 13.6 g, 밀가루와 물은 각각 68.2 g이에요.</p><p>밀가루와 물 숫자가 같으면(1:1:1, 1:2:2, 1:5:5) 같은 양의 밀가루와 물을 먹이는 것이고, 수화율 100% 르방이 돼요.</p>
+
+      <h2>비율 고르기</h2>
+      <p>1:1:1은 먹이가 가장 적어 가장 빨리 정점에 올라요. 당일 바로 쓰거나 주방이 서늘할 때 좋아요. 1:2:2는 중간 속도라 평소 먹이 주기에 맞아요. 1:5:5 이상은 정점까지 느리고 신맛이 순해서 더운 날이나 밤새 둘 때 좋아요. 정점까지 걸리는 시간은 온도에 크게 좌우돼요. 같은 비율이라도 따뜻한 주방에서는 몇 시간이면 되고, 서늘하면 훨씬 오래 걸려요.</p><p>자세한 내용은 <a href="/en/guide/starter-feeding/" hreflang="en">How to feed a sourdough starter(영어)</a>에 있어요.</p>
+
+      <h2>조금 넉넉하게</h2>
+      <p>레시피에 필요한 양보다 조금 더 만드세요. 남은 르방이 다음 먹이 때의 기존 르방이 돼요.</p>
+
+      <section class="inline-cta">
+        <h3>르방 속 밀가루와 물까지 배합표가 계산해요</h3>
+        <p>BakeMemo 배합표에서는 르방 수화율을 설정할 수 있고(기본 100%), 르방 속 밀가루와 물도 총 수화율에 넣어 계산해요. 레시피 62개와 처음 3번의 굽기는 무료이고, 가입도 필요 없어요.</p>
+        <a class="btn btn-primary" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-starter-ko-inline&amp;mt=8"><span class="two"><small>다운로드</small>App Store</span></a>
+      </section>
+      <nav class="related tools" aria-label="다른 베이킹 도구"><h2>다른 베이킹 도구</h2><ul><li><a href="/ko/calculator/">베이커스 퍼센트 계산기</a></li><li><a href="/ko/dough-temperature-calculator/">반죽 온도 계산기</a></li><li><a href="/ko/recipe-scaler/">레시피 분량 환산기</a></li><li><a href="/ko/pan-calculator/">케이크 틀 환산 계산기</a></li></ul></nav>
+    </article>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <span>© 2026 Jiahui Xu · BakeMemo</span>
+      <a href="/ko/">홈</a>
+      <a href="/en/guide/">베이킹 가이드(영어)</a>
+      <a href="/bakememo/support/#en">도움말</a>
+      <a href="/bakememo/privacy/#en">개인정보 처리방침</a>
+      <a class="sp" href="https://beian.miit.gov.cn/" rel="noreferrer">粤ICP备2026075524号</a>
+      <nav class="langs" aria-label="Language"><a href="/starter-calculator/?lang=zh" lang="zh-Hans" hreflang="zh-Hans">简体中文</a><a href="/en/starter-calculator/?lang=en" lang="en" hreflang="en">English</a><a href="/zh-hant/starter-calculator/?lang=zh-hant" lang="zh-Hant" hreflang="zh-Hant">繁體中文</a><a href="/ja/starter-calculator/?lang=ja" lang="ja" hreflang="ja">日本語</a><a href="/ko/starter-calculator/?lang=ko" lang="ko" hreflang="ko" aria-current="page">한국어</a></nav>
+    </div>
+  </footer>
+
+  <div class="dock" role="complementary" aria-label="App Store">
+    <img src="/assets/img/icon.webp" alt="" width="40" height="40">
+    <div class="t"><b>BakeMemo</b><span>무료 · 르방도 총 수화율에</span></div>
+    <a class="btn btn-primary" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-starter-ko-dock&amp;mt=8">App Store</a>
+  </div>
+  <script>
+    /* 只在本页计算，不发送、不保存任何数据。 */
+    (function () {
+      var root = document.getElementById("calc"); if (!root) return;
+      var T = {}, ALLOW0 = false;
+      function num(x) { var n = parseFloat(String(x).replace(",", ".")); return isFinite(n) && (ALLOW0 || n > 0) ? n : 0; }
+      function trim(s) { return s.indexOf(".") >= 0 ? s.replace(/\.?0+$/, "") : s; }
+      function g(n) { return trim(n.toFixed(n >= 100 ? 0 : 1)) + " g"; }
+      function n1(n) { return trim(n.toFixed(1)); }
+      function pct(n) { return trim(n.toFixed(1)) + "%"; }
+      function out(id, s) { document.getElementById("o-" + id).textContent = s; }
+      function show(id, on) { document.getElementById("f-" + id).parentNode.hidden = !on; }
+      var list = root.querySelector(".calc-rows");
+      function rows() { return list ? [].slice.call(list.querySelectorAll(".calc-row")) : []; }
+      function addRow(x) {
+        var r = document.createElement("div"); r.className = "calc-row";
+        r.innerHTML = '<input class="c-name" aria-label="' + T.name + '" placeholder="' + T.name + '"><label class="f c-g"><span>' + T.g + '</span><input type="number" inputmode="decimal" min="0" step="any" aria-label="' + T.g + '"></label>' +
+          '<output class="c-sc" data-l="' + T.sc + '"></output><button type="button" class="del" aria-label="' + T.dele + '">×</button>';
+        if (x) { r.querySelector(".c-name").value = x[0]; r.querySelector(".c-g input").value = x[1]; }
+        r.querySelector(".del").addEventListener("click", function () { r.remove(); calc(); });
+        list.appendChild(r);
+      }
+      function calc() {
+        var v = {}, raw = {}, S = {};
+        [].forEach.call(root.querySelectorAll("[id^=f-]"), function (e) { var k = e.id.slice(2); if (e.tagName === "SELECT") S[k] = e.value; else { raw[k] = e.value.trim(); v[k] = num(e.value); } });
+        var p = v.total / (v.a + v.b + v.c); var ok = v.total > 0 && v.a > 0 && v.b > 0 && v.c > 0;
+      out("seed", ok ? g(p * v.a) : "–"); out("flour", ok ? g(p * v.b) : "–"); out("water", ok ? g(p * v.c) : "–");
+      out("hyd", v.b > 0 && v.c > 0 ? pct(v.c / v.b * 100) : "–");
+      }
+      if (list) { T.rows.forEach(addRow); root.querySelector(".add").addEventListener("click", function () { addRow(null); calc(); list.lastChild.querySelector(".c-name").focus(); }); }
+      root.addEventListener("input", calc); root.addEventListener("change", calc);
+      root.hidden = false; calc();
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="applicable-device" content="pc,mobile">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <title>케이크 틀 환산 계산기: 원형·사각 틀 크기 바꾸기 · BakeMemo</title>
+  <meta name="description" content="무료 케이크 틀 환산 계산기. 원래 틀과 새 틀의 크기(원형은 지름, 사각은 가로·세로)를 입력하면 바닥 면적으로 배합 배수를 계산하고 재료 그램도 환산해 줘요. 계산은 브라우저 안에서만 해요.">
+  <meta name="apple-itunes-app" content="app-id=6792324050">
+  <link rel="canonical" href="https://bakememo.cn/ko/pan-calculator/">
+  <link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/pan-calculator/">
+  <link rel="alternate" hreflang="en" href="https://bakememo.cn/en/pan-calculator/">
+  <link rel="alternate" hreflang="zh-Hant" href="https://bakememo.cn/zh-hant/pan-calculator/">
+  <link rel="alternate" hreflang="ja" href="https://bakememo.cn/ja/pan-calculator/">
+  <link rel="alternate" hreflang="ko" href="https://bakememo.cn/ko/pan-calculator/">
+  <link rel="alternate" hreflang="x-default" href="https://bakememo.cn/pan-calculator/">
+  <script>
+    /* 记住手动选择的语言。 */
+    try { if (/[?&]lang=ko\b/.test(location.search)) localStorage.setItem("bm-lang", "ko"); } catch (e) {}
+  </script>
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:title" content="케이크 틀 환산 계산기">
+  <meta property="og:description" content="두 틀의 크기로 바닥 면적 배수를 계산하고 재료 그램을 환산해요.">
+  <meta property="og:url" content="https://bakememo.cn/ko/pan-calculator/">
+  <meta property="og:image" content="https://bakememo.cn/assets/img/og-en.png">
+  <link rel="icon" href="/assets/img/favicon-64.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/home.css">
+  <link rel="stylesheet" href="/assets/support.css">
+  <style>
+    .calc { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 18px; margin: 8px 0 18px; }
+    .calc-head, .calc-row { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) 5.5em 2.2em; gap: 8px; align-items: center; }
+    .calc-head { font-size: 13px; color: var(--muted); font-weight: 650; padding: 0 2px 6px; }
+    .calc-row { padding: 6px 0; border-top: 1px dashed var(--line); }
+    .calc input { font: inherit; font-size: 16px; width: 100%; min-width: 0; padding: 9px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--ink); }
+    .calc .f { display: block; min-width: 0; } .calc .f span { display: none; }
+    .calc output { font-variant-numeric: tabular-nums; text-align: right; color: var(--ink); }
+    .calc .del { border: 0; background: none; color: var(--muted); font-size: 1.3rem; cursor: pointer; padding: 4px; }
+    .calc .add { margin: 10px 0 4px; border: 1px dashed var(--brand); background: var(--brand-wash); color: var(--brand-deep); border-radius: 10px; padding: 9px 14px; font: inherit; font-weight: 650; cursor: pointer; }
+    .calc-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 6px; }
+    .calc-opts label { font-size: 14px; color: var(--muted); font-weight: 650; display: grid; gap: 6px; align-content: end; }
+    .calc-sum { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin: 14px 0 0; }
+    .calc-sum div { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+    .calc-sum dt { font-size: 12.5px; color: var(--muted); }
+    .calc-sum dd { margin: 2px 0 0; font-family: var(--serif); font-size: 1.35rem; color: var(--ink); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+    @media (max-width: 760px) { .calc-sum { grid-template-columns: 1fr 1fr; } .calc-sum div:first-child { grid-column: 1 / -1; } }
+    @media (max-width: 640px) {
+      .calc-head { display: none; }
+      .calc-row { grid-template-columns: 1fr 1fr 2.2em; grid-template-areas: "name name del" "used price pack" "cost cost cost"; grid-template-columns: 1fr 1fr 1fr; }
+      .calc-row .c-name { grid-column: 1 / 3; } .calc-row .del { grid-column: 3; justify-self: end; }
+      .calc .f span { display: block; font-size: 12.5px; color: var(--muted); margin: 0 0 3px 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .calc-row .c-used { grid-area: used; } .calc-row .c-price { grid-area: price; }
+      .calc-row .c-pack { grid-area: pack; } .calc-row .c-cost { grid-area: cost; text-align: left; }
+      .calc-row output::before { content: attr(data-l) " "; color: var(--muted); font-size: 13px; }
+      .calc-opts { grid-template-columns: 1fr; }
+    }
+    .calc-opts.three { grid-template-columns: repeat(3, minmax(0, 1fr)); } .calc-opts label[hidden] { display: none; } .calc-opts select { font: inherit; font-size: 16px; width: 100%; padding: 9px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--ink); }
+    .calc-sum.auto { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); } .calc-sum.auto div:first-child { grid-column: auto; }
+    .calc.rows .calc-head, .calc.rows .calc-row { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) 6em 2.2em; grid-template-areas: none; }
+    .calc.rows .calc-row .c-name { grid-column: auto; } .calc.rows .calc-row .del { grid-column: auto; }
+    @media (max-width: 640px) { .calc-opts.three { grid-template-columns: 1fr; } .calc.rows .calc-row { grid-template-columns: 1fr 1fr 2.2em; grid-template-areas: "name name del" "g sc sc"; } .calc.rows .calc-row .c-name { grid-area: name; } .calc.rows .calc-row .c-g { grid-area: g; } .calc.rows .calc-row .c-sc { grid-area: sc; text-align: left; align-self: end; padding-bottom: 10px; } .calc.rows .calc-row .del { grid-area: del; } }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","inLanguage":"ko","url":"https://bakememo.cn/ko/pan-calculator/","name":"케이크 틀 환산 계산기","description":"무료 케이크 틀 환산 계산기. 원래 틀과 새 틀의 크기(원형은 지름, 사각은 가로·세로)를 입력하면 바닥 면적으로 배합 배수를 계산하고 재료 그램도 환산해 줘요. 계산은 브라우저 안에서만 해요.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"홈","item":"https://bakememo.cn/ko/"},{"@type":"ListItem","position":2,"name":"케이크 틀 환산 계산기","item":"https://bakememo.cn/ko/pan-calculator/"}]}]}</script>
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap">
+      <a class="brand" href="/ko/" aria-label="BakeMemo"><img src="/assets/img/icon.webp" alt="" width="34" height="34">BakeMemo</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="/ko/">홈</a>
+        <a href="/bakememo/support/#en">도움말</a>
+        <a class="lang hide-s" href="/en/pan-calculator/?lang=en" lang="en" hreflang="en">EN</a>
+        <a class="btn btn-primary btn-sm" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-pan-ko-nav&amp;mt=8">App Store</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap help guide">
+    <article>
+      <section class="help-hero">
+        <p class="eyebrow">베이킹 도구</p>
+        <h1>케이크 틀 환산 계산기</h1>
+        <p class="lede">레시피의 틀과 가진 틀이 다를 때 쓰세요. 두 틀의 크기를 입력하면 바닥 면적으로 배합을 몇 배로 할지 나오고, 재료 그램을 넣으면 환산된 양이 바로 보여요.</p>
+      </section>
+
+      <section class="calc" id="calc" hidden aria-label="케이크 틀 환산 계산기">
+        <div class="calc-opts three">
+          <label>원래 틀 모양<select id="f-s1"><option value="round" selected>원형</option><option value="rect">정사각 / 직사각</option></select></label>
+          <label>원래 틀 지름 / 가로<input id="f-d1" type="number" inputmode="decimal" step="any" value="15"></label>
+          <label>원래 틀 세로<input id="f-w1" type="number" inputmode="decimal" step="any" value=""></label>
+          <label>새 틀 모양<select id="f-s2"><option value="round" selected>원형</option><option value="rect">정사각 / 직사각</option></select></label>
+          <label>새 틀 지름 / 가로<input id="f-d2" type="number" inputmode="decimal" step="any" value="20"></label>
+          <label>새 틀 세로<input id="f-w2" type="number" inputmode="decimal" step="any" value=""></label>
+          <label>재료 양(g)<input id="f-amt" type="number" inputmode="decimal" step="any" value="100"></label>
+        </div>
+        <dl class="calc-sum auto">
+          <div><dt>원래 틀 바닥 면적</dt><dd id="o-a1">–</dd></div>
+          <div><dt>새 틀 바닥 면적</dt><dd id="o-a2">–</dd></div>
+          <div><dt>배합 배수</dt><dd id="o-f">–</dd></div>
+          <div><dt>환산된 양</dt><dd id="o-conv">–</dd></div>
+        </dl>
+      </section>
+      <noscript><p class="note">계산기를 쓰려면 JavaScript가 필요해요. 아래 공식으로 직접 계산할 수도 있어요.</p></noscript>
+      <p class="note">모든 계산은 브라우저 안에서 하며 전송하거나 저장하지 않아요. 기본 예시: 지름 15 원형 틀에서 지름 20 원형 틀로. 두 틀은 같은 단위(둘 다 cm 또는 둘 다 인치)로 입력하세요.</p>
+
+      <h2>계산 방법</h2>
+      <p class="formula">배수 = 새 틀 바닥 면적 ÷ 원래 틀 바닥 면적</p><ul><li>원형 틀 면적 = 3.1416 × 지름 × 지름 ÷ 4</li><li>사각 틀 면적 = 가로 × 세로</li></ul><p>지름 15 원형에서 지름 20 원형으로: 20 × 20 ÷ (15 × 15) ≈ 1.78배. 모든 재료에 1.78을 곱해요.</p>
+
+      <h2>전제 조건</h2>
+      <p>두 틀에 반죽을 <strong>같은 높이로</strong> 채운다고 가정해요. 더 깊은 틀에 높게 굽고 싶다면 양을 더 늘리세요. 틀이 바뀌면 굽는 시간도 보통 달라지는데, 이 도구로는 계산할 수 없어요. 시간만 보지 말고 레시피의 익음 확인 방법으로 판단하세요.</p>
+
+      <h2>달걀은요?</h2>
+      <p>배수가 정수가 아니면 달걀을 풀어서 필요한 그램만큼 계량하세요.</p>
+
+      <section class="inline-cta">
+        <h3>환산한 배합을 나만의 버전으로</h3>
+        <p>BakeMemo 배합표는 목표 총 무게를 정하면 모든 재료를 한 번에 환산하고 실행 취소도 돼요. 굽기를 기록해 두면 다음에는 그 버전에서 이어서 고칠 수 있어요. 레시피 62개와 처음 3번의 굽기는 무료이고, 가입도 필요 없어요.</p>
+        <a class="btn btn-primary" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-pan-ko-inline&amp;mt=8"><span class="two"><small>다운로드</small>App Store</span></a>
+      </section>
+      <nav class="related tools" aria-label="다른 베이킹 도구"><h2>다른 베이킹 도구</h2><ul><li><a href="/ko/calculator/">베이커스 퍼센트 계산기</a></li><li><a href="/ko/dough-temperature-calculator/">반죽 온도 계산기</a></li><li><a href="/ko/starter-calculator/">르방 먹이 비율 계산기</a></li><li><a href="/ko/recipe-scaler/">레시피 분량 환산기</a></li></ul></nav>
+    </article>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <span>© 2026 Jiahui Xu · BakeMemo</span>
+      <a href="/ko/">홈</a>
+      <a href="/en/guide/">베이킹 가이드(영어)</a>
+      <a href="/bakememo/support/#en">도움말</a>
+      <a href="/bakememo/privacy/#en">개인정보 처리방침</a>
+      <a class="sp" href="https://beian.miit.gov.cn/" rel="noreferrer">粤ICP备2026075524号</a>
+      <nav class="langs" aria-label="Language"><a href="/pan-calculator/?lang=zh" lang="zh-Hans" hreflang="zh-Hans">简体中文</a><a href="/en/pan-calculator/?lang=en" lang="en" hreflang="en">English</a><a href="/zh-hant/pan-calculator/?lang=zh-hant" lang="zh-Hant" hreflang="zh-Hant">繁體中文</a><a href="/ja/pan-calculator/?lang=ja" lang="ja" hreflang="ja">日本語</a><a href="/ko/pan-calculator/?lang=ko" lang="ko" hreflang="ko" aria-current="page">한국어</a></nav>
+    </div>
+  </footer>
+
+  <div class="dock" role="complementary" aria-label="App Store">
+    <img src="/assets/img/icon.webp" alt="" width="40" height="40">
+    <div class="t"><b>BakeMemo</b><span>무료 · 총 무게로 환산</span></div>
+    <a class="btn btn-primary" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-pan-ko-dock&amp;mt=8">App Store</a>
+  </div>
+  <script>
+    /* 只在本页计算，不发送、不保存任何数据。 */
+    (function () {
+      var root = document.getElementById("calc"); if (!root) return;
+      var T = {}, ALLOW0 = false;
+      function num(x) { var n = parseFloat(String(x).replace(",", ".")); return isFinite(n) && (ALLOW0 || n > 0) ? n : 0; }
+      function trim(s) { return s.indexOf(".") >= 0 ? s.replace(/\.?0+$/, "") : s; }
+      function g(n) { return trim(n.toFixed(n >= 100 ? 0 : 1)) + " g"; }
+      function n1(n) { return trim(n.toFixed(1)); }
+      function pct(n) { return trim(n.toFixed(1)) + "%"; }
+      function out(id, s) { document.getElementById("o-" + id).textContent = s; }
+      function show(id, on) { document.getElementById("f-" + id).parentNode.hidden = !on; }
+      var list = root.querySelector(".calc-rows");
+      function rows() { return list ? [].slice.call(list.querySelectorAll(".calc-row")) : []; }
+      function addRow(x) {
+        var r = document.createElement("div"); r.className = "calc-row";
+        r.innerHTML = '<input class="c-name" aria-label="' + T.name + '" placeholder="' + T.name + '"><label class="f c-g"><span>' + T.g + '</span><input type="number" inputmode="decimal" min="0" step="any" aria-label="' + T.g + '"></label>' +
+          '<output class="c-sc" data-l="' + T.sc + '"></output><button type="button" class="del" aria-label="' + T.dele + '">×</button>';
+        if (x) { r.querySelector(".c-name").value = x[0]; r.querySelector(".c-g input").value = x[1]; }
+        r.querySelector(".del").addEventListener("click", function () { r.remove(); calc(); });
+        list.appendChild(r);
+      }
+      function calc() {
+        var v = {}, raw = {}, S = {};
+        [].forEach.call(root.querySelectorAll("[id^=f-]"), function (e) { var k = e.id.slice(2); if (e.tagName === "SELECT") S[k] = e.value; else { raw[k] = e.value.trim(); v[k] = num(e.value); } });
+        function area(s, d, w) { return s === "round" ? Math.PI * d * d / 4 : d * w; }
+      var a1 = area(S.s1, v.d1, v.w1), a2 = area(S.s2, v.d2, v.w2), f = a1 > 0 && a2 > 0 ? a2 / a1 : 0;
+      show("w1", S.s1 === "rect"); show("w2", S.s2 === "rect");
+      out("a1", a1 > 0 ? n1(a1) : "–"); out("a2", a2 > 0 ? n1(a2) : "–"); out("f", f > 0 ? "× " + f.toFixed(2) : "–");
+      out("conv", f > 0 && v.amt > 0 ? g(v.amt * f) : "–");
+      }
+      if (list) { T.rows.forEach(addRow); root.querySelector(".add").addEventListener("click", function () { addRow(null); calc(); list.lastChild.querySelector(".c-name").focus(); }); }
+      root.addEventListener("input", calc); root.addEventListener("change", calc);
+      root.hidden = false; calc();
+    })();
+  </script>
+</body>
+</html>

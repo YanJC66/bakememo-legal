@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="applicable-device" content="pc,mobile">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <title>레시피 분량 환산기: 개수나 총 무게로 그램 계산 · BakeMemo</title>
+  <meta name="description" content="무료 레시피 분량 환산기. 재료별 그램을 입력하고 개수(12개를 30개로)나 목표 총 무게로 같은 비율로 환산해요. 모든 재료에 같은 배수를 곱해요. 계산은 브라우저 안에서만 해요.">
+  <meta name="apple-itunes-app" content="app-id=6792324050">
+  <link rel="canonical" href="https://bakememo.cn/ko/recipe-scaler/">
+  <link rel="alternate" hreflang="zh-Hans" href="https://bakememo.cn/recipe-scaler/">
+  <link rel="alternate" hreflang="en" href="https://bakememo.cn/en/recipe-scaler/">
+  <link rel="alternate" hreflang="zh-Hant" href="https://bakememo.cn/zh-hant/recipe-scaler/">
+  <link rel="alternate" hreflang="ja" href="https://bakememo.cn/ja/recipe-scaler/">
+  <link rel="alternate" hreflang="ko" href="https://bakememo.cn/ko/recipe-scaler/">
+  <link rel="alternate" hreflang="x-default" href="https://bakememo.cn/recipe-scaler/">
+  <script>
+    /* 记住手动选择的语言。 */
+    try { if (/[?&]lang=ko\b/.test(location.search)) localStorage.setItem("bm-lang", "ko"); } catch (e) {}
+  </script>
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:title" content="레시피 분량 환산기">
+  <meta property="og:description" content="재료별 그램을 입력하고 개수나 목표 총 무게로 같은 비율로 환산해요.">
+  <meta property="og:url" content="https://bakememo.cn/ko/recipe-scaler/">
+  <meta property="og:image" content="https://bakememo.cn/assets/img/og-en.png">
+  <link rel="icon" href="/assets/img/favicon-64.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/home.css">
+  <link rel="stylesheet" href="/assets/support.css">
+  <style>
+    .calc { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 18px; margin: 8px 0 18px; }
+    .calc-head, .calc-row { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) 5.5em 2.2em; gap: 8px; align-items: center; }
+    .calc-head { font-size: 13px; color: var(--muted); font-weight: 650; padding: 0 2px 6px; }
+    .calc-row { padding: 6px 0; border-top: 1px dashed var(--line); }
+    .calc input { font: inherit; font-size: 16px; width: 100%; min-width: 0; padding: 9px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--ink); }
+    .calc .f { display: block; min-width: 0; } .calc .f span { display: none; }
+    .calc output { font-variant-numeric: tabular-nums; text-align: right; color: var(--ink); }
+    .calc .del { border: 0; background: none; color: var(--muted); font-size: 1.3rem; cursor: pointer; padding: 4px; }
+    .calc .add { margin: 10px 0 4px; border: 1px dashed var(--brand); background: var(--brand-wash); color: var(--brand-deep); border-radius: 10px; padding: 9px 14px; font: inherit; font-weight: 650; cursor: pointer; }
+    .calc-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 6px; }
+    .calc-opts label { font-size: 14px; color: var(--muted); font-weight: 650; display: grid; gap: 6px; align-content: end; }
+    .calc-sum { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin: 14px 0 0; }
+    .calc-sum div { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+    .calc-sum dt { font-size: 12.5px; color: var(--muted); }
+    .calc-sum dd { margin: 2px 0 0; font-family: var(--serif); font-size: 1.35rem; color: var(--ink); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+    @media (max-width: 760px) { .calc-sum { grid-template-columns: 1fr 1fr; } .calc-sum div:first-child { grid-column: 1 / -1; } }
+    @media (max-width: 640px) {
+      .calc-head { display: none; }
+      .calc-row { grid-template-columns: 1fr 1fr 2.2em; grid-template-areas: "name name del" "used price pack" "cost cost cost"; grid-template-columns: 1fr 1fr 1fr; }
+      .calc-row .c-name { grid-column: 1 / 3; } .calc-row .del { grid-column: 3; justify-self: end; }
+      .calc .f span { display: block; font-size: 12.5px; color: var(--muted); margin: 0 0 3px 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .calc-row .c-used { grid-area: used; } .calc-row .c-price { grid-area: price; }
+      .calc-row .c-pack { grid-area: pack; } .calc-row .c-cost { grid-area: cost; text-align: left; }
+      .calc-row output::before { content: attr(data-l) " "; color: var(--muted); font-size: 13px; }
+      .calc-opts { grid-template-columns: 1fr; }
+    }
+    .calc-opts.three { grid-template-columns: repeat(3, minmax(0, 1fr)); } .calc-opts label[hidden] { display: none; } .calc-opts select { font: inherit; font-size: 16px; width: 100%; padding: 9px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--ink); }
+    .calc-sum.auto { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); } .calc-sum.auto div:first-child { grid-column: auto; }
+    .calc.rows .calc-head, .calc.rows .calc-row { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) 6em 2.2em; grid-template-areas: none; }
+    .calc.rows .calc-row .c-name { grid-column: auto; } .calc.rows .calc-row .del { grid-column: auto; }
+    @media (max-width: 640px) { .calc-opts.three { grid-template-columns: 1fr; } .calc.rows .calc-row { grid-template-columns: 1fr 1fr 2.2em; grid-template-areas: "name name del" "g sc sc"; } .calc.rows .calc-row .c-name { grid-area: name; } .calc.rows .calc-row .c-g { grid-area: g; } .calc.rows .calc-row .c-sc { grid-area: sc; text-align: left; align-self: end; padding-bottom: 10px; } .calc.rows .calc-row .del { grid-area: del; } }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","inLanguage":"ko","url":"https://bakememo.cn/ko/recipe-scaler/","name":"레시피 분량 환산기","description":"무료 레시피 분량 환산기. 재료별 그램을 입력하고 개수(12개를 30개로)나 목표 총 무게로 같은 비율로 환산해요. 모든 재료에 같은 배수를 곱해요. 계산은 브라우저 안에서만 해요.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"홈","item":"https://bakememo.cn/ko/"},{"@type":"ListItem","position":2,"name":"레시피 분량 환산기","item":"https://bakememo.cn/ko/recipe-scaler/"}]}]}</script>
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap">
+      <a class="brand" href="/ko/" aria-label="BakeMemo"><img src="/assets/img/icon.webp" alt="" width="34" height="34">BakeMemo</a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="/ko/">홈</a>
+        <a href="/bakememo/support/#en">도움말</a>
+        <a class="lang hide-s" href="/en/recipe-scaler/?lang=en" lang="en" hreflang="en">EN</a>
+        <a class="btn btn-primary btn-sm" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-scale-ko-nav&amp;mt=8">App Store</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap help guide">
+    <article>
+      <section class="help-hero">
+        <p class="eyebrow">베이킹 도구</p>
+        <h1>레시피 분량 환산기</h1>
+        <p class="lede">레시피는 12개 분량인데 30개를 만들고 싶거나, 총 무게를 딱 떨어지는 숫자로 맞추고 싶을 때. 재료별 그램을 입력하고 개수나 총 무게로 환산하세요.</p>
+      </section>
+
+      <section class="calc rows" id="calc" hidden aria-label="레시피 분량 환산기">
+        <div class="calc-head"><span>재료</span><span>그램</span><span style="text-align:right">환산</span><span></span></div>
+        <div class="calc-rows"></div>
+        <button type="button" class="add">+ 재료 추가</button>
+        <div class="calc-opts three">
+          <label>원래 레시피 개수 / 인분<input id="f-from" type="number" inputmode="decimal" step="any" value="12"></label>
+          <label>만들 개수 / 인분<input id="f-to" type="number" inputmode="decimal" step="any" value="30"></label>
+          <label>또는: 목표 총 무게(g, 입력하면 이 값으로 계산)<input id="f-target" type="number" inputmode="decimal" step="any" value=""></label>
+        </div>
+        <dl class="calc-sum auto">
+          <div><dt>배수</dt><dd id="o-f">–</dd></div>
+          <div><dt>원래 총 무게</dt><dd id="o-t0">–</dd></div>
+          <div><dt>환산 후 총 무게</dt><dd id="o-t1">–</dd></div>
+        </dl>
+      </section>
+      <noscript><p class="note">계산기를 쓰려면 JavaScript가 필요해요. 아래 공식으로 직접 계산할 수도 있어요.</p></noscript>
+      <p class="note">모든 계산은 브라우저 안에서 하며 전송하거나 저장하지 않아요. 기본 예시: 12개짜리 버터 쿠키를 30개로, 배수 2.5.</p>
+
+      <h2>계산 방법</h2>
+      <p class="formula">배수 = 만들 개수 ÷ 원래 개수　또는　목표 총 무게 ÷ 원래 총 무게</p><p>모든 재료에 같은 배수를 곱하므로 재료 사이의 비율은 그대로예요. 목표 총 무게를 입력하면 총 무게로 계산하고 개수는 쓰지 않아요.</p>
+
+      <h2>환산한 뒤 확인할 것</h2>
+      <ul><li><b>달걀</b>: 한 개 단위로 떨어지지 않으면 풀어서 그램으로 계량하세요.</li><li><b>틀과 오븐 팬</b>: 양이 바뀌면 틀도 바꿔야 할 때가 많아요. <a href="/ko/pan-calculator/">케이크 틀 환산 계산기</a>를 참고하세요.</li><li><b>시간</b>: 이 도구는 분량만 환산해요. 섞기, 발효, 굽기 시간은 양에 따라 달라질 수 있으니 레시피의 상태 기준으로 판단하세요.</li></ul>
+
+      <h2>빵이라면</h2>
+      <p>빵 배합은 베이커스 퍼센트가 더 편해요. <a href="/ko/calculator/">베이커스 퍼센트 계산기</a>는 환산과 함께 수화율과 르방을 포함한 총 수화율도 보여 줘요.</p>
+
+      <section class="inline-cta">
+        <h3>환산했으면 바로 따라 만들기</h3>
+        <p>BakeMemo 배합표는 목표 총 무게를 정하면 모든 재료를 한 번에 환산하고 실행 취소도 돼요. 장보기 목록은 만들 횟수에 맞춰 살 양을 계산해요. 레시피 62개와 처음 3번의 굽기는 무료이고, 가입도 필요 없어요.</p>
+        <a class="btn btn-primary" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-scale-ko-inline&amp;mt=8"><span class="two"><small>다운로드</small>App Store</span></a>
+      </section>
+      <nav class="related tools" aria-label="다른 베이킹 도구"><h2>다른 베이킹 도구</h2><ul><li><a href="/ko/calculator/">베이커스 퍼센트 계산기</a></li><li><a href="/ko/dough-temperature-calculator/">반죽 온도 계산기</a></li><li><a href="/ko/starter-calculator/">르방 먹이 비율 계산기</a></li><li><a href="/ko/pan-calculator/">케이크 틀 환산 계산기</a></li></ul></nav>
+    </article>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <span>© 2026 Jiahui Xu · BakeMemo</span>
+      <a href="/ko/">홈</a>
+      <a href="/en/guide/">베이킹 가이드(영어)</a>
+      <a href="/bakememo/support/#en">도움말</a>
+      <a href="/bakememo/privacy/#en">개인정보 처리방침</a>
+      <a class="sp" href="https://beian.miit.gov.cn/" rel="noreferrer">粤ICP备2026075524号</a>
+      <nav class="langs" aria-label="Language"><a href="/recipe-scaler/?lang=zh" lang="zh-Hans" hreflang="zh-Hans">简体中文</a><a href="/en/recipe-scaler/?lang=en" lang="en" hreflang="en">English</a><a href="/zh-hant/recipe-scaler/?lang=zh-hant" lang="zh-Hant" hreflang="zh-Hant">繁體中文</a><a href="/ja/recipe-scaler/?lang=ja" lang="ja" hreflang="ja">日本語</a><a href="/ko/recipe-scaler/?lang=ko" lang="ko" hreflang="ko" aria-current="page">한국어</a></nav>
+    </div>
+  </footer>
+
+  <div class="dock" role="complementary" aria-label="App Store">
+    <img src="/assets/img/icon.webp" alt="" width="40" height="40">
+    <div class="t"><b>BakeMemo</b><span>무료 · 총 무게로 환산</span></div>
+    <a class="btn btn-primary" href="https://apps.apple.com/app/id6792324050?pt=129189349&amp;ct=web-scale-ko-dock&amp;mt=8">App Store</a>
+  </div>
+  <script>
+    /* 只在本页计算，不发送、不保存任何数据。 */
+    (function () {
+      var root = document.getElementById("calc"); if (!root) return;
+      var T = {"name": "재료", "g": "그램", "sc": "환산", "dele": "이 줄 삭제", "rows": [["박력분", 250], ["버터", 200], ["설탕", 100], ["달걀", 50]]}, ALLOW0 = false;
+      function num(x) { var n = parseFloat(String(x).replace(",", ".")); return isFinite(n) && (ALLOW0 || n > 0) ? n : 0; }
+      function trim(s) { return s.indexOf(".") >= 0 ? s.replace(/\.?0+$/, "") : s; }
+      function g(n) { return trim(n.toFixed(n >= 100 ? 0 : 1)) + " g"; }
+      function n1(n) { return trim(n.toFixed(1)); }
+      function pct(n) { return trim(n.toFixed(1)) + "%"; }
+      function out(id, s) { document.getElementById("o-" + id).textContent = s; }
+      function show(id, on) { document.getElementById("f-" + id).parentNode.hidden = !on; }
+      var list = root.querySelector(".calc-rows");
+      function rows() { return list ? [].slice.call(list.querySelectorAll(".calc-row")) : []; }
+      function addRow(x) {
+        var r = document.createElement("div"); r.className = "calc-row";
+        r.innerHTML = '<input class="c-name" aria-label="' + T.name + '" placeholder="' + T.name + '"><label class="f c-g"><span>' + T.g + '</span><input type="number" inputmode="decimal" min="0" step="any" aria-label="' + T.g + '"></label>' +
+          '<output class="c-sc" data-l="' + T.sc + '"></output><button type="button" class="del" aria-label="' + T.dele + '">×</button>';
+        if (x) { r.querySelector(".c-name").value = x[0]; r.querySelector(".c-g input").value = x[1]; }
+        r.querySelector(".del").addEventListener("click", function () { r.remove(); calc(); });
+        list.appendChild(r);
+      }
+      function calc() {
+        var v = {}, raw = {}, S = {};
+        [].forEach.call(root.querySelectorAll("[id^=f-]"), function (e) { var k = e.id.slice(2); if (e.tagName === "SELECT") S[k] = e.value; else { raw[k] = e.value.trim(); v[k] = num(e.value); } });
+        var total = 0; rows().forEach(function (r) { total += num(r.querySelector(".c-g input").value); });
+      var f = v.target > 0 && total > 0 ? v.target / total : (v.from > 0 && v.to > 0 ? v.to / v.from : 0);
+      rows().forEach(function (r) { var w = num(r.querySelector(".c-g input").value); r.querySelector(".c-sc").value = f > 0 && w > 0 ? g(w * f) : "–"; });
+      out("f", f > 0 ? "× " + f.toFixed(2) : "–"); out("t0", total > 0 ? g(total) : "–"); out("t1", f > 0 && total > 0 ? g(total * f) : "–");
+      }
+      if (list) { T.rows.forEach(addRow); root.querySelector(".add").addEventListener("click", function () { addRow(null); calc(); list.lastChild.querySelector(".c-name").focus(); }); }
+      root.addEventListener("input", calc); root.addEventListener("change", calc);
+      root.hidden = false; calc();
+    })();
+  </script>
+</body>
+</html>
